@@ -1,8 +1,8 @@
 #' Converts FishBase/SealifBase volumetric diet data obtained from the diet function into a usable format for TrophicLevelR
-#' @param FishBaseDiet a data frame with rows as individuals and each row consisting of a prey item name.
+#' @param FishBaseDiet a data frame produced by the rfishbase diet function
 #' @param ExcludeStage a character, indicating which life stages to exclude. Must match stage names given by rfishbase (i.e. larvae, rec./juveniles, juv./adults, adults).
 #' @return a list of length two, with two data frames. One containing the re-formatted diet data and one containing the Taxonomy.
-#' @details This converts the data frame produced by rfishbase
+#' @details This converts the data frame produced by rfishbase into a usable form for calculating trophic levels in TrophicLevelR.
 #' @examples
 #' #Get rfishbase diet data for a few species
 #' my.diets<-rfishbase::diet(c("Oreochromis niloticus","Salmo salar"))
