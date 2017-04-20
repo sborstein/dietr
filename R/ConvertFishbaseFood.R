@@ -10,14 +10,16 @@
 #' cleaned.food.items<-ConvertFishbaseFood(FishBaseFood=my.food, ExcludeStage=c("larvae","recruits/juv."))
 #' @export
 
-ConvertFishbaseFood<-function(FishBaseFood,ExcludeStage){
+ConvertFishbaseFood<-function(FishBaseFood,ExcludeStage=NULL){
   if(!length(colnames(FishBaseFood))==30){#check if right format
     stop('Error: Not Raw rfishbase Food Data')#kill if it is not right format
   }else{
     unique.life<-unique(FishBaseFood$PredatorStage)#get the life stages to exclude
+    if(!is.null(ExcludeStage)){
     for(ExcludeStage.index in 1:length(ExcludeStage)){#trim exclude lifestages out
       FishBaseFood<-subset(FishBaseFood,!FishBaseFood$PredatorStage==ExcludeStage[ExcludeStage.index])#subset bad lifestages
     }
+    }else{
     Taxonomy<-as.data.frame(FishBaseFood$sciname,stringsAsFactors = F)
     colnames(Taxonomy)<-"Species"
     FoodItems<-cbind(FishBaseFood$sciname,FishBaseFood$FoodI,FishBaseFood$FoodII,FishBaseFood$FoodIII,FishBaseFood$PreyStage)
@@ -25,6 +27,7 @@ ConvertFishbaseFood<-function(FishBaseFood,ExcludeStage){
     FoodItems<-as.data.frame(FoodItems, stringsAsFactors = F)
     ConvertedStuff<-list(FoodItems,Taxonomy)
     names(ConvertedStuff)<-c("FoodItems","Taxonomy")
-  }
+    }
   ConvertedStuff
+  }
 }
