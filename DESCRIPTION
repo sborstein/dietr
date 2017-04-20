@@ -9,6 +9,7 @@ Depends:
 Imports:
     rfishbase
 Description: Calculate trophic level from volumetric and food item diet data with integration of data from rfishbase
+License: GPL (>= 3)
 LazyData: true
 RoxygenNote: 6.0.1
 Suggests:
