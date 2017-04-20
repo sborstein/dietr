@@ -2,7 +2,12 @@
 #' @param FishBaseDiet a data frame with rows as individuals and each row consisting of a prey item name.
 #' @param ExcludeStage a character, indicating which life stages to exclude. Must match stage names given by rfishbase (i.e. larvae, rec./juveniles, juv./adults, adults).
 #' @return a list of length two, with two data frames. One containing the re-formatted diet data and one containing the Taxonomy.
-#' @details This converts the data frame produced by rfishbase 
+#' @details This converts the data frame produced by rfishbase
+#' @examples
+#' #Get rfishbase diet data for a few species
+#' my.diets<-rfishbase::diet(c("Oreochromis niloticus","Salmo salar"))
+#' #use the ConvertFishbaseDiet function to format it for TrophicLevelR and exclude recruits/juveniles
+#' cleaned.diets<-ConvertFishbaseDiet(FishBaseDiet=my.diets, ExcludeStage=c("larvae","recruits/juv."))
 #' @export
 
 ConvertFishbaseDiet<-function(FishBaseDiet,ExcludeStage){
@@ -15,7 +20,7 @@ ConvertFishbaseDiet<-function(FishBaseDiet,ExcludeStage){
     }
     Taxonomy<-as.data.frame(cbind(FishBaseDiet$DietCode,FishBaseDiet$sciname),stringsAsFactors = F)
     colnames(Taxonomy)<-c("Individual","Species")
-    Volumes<-cbind(FishBaseDiet$DietCode,FishBaseDiet$sciname,adult.diets$FoodI,adult.diets$FoodII,adult.diets$FoodIII,adult.diets$Stage, adult.diets$DietPercent)
+    Volumes<-cbind(FishBaseDiet$DietCode,FishBaseDiet$sciname,FishBaseDiet$FoodI,FishBaseDiet$FoodII,FishBaseDiet$FoodIII,FishBaseDiet$Stage, FishBaseDiet$DietPercent)
     colnames(Volumes)<-c("Individual","Species","FoodI","FoodII","FoodIII","Stage","Volume")
     Volumes<-as.data.frame(Volumes, stringsAsFactors = F)
     ConvertedStuff<-list(Volumes,Taxonomy)
