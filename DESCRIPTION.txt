@@ -1,0 +1,18 @@
+Package: TrophicLevelR
+Version: 1.0
+Date: 2017-4-20
+Title: Calculate Trophic Level From Diet Data
+Author: Samuel R. Borstein <sam@borstein.com>, Brian O'Meara <bomeara@utk.edu>
+Maintainer: Samuel R. Borstein <sam@borstein.com>
+Depends:
+    R (>= 3.2.3)
+Imports:
+    rfishbase
+Description: Calculate trophic level from volumetric and food item diet data with integration of data from rfishbase
+LazyData: true
+RoxygenNote: 6.0.1
+Suggests:
+	knitr,
+    rmarkdown,
+	testthat
+VignetteBuilder: knitr
