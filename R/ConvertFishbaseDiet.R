@@ -15,9 +15,10 @@ ConvertFishbaseDiet<-function(FishBaseDiet,ExcludeStage){
     stop('Error: Not Raw rfishbase Diet Data')#kill if it is not right format
   }else{
     unique.life<-unique(FishBaseDiet$SampleStage)#get the life stages to exclude
-    for(ExcludeStage.index in 1:length(ExcludeStage)){#trim exclude lifestages out
+    if(!is.null(ExcludeStage)){
+      for(ExcludeStage.index in 1:length(ExcludeStage)){#trim exclude lifestages out
       FishBaseDiet<-subset(FishBaseDiet,!FishBaseDiet$SampleStage==ExcludeStage[ExcludeStage.index])#subset bad lifestages
-    }
+      }
     Taxonomy<-as.data.frame(cbind(FishBaseDiet$DietCode,FishBaseDiet$sciname),stringsAsFactors = F)
     colnames(Taxonomy)<-c("Individual","Species")
     Volumes<-cbind(FishBaseDiet$DietCode,FishBaseDiet$sciname,FishBaseDiet$FoodI,FishBaseDiet$FoodII,FishBaseDiet$FoodIII,FishBaseDiet$Stage, FishBaseDiet$DietPercent)
@@ -25,6 +26,15 @@ ConvertFishbaseDiet<-function(FishBaseDiet,ExcludeStage){
     Volumes<-as.data.frame(Volumes, stringsAsFactors = F)
     ConvertedStuff<-list(Volumes,Taxonomy)
     names(ConvertedStuff)<-c("Volumes","Taxonomy")
+    }else{
+      Taxonomy<-as.data.frame(cbind(FishBaseDiet$DietCode,FishBaseDiet$sciname),stringsAsFactors = F)
+      colnames(Taxonomy)<-c("Individual","Species")
+      Volumes<-cbind(FishBaseDiet$DietCode,FishBaseDiet$sciname,FishBaseDiet$FoodI,FishBaseDiet$FoodII,FishBaseDiet$FoodIII,FishBaseDiet$Stage, FishBaseDiet$DietPercent)
+      colnames(Volumes)<-c("Individual","Species","FoodI","FoodII","FoodIII","Stage","Volume")
+      Volumes<-as.data.frame(Volumes, stringsAsFactors = F)
+      ConvertedStuff<-list(Volumes,Taxonomy)
+      names(ConvertedStuff)<-c("Volumes","Taxonomy") 
+    }
   }
   ConvertedStuff
 }
