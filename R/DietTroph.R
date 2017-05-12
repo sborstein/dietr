@@ -3,6 +3,9 @@
 #' @param PreyValues a data frame with rows as prey item names and columns containing the trophic level of the prey item and the standard error of that trophic item.
 #' @param Taxonomy a data frame with the least inclusive level progressing to more inclusive moving towards the right.
 #' @return a list length of the columns in taxonomy, each containing trophic level estimation at each taxonomic level
+#' @description 
+#' Calculates trophic level from volumetric diet data. Volumes must follow the fishbase format, with the columns for 
+#' Individual/species, FoodI, FoodII, FoodII, stage, and volume.Prey values for TrophLab and 
 #' @examples 
 #' #' #Get some food item data from rfishbase
 #' my.diet<-diet(c("Oreochromis niloticus", "Salmo salar"))
