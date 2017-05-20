@@ -17,18 +17,6 @@
 #' my.TL<-DietTroph(Volumes = converted.diet$FoodItems,Taxonomy = converted.diet$Taxonomy, TrophLabPrey)
 #' @export
 
-adult.diets
-Volumes<-cbind(adult.diets$sciname,adult.diets$DietCode,adult.diets$FoodI,adult.diets$FoodII,adult.diets$FoodIII,adult.diets$Stage, adult.diets$DietPercent)
-colnames(Volumes)<-c("Species","Individual","FoodI","FoodII","FoodIII","Stage","Volume")
-Volumes<-Volumes[,-1]
-Volumes<-as.data.frame(Volumes, stringsAsFactors = F)
-Taxonomy<-cbind(adult.diets$DietCode,adult.diets$sciname)
-Taxonomy<-as.data.frame(Taxonomy)
-colnames(Taxonomy)<-c("Individual","Species")
-PreyValues<-read.csv("TLvals.csv", stringsAsFactors = F)
-PreyValues<-uniquecombs(PreyValues)
-
-
 DietTroph<-function(Volumes, PreyValues,Taxonomy){
   individual.TL<-data.frame(matrix(nrow = length(unique(Taxonomy[,1])), ncol = 3))#make final table
   colnames(individual.TL)<-c("Individual","TrophicLevel","SE")#make column names for final table
