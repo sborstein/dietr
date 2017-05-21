@@ -5,7 +5,7 @@
 #' @return a list containing estimated trophic levels from food items at each taxonomic level provided by the user.
 #' @examples 
 #' #Get some food item data from rfishbase
-#' my.foods<-fooditems(c("Anomalops katoptron", "Grammatorcynus bilineatus"))
+#' my.foods<-rfishbase::fooditems(c("Anomalops katoptron", "Grammatorcynus bilineatus"))
 #' #convert FishBase data into data for trophic calculation using TrophicLevelR
 #' converted.foods<-ConvertFishbaseFood(my.foods)
 #' #Load Prey Values
