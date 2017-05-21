@@ -14,7 +14,6 @@
 #' my.TL<-FoodTroph(Foods = converted.foods$FoodItems,Taxonomy = converted.foods$Taxonomy, TrophLabPrey)
 #' @export
 
-TrophLabPrey<-PreyValues
 FoodTroph<-function(Foods, PreyValues,Taxonomy){
   individual.TL<-data.frame(matrix(nrow = length(unique(Taxonomy[,1])), ncol = 4))#make final table
   colnames(individual.TL)<-c("Individual","TrophicLevel","SE","Items")#make column names for final table
