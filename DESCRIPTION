@@ -1,8 +1,8 @@
-Package: TrophicLevelR
+Package: tRophic
 Version: 1.0
-Date: 2017-4-20
+Date: 2017-5-20
 Title: Calculate Trophic Level From Diet Data
-Author: Samuel R. Borstein <sam@borstein.com>, Brian O'Meara <bomeara@utk.edu>
+Author: Samuel R. Borstein <sam@borstein.com>
 Maintainer: Samuel R. Borstein <sam@borstein.com>
 Depends:
     R (>= 3.2.3)

@@ -2,4 +2,5 @@
 
 export(ConvertFishbaseDiet)
 export(ConvertFishbaseFood)
-export(TrophLabPrey)
+export(DietTroph)
+export(FoodTroph)
