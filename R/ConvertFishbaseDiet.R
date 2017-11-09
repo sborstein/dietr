@@ -10,7 +10,7 @@
 #' cleaned.diets<-ConvertFishbaseDiet(FishBaseDiet=my.diets, ExcludeStage=c("larvae","recruits/juv."))
 #' @export
 
-ConvertFishbaseDiet<-function(FishBaseDiet,ExcludeStage){
+ConvertFishbaseDiet<-function(FishBaseDiet,ExcludeStage=NULL){
   if(!length(colnames(FishBaseDiet))==53){#check if right format
     stop('Error: Not Raw rfishbase Diet Data')#kill if it is not right format
   }else{
