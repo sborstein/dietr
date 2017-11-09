@@ -1,2 +1,2 @@
 library(testthat)
-test_check("TrophicLevelR")
+test_check("tRophic")
