@@ -4,4 +4,3 @@
 ##Ignore the cran-comments.rd
 ^cran-comments\.md$
 ^README\.md$
-^ManuscriptExamples$
