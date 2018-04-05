@@ -14,7 +14,7 @@
 #' #Load Prey Values
 #' data(TrophLabPrey)
 #' #Calculate Trophic Levels
-#' my.TL<-DietTroph(Volumes = converted.diet$FoodItems,Taxonomy = converted.diet$Taxonomy, TrophLabPrey)
+#' my.TL<-DietTroph(Volumes = converted.diet$Volumes,PreyValues = TrophLabPrey, Taxonomy = converted.diet$Taxonomy)
 #' @export
 
 DietTroph<-function(Volumes, PreyValues,Taxonomy){
@@ -24,7 +24,7 @@ DietTroph<-function(Volumes, PreyValues,Taxonomy){
   for(record.index in 1:length(unique(unique.records))){#for each record
     individual.TL$Individual[record.index]<-unique.records[record.index]#put record name in final table
     current.rec<-subset(Volumes,Volumes$Individual==unique.records[record.index])#subset the current records data
-    Troph.Match <- merge(current.rec, PreyValues, by.y=c('FoodI','FoodII','FoodIII',"Stage"))#match the volumes with corresponding prey TL
+    Troph.Match <- merge(current.rec, PreyValues, by.y=c('FoodI','FoodII','FoodIII',"Stage"),all.x = TRUE)#match the volumes with corresponding prey TL
     TrophLevel<- 1.0 + sum(as.numeric(Troph.Match$TL)*as.numeric(Troph.Match$Volume))/100#calculate Trophic Level for record
     seTroph=sqrt(sum(as.numeric(Troph.Match$Volume)*as.numeric(Troph.Match$SE^2)/100))#Calculate S.E. of Trophic Level
     #individual.TL$TrophicLevel[record.index]<-TrophLevel#add Trophic Level to final table
