@@ -7,11 +7,11 @@
 DietTroph(Volumes, PreyValues, Taxonomy)
 }
 \arguments{
+\item{Volumes}{a data frame with rows as individuals and each row consisting of a prey item name and a corresponding volumetric percentage.}
+
 \item{PreyValues}{a data frame with rows as prey item names and columns containing the trophic level of the prey item and the standard error of that trophic item.}
 
 \item{Taxonomy}{a data frame with the least inclusive level progressing to more inclusive moving towards the right.}
-
-\item{volumes}{a data frame with rows as individuals and each row consisting of a prey item name and a corresponding volumetric percentage.}
 }
 \value{
 a list length of the columns in taxonomy, each containing trophic level estimation at each taxonomic level

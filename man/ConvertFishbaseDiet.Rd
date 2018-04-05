@@ -4,7 +4,7 @@
 \alias{ConvertFishbaseDiet}
 \title{Converts FishBase/SealifBase volumetric diet data obtained from the diet function into a usable format for TrophicLevelR}
 \usage{
-ConvertFishbaseDiet(FishBaseDiet, ExcludeStage)
+ConvertFishbaseDiet(FishBaseDiet, ExcludeStage = NULL)
 }
 \arguments{
 \item{FishBaseDiet}{a data frame produced by the rfishbase diet function}

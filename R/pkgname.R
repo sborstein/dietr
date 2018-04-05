@@ -1,6 +1,6 @@
 #' An R package to estimate trophic level from diet and food item data
 #'
-#' @description Trophic level estimation from diet and food item data
+#' @description Trophic level estimation from diet and food item data in R
 #'
 #' @details 
 #' Package: tRophic
