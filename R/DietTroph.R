@@ -8,6 +8,7 @@
 #' Individual/species, FoodI, FoodII, FoodII, stage, and volume.Prey values for TrophLab and 
 #' @examples 
 #' #Get some food item data from rfishbase
+#' library(rfishbase)
 #' my.diet<-rfishbase::diet(c("Oreochromis niloticus", "Salmo salar"))
 #' #convert FishBase data into data for trophic calculation using TrophicLevelR
 #' converted.diet<-ConvertFishbaseDiet(my.diet)

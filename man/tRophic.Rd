@@ -28,9 +28,6 @@ than the original microsoft access program and also allows for a hierarchical es
 trophic level given a corresponding "taxonomy" data frame (i.e. estimate trophic level for a 
 individual,population,species, etc.).
 }
-\seealso{
-\code{\link{ConvertFishbaseDiet}},\code{\link{ConvertFishbaseFood}},\code{\link{DietTroph}},\code{\link{FoodTroph}},\code{\link{TrophLabPrey}},\code{\link{ChondrichthyesPrey}}
-}
 \author{
 Samuel Borstein
 Maintainer: Samuel Borstein <sborstei@vols.utk.edu>

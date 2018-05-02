@@ -25,7 +25,7 @@
 #' @author Samuel Borstein
 #' Maintainer: Samuel Borstein <sborstei@vols.utk.edu>
 #' 
-#' @seealso \code{\link{ConvertFishbaseDiet}},\code{\link{ConvertFishbaseFood}},\code{\link{DietTroph}},\code{\link{FoodTroph}},\code{\link{TrophLabPrey}},\code{\link{ChondrichthyesPrey}}
+#' @seealso \code{\link{ConvertFishbaseDiet}},\code{\link{ConvertFishbaseFood}},\code{\link{DietTroph}},\code{\link{FoodTroph}}}
 #' 
 #' @docType package
 #' @name tRophic

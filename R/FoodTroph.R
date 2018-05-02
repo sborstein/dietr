@@ -5,13 +5,14 @@
 #' @return a list containing estimated trophic levels from food items at each taxonomic level provided by the user.
 #' @examples 
 #' #Get some food item data from rfishbase
+#' library(rfishbase)
 #' my.foods<-rfishbase::fooditems(c("Anomalops katoptron", "Grammatorcynus bilineatus"))
 #' #convert FishBase data into data for trophic calculation using TrophicLevelR
 #' converted.foods<-ConvertFishbaseFood(my.foods)
 #' #Load Prey Values
 #' data(TrophLabPrey)
 #' #Calculate Trophic Levels
-#' my.TL<-FoodTroph(FoodItems = converted.foods$FoodItems,Taxonomy = converted.foods$Taxonomy, TrophLabPrey)
+#' my.TL<-FoodTroph(FoodItems = converted.foods$FoodItems,PreyValues = TrophLabPrey, Taxonomy = converted.foods$Taxonomy)
 #' @export
 
 FoodTroph<-function(FoodItems, PreyValues,Taxonomy){
@@ -21,7 +22,7 @@ FoodTroph<-function(FoodItems, PreyValues,Taxonomy){
   check.food.items<-vector(length = length(unique.records))#check that the stuff is ok for now.
   for(record.index in 1:length(unique(unique.records))){#for each record
     individual.TL$Individual[record.index]<-unique.records[record.index]#put record name in final table
-    current.rec<-subset(Foods,Foods[,1]==unique.records[record.index])#subset the current records data
+    current.rec<-subset(FoodItems,FoodItems[,1]==unique.records[record.index])#subset the current records data
     Food.Match <- merge(current.rec, PreyValues, by.y=c('FoodI','FoodII','FoodIII',"Stage"))#match the food with corresponding prey TL
     ifelse(dim(Food.Match)[1]<dim(current.rec)[1],check.food.items[record.index]<-"bad",check.food.items[record.index]<-"good")
     if(length(unique(Food.Match$TL))==1 && length(unique(Food.Match$SE))==1){#If only a single food item, use that without subsampling
