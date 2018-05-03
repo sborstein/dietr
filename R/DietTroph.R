@@ -13,7 +13,7 @@
 #' #convert FishBase data into data for trophic calculation using TrophicLevelR
 #' converted.diet<-ConvertFishbaseDiet(my.diet)
 #' #Load Prey Values
-#' data(TrophLabPrey)
+#' data(FishBasePreyVals)
 #' #Calculate Trophic Levels
 #' my.TL<-DietTroph(Volumes = converted.diet$Volumes,PreyValues = FishBasePreyVals, Taxonomy = converted.diet$Taxonomy)
 #' @export

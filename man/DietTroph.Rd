@@ -27,7 +27,7 @@ my.diet<-rfishbase::diet(c("Oreochromis niloticus", "Salmo salar"))
 #convert FishBase data into data for trophic calculation using TrophicLevelR
 converted.diet<-ConvertFishbaseDiet(my.diet)
 #Load Prey Values
-data(TrophLabPrey)
+data(FishBasePreyVals)
 #Calculate Trophic Levels
-my.TL<-DietTroph(Volumes = converted.diet$Volumes,PreyValues = TrophLabPrey, Taxonomy = converted.diet$Taxonomy)
+my.TL<-DietTroph(Volumes = converted.diet$Volumes,PreyValues = FishBasePreyVals, Taxonomy = converted.diet$Taxonomy)
 }

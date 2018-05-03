@@ -10,7 +10,7 @@
 #' #convert FishBase data into data for trophic calculation using TrophicLevelR
 #' converted.foods<-ConvertFishbaseFood(my.foods)
 #' #Load Prey Values
-#' data(TrophLabPrey)
+#' data(FishBasePreyVals)
 #' #Calculate Trophic Levels
 #' my.TL<-FoodTroph(FoodItems = converted.foods$FoodItems,PreyValues = FishBasePreyVals, Taxonomy = converted.foods$Taxonomy)
 #' @export
