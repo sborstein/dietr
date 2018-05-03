@@ -3,7 +3,6 @@
 \docType{data}
 \name{FishBasePreyVals}
 \alias{FishBasePreyVals}
-\alias{FishBasePreyVals}
 \title{FishBasePreyVals}
 \format{A data frame of of 384 rows and 6 columns
 \itemize{
@@ -16,20 +15,20 @@
 }}
 \usage{
 FishBasePreyVals
-
-FishBasePreyVals
 }
 \description{
 A data frame containing prey items and their respective trophic levels following  FishBase and
  TrophLab.
-
-A data frame containing search terms for plant mitochondrial loci. Can be subset for loci of 
- interest. Columns are as follows and users should follow the column format if they wish to
- add search terms using the MergeSearchTerms function:
+}
+\references{
+{
+\itemize{
+  \item Froese R, and Pauly D. 2018. FishBase. http://www.fishbase.org/2018).
+  \item Pauly D, Froese R, Sa-a P, Palomares M, Christensen V, and Rius J. 2000. TrophLab manual. ICLARM, Manila, Philippines. 
+  }
+}
 }
 \seealso{
-\code{\link{MergeSearchTerms}}
-
-\code{\link{FoodTroph}}
+\code{\link{DietTroph}}
 }
 \keyword{datasets}

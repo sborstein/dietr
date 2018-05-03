@@ -12,22 +12,11 @@
 #'   \item TL: Trophic level of the prey item.
 #'   \item SE: Standard error around trophic level estimate of the prey item.
 #' }
-#' 
-#' @seealso \code{\link{MergeSearchTerms}}
-"FishBasePreyVals"
-
-#' Mitochondrial DNA Search Terms for Plants
-#'
-#' A data frame containing search terms for plant mitochondrial loci. Can be subset for loci of 
-#'  interest. Columns are as follows and users should follow the column format if they wish to
-#'  add search terms using the MergeSearchTerms function:
-#'
-#' @format A data frame of of 248 rows and 3 columns
+#' @references{
 #' \itemize{
-#'   \item Locus: Locus name, FASTA files will be written with this name
-#'   \item Type: Type of subsequence, either CDS,tRNA,rRNA,misc_RNA, or D-loop
-#'   \item Name:Name of synonym for a locus to search for
+#'   \item Froese R, and Pauly D. 2018. FishBase. http://www.fishbase.org/2018).
+#'   \item Pauly D, Froese R, Sa-a P, Palomares M, Christensen V, and Rius J. 2000. TrophLab manual. ICLARM, Manila, Philippines. 
+#'   }
 #' }
-#' 
-#' @seealso \code{\link{FoodTroph}}
+#' @seealso \code{\link{DietTroph}}
 "FishBasePreyVals"
