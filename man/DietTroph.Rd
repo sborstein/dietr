@@ -4,10 +4,10 @@
 \alias{DietTroph}
 \title{Calculates trophic level from volumetric diet data for species, populations, and individuals.}
 \usage{
-DietTroph(Volumes, PreyValues, Taxonomy)
+DietTroph(DietItems, PreyValues, Taxonomy)
 }
 \arguments{
-\item{Volumes}{a data frame with rows as individuals and each row consisting of a prey item name and a corresponding volumetric percentage.}
+\item{DietItems}{a data frame with rows as individuals and each row consisting of a prey item name and a corresponding volumetric percentage.}
 
 \item{PreyValues}{a data frame with rows as prey item names and columns containing the trophic level of the prey item and the standard error of that trophic item.}
 
@@ -29,5 +29,5 @@ converted.diet<-ConvertFishbaseDiet(my.diets)
 #Load Prey Values
 data(FishBasePreyVals)
 #Calculate Trophic Levels
-my.TL<-DietTroph(Volumes = converted.diet$Volumes,PreyValues = FishBasePreyVals, Taxonomy = converted.diet$Taxonomy)
+my.TL<-DietTroph(DietItems = converted.diet$Volumes,PreyValues = FishBasePreyVals, Taxonomy = converted.diet$Taxonomy)
 }
