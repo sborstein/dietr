@@ -16,6 +16,7 @@
 #' @export
 
 FoodTroph<-function(FoodItems, PreyValues,Taxonomy){
+  PreyValues<-mgcv::uniquecombs(PreyValues)
   individual.TL<-data.frame(matrix(nrow = length(unique(Taxonomy[,1])), ncol = 4))#make final table
   colnames(individual.TL)<-c("Individual","TrophicLevel","SE","Items")#make column names for final table
   unique.records<-as.vector(unique(Taxonomy[,1]))#get the number of unique records
