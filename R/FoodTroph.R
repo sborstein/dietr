@@ -6,9 +6,9 @@
 #' @examples 
 #' #Get some food item data from rfishbase
 #' library(rfishbase)
-#' my.foods<-rfishbase::fooditems(c("Anomalops katoptron", "Grammatorcynus bilineatus"))
+#' my.food<-rfishbase::fooditems(c("Lutjanus apodus","Epinephelus itajara"))
 #' #convert FishBase data into data for trophic calculation using TrophicLevelR
-#' converted.foods<-ConvertFishbaseFood(my.foods)
+#' converted.foods<-ConvertFishbaseFood(my.food)
 #' #Load Prey Values
 #' data(FishBasePreyVals)
 #' #Calculate Trophic Levels

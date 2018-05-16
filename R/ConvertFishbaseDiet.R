@@ -11,7 +11,7 @@
 #' trophic levels in TrophicLevelR.
 #' @examples
 #' #Get rfishbase diet data for a few species
-#' my.diets<-rfishbase::diet(c("Oreochromis niloticus","Salmo salar"))
+#' my.diets<-rfishbase::diet(c("Lutjanus apodus","Epinephelus itajara"))
 #' #use the ConvertFishbaseDiet function to format it for TrophicLevelR and exclude recruits/juveniles
 #' cleaned.diets<-ConvertFishbaseDiet(FishBaseDiet=my.diets, ExcludeStage=c("larvae","recruits/juv."))
 #' @export
