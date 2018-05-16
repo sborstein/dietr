@@ -1,5 +1,5 @@
 #' Calculates trophic level from volumetric diet data for species, populations, and individuals.
-#' @param Volumes a data frame with rows as individuals and each row consisting of a prey item name and a corresponding volumetric percentage.
+#' @param DietItems a data frame with rows as individuals and each row consisting of a prey item name and a corresponding volumetric percentage.
 #' @param PreyValues a data frame with rows as prey item names and columns containing the trophic level of the prey item and the standard error of that trophic item.
 #' @param Taxonomy a data frame with the least inclusive level progressing to more inclusive moving towards the right.
 #' @return a list length of the columns in taxonomy, each containing trophic level estimation at each taxonomic level
@@ -15,17 +15,17 @@
 #' #Load Prey Values
 #' data(FishBasePreyVals)
 #' #Calculate Trophic Levels
-#' my.TL<-DietTroph(Volumes = converted.diet$Volumes,PreyValues = FishBasePreyVals, Taxonomy = converted.diet$Taxonomy)
+#' my.TL<-DietTroph(DietItems = converted.diet$Volumes,PreyValues = FishBasePreyVals, Taxonomy = converted.diet$Taxonomy)
 #' @export
 
-DietTroph<-function(Volumes, PreyValues,Taxonomy){
+DietTroph<-function(DietItems, PreyValues,Taxonomy){
   PreyValues<-mgcv::uniquecombs(PreyValues)
   individual.TL<-data.frame(matrix(nrow = length(unique(Taxonomy[,1])), ncol = 3))#make final table
   colnames(individual.TL)<-c("Individual","TrophicLevel","SE")#make column names for final table
   unique.records<-as.vector(unique(Taxonomy[,1]))#get the number of unique records
   for(record.index in 1:length(unique(unique.records))){#for each record
     individual.TL$Individual[record.index]<-unique.records[record.index]#put record name in final table
-    current.rec<-subset(Volumes,Volumes$Individual==unique.records[record.index])#subset the current records data
+    current.rec<-subset(DietItems,DietItems$Individual==unique.records[record.index])#subset the current records data
     Troph.Match <- merge(current.rec, PreyValues, by.y=c('FoodI','FoodII','FoodIII',"Stage"),all.x = TRUE)#match the volumes with corresponding prey TL
     TrophLevel<- 1.0 + sum(as.numeric(Troph.Match$TL)*as.numeric(Troph.Match$Volume))/100#calculate Trophic Level for record
     seTroph=sqrt(sum(as.numeric(Troph.Match$Volume)*as.numeric(Troph.Match$SE^2)/100))#Calculate S.E. of Trophic Level
