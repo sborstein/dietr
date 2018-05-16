@@ -7,7 +7,8 @@ Maintainer: Samuel R. Borstein <sam@borstein.com>
 Depends:
     R (>= 3.4)
 Imports:
-    rfishbase (>= 2.1)
+    rfishbase (>= 2.1),
+	mgcv
 Description: Trophic level estimation from diet and food item data in R.
 License: GPL (>= 2)
 LazyData: true

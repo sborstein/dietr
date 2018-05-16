@@ -23,9 +23,9 @@ Individual/species, FoodI, FoodII, FoodII, stage, and volume.Prey values for Tro
 \examples{
 #Get some food item data from rfishbase
 library(rfishbase)
-my.diet<-rfishbase::diet(c("Oreochromis niloticus", "Salmo salar"))
+my.diets<-rfishbase::diet(c("Lutjanus apodus","Epinephelus itajara"))
 #convert FishBase data into data for trophic calculation using TrophicLevelR
-converted.diet<-ConvertFishbaseDiet(my.diet)
+converted.diet<-ConvertFishbaseDiet(my.diets)
 #Load Prey Values
 data(FishBasePreyVals)
 #Calculate Trophic Levels

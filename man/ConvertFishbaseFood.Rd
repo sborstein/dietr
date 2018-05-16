@@ -22,7 +22,7 @@ This converts the data frame produced by rfishbase fooditem function into a usab
 }
 \examples{
 #Get rfishbase food item data for a few species
-my.food<-rfishbase::fooditems(c("Oreochromis niloticus","Salmo salar"))
+my.food<-rfishbase::fooditems(c("Lutjanus apodus","Epinephelus itajara"))
 #use the ConvertFishbaseFood function to format it for TrophicLevelR and exclude recruits/juveniles
 cleaned.food.items<-ConvertFishbaseFood(FishBaseFood=my.food, ExcludeStage=c("larvae","recruits/juv."))
 }
