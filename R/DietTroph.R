@@ -24,7 +24,7 @@ DietTroph<-function(DietItems, PreyValues,Taxonomy){
   colnames(individual.TL)<-c("Individual","TrophicLevel","SE")#make column names for final table
   unique.records<-as.vector(unique(Taxonomy[,1]))#get the number of unique records
   for(record.index in 1:length(unique(unique.records))){#for each record
-    individual.TL$Individual[record.index]<-unique.records[record.index]#put record name in final table
+    individual.TL[record.index,1]<-unique.records[record.index]#put record name in final table
     current.rec<-subset(DietItems,DietItems$Individual==unique.records[record.index])#subset the current records data
     Troph.Match <- merge(current.rec, PreyValues, by.y=c('FoodI','FoodII','FoodIII',"Stage"),all.x = TRUE)#match the volumes with corresponding prey TL
     TrophLevel<- 1.0 + sum(as.numeric(Troph.Match$TL)*as.numeric(Troph.Match$Volume))/100#calculate Trophic Level for record
@@ -44,7 +44,7 @@ DietTroph<-function(DietItems, PreyValues,Taxonomy){
     colnames(current.level)<-c(colnames(Taxonomy)[tax.rank.index],"TrophicLevel","SE", "nObs")
     for(taxa.index in 1:length(uni.taxa)){
       current.taxa<-subset(Taxonomy,Taxonomy[,tax.rank.index]==uni.taxa[taxa.index])
-      current.TL.calcs<-individual.TL[individual.TL$Individual%in%unique(current.taxa$Individual),]
+      current.TL.calcs<-individual.TL[individual.TL[,1]%in%unique(current.taxa[,1]),]
       #current.TL.calcs<-subset(individual.TL,individual.TL$Individual==unique(current.taxa$Individual))
       current.TL.Mean<-sum(current.TL.calcs$TrophicLevel)/dim(current.TL.calcs)[1]
       current.SE.Mean<-sum(current.TL.calcs$SE)/dim(current.TL.calcs)[1]
