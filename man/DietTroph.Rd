@@ -41,5 +41,5 @@ converted.diet<-ConvertFishbaseDiet(my.diets,ExcludeStage=c("larvae","recruits/j
 #Load Prey Values
 data(FishBasePreyVals)
 #Calculate Trophic Levels
-my.TL<-DietTroph(DietItems = converted.diet$Volumes,PreyValues = FishBasePreyVals, Taxonomy = converted.diet$Taxonomy,PreyClass=c("FoodI","FoodII","FoodIII","Stage"))
+my.TL<-DietTroph(DietItems = converted.diet$DietItems,PreyValues = FishBasePreyVals, Taxonomy = converted.diet$Taxonomy, PreyClass=c("FoodI","FoodII","FoodIII","Stage"))
 }
