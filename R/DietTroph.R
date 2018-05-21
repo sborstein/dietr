@@ -1,24 +1,34 @@
 #' Calculates trophic level from volumetric diet data for species, populations, and individuals.
-#' @param DietItems a data frame with rows as individuals and each row consisting of a prey item name and a corresponding volumetric percentage.
-#' @param PreyValues a data frame with rows as prey item names and columns containing the trophic level of the prey item and the standard error of that trophic item.
-#' @param Taxonomy a data frame with the least inclusive level progressing to more inclusive moving towards the right.
-#' @return a list length of the columns in taxonomy, each containing trophic level estimation at each taxonomic level
+#' @param DietItems a data frame with rows as individual entries and each row consisting of a prey 
+#' classification and a corresponding diet percentage. The column names for prey classification of 
+#' the diets should match those of PreyValues. The first column should contain the identifier of 
+#' the individual.
+#' @param PreyValues a data frame with rows as prey item names and columns containing the trophic 
+#' level of the prey item and the standard error of that trophic item. The column names of 
+#' PreyValues except for TL and SE should match those in DietItems.
+#' @param Taxonomy a data frame with the least inclusive level progressing to more inclusive moving
+#'  towards the right.
+#' @param PreyClass Column names of the PreyValues used for matching between DietItems and 
+#' PreyValues, exclusive of TL and SE. Default is those of FishBase.
+#' @return a list length of the columns in taxonomy, each containing trophic level estimation at 
+#' the respective taxonomic level.
 #' @description 
-#' Calculates trophic level from volumetric diet data. Volumes must follow the fishbase format, with the columns for 
-#' Individual/species, FoodI, FoodII, FoodII, stage, and volume.Prey values for TrophLab and 
+#' Calculates trophic level from volumetric diet data following the routine described in TrophLab. 
+#' While FishBase data obtained from rfishbase can be used, users can also upload their own data for
+#' use in the function. 
 #' @examples 
 #' #Get some food item data from rfishbase
 #' library(rfishbase)
 #' my.diets<-rfishbase::diet(c("Lutjanus apodus","Epinephelus itajara"))
 #' #convert FishBase data into data for trophic calculation using TrophicLevelR
-#' converted.diet<-ConvertFishbaseDiet(my.diets)
+#' converted.diet<-ConvertFishbaseDiet(my.diets,ExcludeStage=c("larvae","recruits/juv."))
 #' #Load Prey Values
 #' data(FishBasePreyVals)
 #' #Calculate Trophic Levels
-#' my.TL<-DietTroph(DietItems = converted.diet$Volumes,PreyValues = FishBasePreyVals, Taxonomy = converted.diet$Taxonomy)
+#' my.TL<-DietTroph(DietItems = converted.diet$Volumes,PreyValues = FishBasePreyVals, Taxonomy = converted.diet$Taxonomy,PreyClass=c("FoodI","FoodII","FoodIII","Stage"))
 #' @export
 
-DietTroph<-function(DietItems, PreyValues,Taxonomy){
+DietTroph<-function(DietItems, PreyValues,Taxonomy,PreyClass=c("FoodI","FoodII","FoodIII","Stage")){
   PreyValues<-mgcv::uniquecombs(PreyValues)
   individual.TL<-data.frame(matrix(nrow = length(unique(Taxonomy[,1])), ncol = 3))#make final table
   colnames(individual.TL)<-c("Individual","TrophicLevel","SE")#make column names for final table
@@ -26,7 +36,7 @@ DietTroph<-function(DietItems, PreyValues,Taxonomy){
   for(record.index in 1:length(unique(unique.records))){#for each record
     individual.TL[record.index,1]<-unique.records[record.index]#put record name in final table
     current.rec<-subset(DietItems,DietItems$Individual==unique.records[record.index])#subset the current records data
-    Troph.Match <- merge(current.rec, PreyValues, by.y=c('FoodI','FoodII','FoodIII',"Stage"),all.x = TRUE)#match the volumes with corresponding prey TL
+    Troph.Match <- merge(current.rec, PreyValues, by.y=PreyClass,all.x = TRUE)#match the volumes with corresponding prey TL
     TrophLevel<- 1.0 + sum(as.numeric(Troph.Match$TL)*as.numeric(Troph.Match$Volume))/100#calculate Trophic Level for record
     seTroph=sqrt(sum(as.numeric(Troph.Match$Volume)*as.numeric(Troph.Match$SE^2)/100))#Calculate S.E. of Trophic Level
     #individual.TL$TrophicLevel[record.index]<-TrophLevel#add Trophic Level to final table

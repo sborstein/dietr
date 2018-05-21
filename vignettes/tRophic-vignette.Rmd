@@ -54,20 +54,37 @@ To load tRophic and all of its functions/data:
 library(tRophic)
 ```
 ## 3.0: Basic data necessary to run tRophic
+To run tRophic you will need the following data as inputs. First is diet or food item data, which are functions
+call in DietTroph and FoodTroph as `DietItems` and `FoodItems` respectively. These should be organized from most inclusive to least inclusive from left to right and have column names.
 
+The second is a dataframe of trophic levels of the prey, or as we name them in the functions, `PreyValues`. We include a few different datasets with prey values users can use, though they can also supply their own. `FishBasePreyVals` are the values FishBase/TrophLab use to calculate trophic levels. `CortesPreyVals`
+are standardized diet prey values for sharks from Cortes, 1999. Both of these can be loaded into R
+from tRophic using the `data()` function:
+```
+data(FishBasePreyVals)#Load the Fishbase trophic levels of prey items 
+data(CortesPreyVals)#Load the Cortes standardized trophic levels of prey items
+```
+The last data object we need is a data frame we call `Taxonomy`. Columns of this dataframe should move from least inclusive to most inclusive from left to right. This data is used to measure hierarchical trophic levels (i.e. individuals, populations, species, etc.) all at once. This can be as simple as just a single column data frame if you only want to measure trophic levels for each individual and not at a higher level.
 
 ## 3.1: Using tRophic to calculate trophic levels from FishBase diet data
 Our first example will use FishBase diet data. For this, we will get data for two species: The Goliath
 Grouper, *Epinephelus itajara*, and the Schoolmaster snapper, *Lutjanus apodus*.
 
+First, let us load rfishbase and use the diet function to obtain diet data.
+
 ```
 #load fishbase
-library(fishbase)
+library(rfishbase)
 #Use FishBase diet function to read in  
-my.longest.seqs<-FindLongestSeq(accessions)#Run the FindLongestSeq function
-my.longest.seqs#returns the longest seqs found per species
+my.diets<-rfishbase::diet(c("Lutjanus apodus","Epinephelus itajara"))
 ```
-In this case we can see that the function worked as it only returned accession AP011317.1 (16577 bp) for *Barbonymus schwanefeldii* which was longer than accessions KU498040.2, KU233186.2, KJ573467.1  (16570,16478, and 16576 bp respectively) as well as the single accessions for *Barbonymus altus* and *Barbonymus gonionnotus*. The table returns a three-column data frame with the species name, the corresponding accession number, and the length.
+This object contains a lot of info, most of which is metadata for the diet records. It is always good to look at this metadata to assess possible issues, but we will want to strip out the metadata leaving us with just the columns containing data we need to calculate trophic level. We can do this by using `tRophic`'s `ConvertFishbaseDiet` function. This function has two arguments. `FishBaseDiet` is the data frame we obtained through `rfishbase`. ExcludeStage is an argument that excludes records of a certain life-history stage. For example, we may want to exclude larvae and immature fishes from our data. We could do this with the following code:
+
+```
+cleaned.diets<-ConvertFishbaseDiet(FishBaseDiet=my.diets, ExcludeStage=c("larvae","recruits/juv."))
+
+```
+We can see that `cleaned.diets` object we created is a list containing two data frames. The first one, called DietItems, contains the information about diet composition, with `FoodI`, `FoodII`,`FoodIII`, `Stage` and `Volume` being the fields with descriptors for the various diets. In this case, each diet item has its own row in the data frame. The first column, `Individual`, contains the fish base diet reference number unique to that study. By including this, one can have multiple studies of the same species and then pool the data using the Taxonomy, which is the second data frame in our list. The `Species` column in the `DietItems` data frame contains the species name. For example, from the `cleaned.diets$DietItems` object we created above, we can see that *Lutjanus apodus* with the diet record number of 1337 ate three different items, bony fish, crabs, and other benthic crustaceans. If we look at `cleaned.diets$Taxonomy` we will see it is a data frame of two columns. For FishBase data, our function returns each individual diet study for a species in the column `Individual`. The next column has the respective species name. 
 
 ## 3.2: Load a Data Frame of Search Terms of Gene Synonyms to Search With:
 AnnotationBustR works by searching through the annotation features table for a locus of interest using search terms for it (i.e. possible synonyms it may be listed under). These search terms are formatted to have three columns:

@@ -31,7 +31,7 @@ ConvertFishbaseDiet<-function(FishBaseDiet,ExcludeStage=NULL){
     colnames(Volumes)<-c("Individual","Species","FoodI","FoodII","FoodIII","Stage","Volume")
     Volumes<-as.data.frame(Volumes, stringsAsFactors = F)
     ConvertedStuff<-list(Volumes,Taxonomy)
-    names(ConvertedStuff)<-c("Volumes","Taxonomy")
+    names(ConvertedStuff)<-c("DietItems","Taxonomy")
     }else{
       Taxonomy<-as.data.frame(cbind(FishBaseDiet$DietCode,FishBaseDiet$sciname),stringsAsFactors = F)
       colnames(Taxonomy)<-c("Individual","Species")
@@ -39,7 +39,7 @@ ConvertFishbaseDiet<-function(FishBaseDiet,ExcludeStage=NULL){
       colnames(Volumes)<-c("Individual","Species","FoodI","FoodII","FoodIII","Stage","Volume")
       Volumes<-as.data.frame(Volumes, stringsAsFactors = F)
       ConvertedStuff<-list(Volumes,Taxonomy)
-      names(ConvertedStuff)<-c("Volumes","Taxonomy") 
+      names(ConvertedStuff)<-c("DietItems","Taxonomy") 
     }
   }
   ConvertedStuff
