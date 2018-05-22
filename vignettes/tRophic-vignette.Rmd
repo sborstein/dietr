@@ -13,27 +13,18 @@ vignette: >
 
 # 1: Introduction
 
-This is a tutorial for using the R package `tRophic`. `tRophic` uses diet or food item data to calculate
-trophic levels following the procedures described in `TrophLab` (Pauly et al., 2000), which is only
-avaialbleas a Microsoft Access database program. Our implementation is very easy to use and extremely
-fast asusers can specify all their data as dataframes. It also differs from TrophLab in that users 
-can specifya taxonomic hierarchy and measure trophic levels from their data at various levels (e.x.
-individual,population, species,genus, etc.). tRophic also works well with FishBase (Froese & Pauly,
-2018) dataand can use diet and food item data obtained in R using the rfishbase package (Boettiger 
-et al., 2012). 
+This is a tutorial for using the R package `tRophic`. `tRophic` uses diet or food item data to calculate trophic levels following the procedures described in `TrophLab` (Pauly et al., 2000), which is only avaialble as a Microsoft Access database program. Our implementation is very easy to use and extremely fast as users can specify all their data as dataframes. It also differs from TrophLab in that users can specify a taxonomic hierarchy and measure trophic levels from their data at various levels (e.x. individual,population, species,genus, etc.). tRophic also works well with FishBase (Froese & Pauly, 2018) data and can use diet and food item data obtained in R using the rfishbase package (Boettiger et al., 2012). 
 
-In this tutorial we will cover the basics of how to use tRophic to measure trophic levels. We will 
-discuss both how to read in data from FishBase using rfishbase and how to pass that data into tRophic.
-We will also show how one can use their own data and input that 
+In this tutorial we will cover the basics of how to use tRophic to measure trophic levels. We will first discuss how to read in data from FishBase using rfishbase and how to pass that data into tRophic. We will then show how one can input their own raw data and use the package to estimate trophic levels.
 
 # 2: Installation
 ## 2.1: Installation From CRAN
-In order to install the stable CRAN version of the AnnotationBustR package:
+In order to install the stable CRAN version of the `tRophic` package:
 ```
 install.packages("tRophic")
 ```
 ## 2.2: Installation of Development Version From GitHub
-While we recommend use of the stable CRAN version of this package, we recommend using the package `devtools` to temporarily install the development version of the package from GitHub if for any reason you wish to use it :
+While we recommend use of the stable CRAN version of this package, we recommend using the package `devtools` to temporarily install the development version of the package from GitHub if for any reason you wish to use it:
 ```
 #1. Install 'devtools' if you do not already have it installed:
 install.packages("devtools")
@@ -54,17 +45,16 @@ To load tRophic and all of its functions/data:
 library(tRophic)
 ```
 ## 3.0: Basic data necessary to run tRophic
-To run tRophic you will need the following data as inputs. First is diet or food item data, which are functions
-call in DietTroph and FoodTroph as `DietItems` and `FoodItems` respectively. These should be organized from most inclusive to least inclusive from left to right and have column names.
+To run tRophic you will need the following data as inputs. First is diet or food item data, which our functions call in DietTroph and FoodTroph as `DietItems` and `FoodItems` respectively. These should be organized from most inclusive to least inclusive from left to right and have column names.
 
-The second is a dataframe of trophic levels of the prey, or as we name them in the functions, `PreyValues`. We include a few different datasets with prey values users can use, though they can also supply their own. `FishBasePreyVals` are the values FishBase/TrophLab use to calculate trophic levels. `CortesPreyVals`
+The second is a dataframe of trophic levels of the prey, or as we name them in the functions, `PreyValues`. We include a few different datasets with prey values users can use, though you can also supply your own. `FishBasePreyVals` are the values FishBase/TrophLab use to calculate trophic levels. `CortesPreyVals`
 are standardized diet prey values for sharks from Cortes, 1999. Both of these can be loaded into R
 from tRophic using the `data()` function:
 ```
 data(FishBasePreyVals)#Load the Fishbase trophic levels of prey items 
 data(CortesPreyVals)#Load the Cortes standardized trophic levels of prey items
 ```
-The last data object we need is a data frame we call `Taxonomy`. Columns of this dataframe should move from least inclusive to most inclusive from left to right. This data is used to measure hierarchical trophic levels (i.e. individuals, populations, species, etc.) all at once. This can be as simple as just a single column data frame if you only want to measure trophic levels for each individual and not at a higher level.
+The last data object we need is a data frame we call `Taxonomy`. Columns of this dataframe should move from least inclusive to most inclusive from left to right. This data is used to assign individuals to groups for measuring hierarchical trophic levels (ex. trophic levels for an individuals, populations, species, etc.). This can be as simple as just a single column data frame if you only want to measure trophic levels for each individual and not at a higher level.
 
 ## 3.1: Using tRophic to calculate trophic levels from FishBase diet data
 Our first example will use FishBase diet data. For this, we will get data for two species: The Goliath
@@ -84,7 +74,17 @@ This object contains a lot of info, most of which is metadata for the diet recor
 cleaned.diets<-ConvertFishbaseDiet(FishBaseDiet=my.diets, ExcludeStage=c("larvae","recruits/juv."))
 
 ```
-We can see that `cleaned.diets` object we created is a list containing two data frames. The first one, called DietItems, contains the information about diet composition, with `FoodI`, `FoodII`,`FoodIII`, `Stage` and `Volume` being the fields with descriptors for the various diets. In this case, each diet item has its own row in the data frame. The first column, `Individual`, contains the fish base diet reference number unique to that study. By including this, one can have multiple studies of the same species and then pool the data using the Taxonomy, which is the second data frame in our list. The `Species` column in the `DietItems` data frame contains the species name. For example, from the `cleaned.diets$DietItems` object we created above, we can see that *Lutjanus apodus* with the diet record number of 1337 ate three different items, bony fish, crabs, and other benthic crustaceans. If we look at `cleaned.diets$Taxonomy` we will see it is a data frame of two columns. For FishBase data, our function returns each individual diet study for a species in the column `Individual`. The next column has the respective species name. 
+We can see that `cleaned.diets` object we created is a list containing two data frames. The first one, called DietItems, contains the information about diet composition, with `FoodI`, `FoodII`,`FoodIII`, `Stage` and `Volume` being the fields with descriptors for the various diets. In this case, each diet item has its own row in the data frame. The first column, `Individual`, contains the fish base diet reference number unique to that study. By including this, one can have multiple studies of the same species and then pool the data using the Taxonomy, which is the second data frame in our list. The `Species` column in the `DietItems` data frame contains the species name. For example, from the `cleaned.diets$DietItems` object we created above, we can see that *Lutjanus apodus* with the diet record number of 1337 ate three different items, bony fish, crabs, and other benthic crustaceans. If we look at `cleaned.diets$Taxonomy` we will see it is a data frame of two columns. For FishBase data, our function returns each individual diet study for a species in the column `Individual`. The next column has the respective species name. So, for this example, using this Taxonomy, we can expect the trophic level for *Lutjanus apodus* to be calculated for two studies, and then also return a single values for the species.
+
+We can now measure the trophic level from diet items using the function `DietTroph`. Here, we will specify our `DietItems` and `Taxonomy` using the `cleaned.diets` object we generated above. We will also specify the `PreyValues` as being the included `FishBasePreyVals` that are part of the package. As the columns for the `PreyVals` and `DietItems` use a calssification of "FoodI","FoodII","FoodIII","Stage", we will specify these as a vector for the `PreyClass` argument.
+
+```
+data(FishBasePreyVals)#load the FishBase prey values that are part of the tRophic package
+#Calculate trophic level with DietTroph function
+my.TL<-DietTroph(DietItems = converted.diet$DietItems,PreyValues = FishBasePreyVals, Taxonomy = converted.diet$Taxonomy, PreyClass=c("FoodI","FoodII","FoodIII","Stage"))
+```
+
+We can see that the `my.TL` object we just created contains a list of length two, each with a data frame, with the names of these data frames matching the `Taxonomy` we provided. We can see that the first data frame in this list, named `Individual` contains the trophic levels for each individual study that we input, while the data frame named `Species` provides the mean trophic level and SE and the number of studies across all individuals for each species.
 
 ## 3.2: Load a Data Frame of Search Terms of Gene Synonyms to Search With:
 AnnotationBustR works by searching through the annotation features table for a locus of interest using search terms for it (i.e. possible synonyms it may be listed under). These search terms are formatted to have three columns:
