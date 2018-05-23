@@ -11,6 +11,7 @@
 
 <meta name="author" content="Samuel R. Borstein" />
 
+<meta name="date" content="2018-05-22" />
 
 <title>tRophic Tutorial</title>
 
@@ -120,7 +121,7 @@ $(document).ready(function () {
 
 <h1 class="title toc-ignore">tRophic Tutorial</h1>
 <h4 class="author"><em>Samuel R. Borstein</em></h4>
-<h4 class="date"><em>22 May, 2018</em></h4>
+<h4 class="date"><em>May 22, 2018</em></h4>
 
 </div>
 
@@ -191,7 +192,14 @@ my.TL&lt;-DietTroph(DietItems = converted.diet$DietItems,PreyValues = FishBasePr
 </div>
 <div id="using-trophic-to-calculate-trophic-levels-from-fishbase-food-item-data" class="section level2">
 <h2>3.2: Using tRophic to calculate trophic levels from FishBase food item data</h2>
-<p>Our second example will estimate trophic level from food item data.</p>
+<p>Our second example will estimate trophic level from food item data. The process is extremely similar to the above. For this example, let’s get some data from rfishbase using the <code>fooditems</code> function for the same two species we did above.</p>
+<pre><code>#Get some food item data from rfishbase
+my.food&lt;-rfishbase::fooditems(c(&quot;Lutjanus apodus&quot;,&quot;Epinephelus itajara&quot;))</code></pre>
+<p>In order to use this in <code>tRophic</code>, we will need to convert it using the function <code>ConvertFishbaseFood</code>. This function is basically identical to the <code>ConvertFishbaseDiet</code> function we used above, except our data frame is from the <code>fooditems</code> function. We will then use <code>FoodTroph</code> function to calculate the trophic level. It is important to note that as this method randomly samples food items and ranks them for calculating the trophic level, that each time you run the function you will get a slightly different result, though they should largey be close in value.</p>
+<pre><code>#Convert FishBase food item data to a format usable for FoodTroph
+converted.foods&lt;-ConvertFishbaseFood(my.food)
+#Calculate trophic level from food items
+my.TL&lt;-FoodTroph(FoodItems = converted.foods$FoodItems,PreyValues = FishBasePreyVals, Taxonomy = converted.foods$Taxonomy,PreyClass=c(&quot;FoodI&quot;,&quot;FoodII&quot;,&quot;FoodIII&quot;,&quot;Stage&quot;))</code></pre>
 </div>
 <div id="troubleshooting" class="section level2">
 <h2>3.5 Troubleshooting</h2>

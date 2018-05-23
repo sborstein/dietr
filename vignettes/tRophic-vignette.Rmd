@@ -101,9 +101,21 @@ We can see that the `my.TL` object we just created contains a list of length two
 
 ## 3.2: Using tRophic to calculate trophic levels from FishBase food item data
 
-Our second example will estimate trophic level from food item data. 
+Our second example will estimate trophic level from food item data. The process is extremely similar to the above. For this example, let's get some data from rfishbase using the `fooditems` function for the same two species we did above. 
 
+```
+#Get some food item data from rfishbase
+my.food<-rfishbase::fooditems(c("Lutjanus apodus","Epinephelus itajara"))
+```
 
+In order to use this in `tRophic`, we will need to convert it using the function `ConvertFishbaseFood`. This function is basically identical to the  `ConvertFishbaseDiet` function we used above, except our data frame is from the `fooditems` function. We will then use `FoodTroph` function to calculate the trophic level. It is important to note that as this method randomly samples food items and ranks them for calculating the trophic level, that each time you run the function you will get a slightly different result, though they should largey be close in value. 
+
+```
+#Convert FishBase food item data to a format usable for FoodTroph
+converted.foods<-ConvertFishbaseFood(my.food)
+#Calculate trophic level from food items
+my.TL<-FoodTroph(FoodItems = converted.foods$FoodItems,PreyValues = FishBasePreyVals, Taxonomy = converted.foods$Taxonomy,PreyClass=c("FoodI","FoodII","FoodIII","Stage"))
+```
 ## 3.5 Troubleshooting
 
 
