@@ -1,7 +1,7 @@
 ---
 title: "tRophic Tutorial"
 author: "Samuel R. Borstein"
-date: "`r format(Sys.time(), '%d %B, %Y')`"
+date: "May 22, 2018"
 output:
   html_document:
     keep_md: true
