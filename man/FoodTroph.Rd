@@ -4,7 +4,8 @@
 \alias{FoodTroph}
 \title{Calculates trophic level from food item data for species, populations, and individuals using a random subsampling routine.}
 \usage{
-FoodTroph(FoodItems, PreyValues, Taxonomy)
+FoodTroph(FoodItems, PreyValues, Taxonomy, PreyClass = c("FoodI", "FoodII",
+  "FoodIII", "Stage"))
 }
 \arguments{
 \item{FoodItems}{a data frame with rows as individuals and each row consisting of a prey item name.}
@@ -12,6 +13,9 @@ FoodTroph(FoodItems, PreyValues, Taxonomy)
 \item{PreyValues}{a data frame with rows as prey item names and columns containing the trophic level of the prey item and the standard error of that trophic item.}
 
 \item{Taxonomy}{a data frame with the least inclusive level in the leftmost column progressing to more inclusive with columns to the right.Can be a single column.}
+
+\item{PreyClass}{Column names of the PreyValues used for matching between FoodItems and 
+PreyValues, exclusive of TL and SE. Default is those of FishBase.}
 }
 \value{
 a list containing estimated trophic levels from food items at each taxonomic level provided by the user.
@@ -28,5 +32,5 @@ converted.foods<-ConvertFishbaseFood(my.food)
 #Load Prey Values
 data(FishBasePreyVals)
 #Calculate Trophic Levels
-my.TL<-FoodTroph(FoodItems = converted.foods$FoodItems,PreyValues = FishBasePreyVals, Taxonomy = converted.foods$Taxonomy)
+my.TL<-FoodTroph(FoodItems = converted.foods$FoodItems,PreyValues = FishBasePreyVals, Taxonomy = converted.foods$Taxonomy,PreyClass=c("FoodI","FoodII","FoodIII","Stage"))
 }

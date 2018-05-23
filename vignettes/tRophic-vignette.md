@@ -1,7 +1,7 @@
 ---
 title: "tRophic Tutorial"
 author: "Samuel R. Borstein"
-date: "May 22, 2018"
+date: "23 May, 2018"
 output:
   html_document:
     keep_md: true
