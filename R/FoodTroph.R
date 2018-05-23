@@ -2,6 +2,8 @@
 #' @param FoodItems a data frame with rows as individuals and each row consisting of a prey item name.
 #' @param PreyValues a data frame with rows as prey item names and columns containing the trophic level of the prey item and the standard error of that trophic item.
 #' @param Taxonomy a data frame with the least inclusive level in the leftmost column progressing to more inclusive with columns to the right.Can be a single column.
+#' @param PreyClass Column names of the PreyValues used for matching between FoodItems and 
+#' PreyValues, exclusive of TL and SE. Default is those of FishBase.
 #' @return a list containing estimated trophic levels from food items at each taxonomic level provided by the user.
 #' @examples 
 #' #Get some food item data from rfishbase
@@ -12,10 +14,10 @@
 #' #Load Prey Values
 #' data(FishBasePreyVals)
 #' #Calculate Trophic Levels
-#' my.TL<-FoodTroph(FoodItems = converted.foods$FoodItems,PreyValues = FishBasePreyVals, Taxonomy = converted.foods$Taxonomy)
+#' my.TL<-FoodTroph(FoodItems = converted.foods$FoodItems,PreyValues = FishBasePreyVals, Taxonomy = converted.foods$Taxonomy,PreyClass=c("FoodI","FoodII","FoodIII","Stage"))
 #' @export
 
-FoodTroph<-function(FoodItems, PreyValues,Taxonomy){
+FoodTroph<-function(FoodItems, PreyValues,Taxonomy,PreyClass=c("FoodI","FoodII","FoodIII","Stage")){
   PreyValues<-mgcv::uniquecombs(PreyValues)
   individual.TL<-data.frame(matrix(nrow = length(unique(Taxonomy[,1])), ncol = 4))#make final table
   colnames(individual.TL)<-c("Individual","TrophicLevel","SE","Items")#make column names for final table
@@ -24,7 +26,7 @@ FoodTroph<-function(FoodItems, PreyValues,Taxonomy){
   for(record.index in 1:length(unique(unique.records))){#for each record
     individual.TL$Individual[record.index]<-unique.records[record.index]#put record name in final table
     current.rec<-subset(FoodItems,FoodItems[,1]==unique.records[record.index])#subset the current records data
-    Food.Match <- merge(current.rec, PreyValues, by.y=c('FoodI','FoodII','FoodIII',"Stage"))#match the food with corresponding prey TL
+    Food.Match <- merge(current.rec, PreyValues, by.y=PreyClass)#match the food with corresponding prey TL
     ifelse(dim(Food.Match)[1]<dim(current.rec)[1],check.food.items[record.index]<-"bad",check.food.items[record.index]<-"good")
     if(length(unique(Food.Match$TL))==1 && length(unique(Food.Match$SE))==1){#If only a single food item, use that without subsampling
       individual.TL$TrophicLevel[record.index]<-1+unique(Food.Match$TL)#add 1 to the single food items trophic level
