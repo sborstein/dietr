@@ -125,9 +125,9 @@ Further information on the functions and their usage can be found in the helpfil
 For any further issues and questions send an email with subject 'tRophic support' to sborstei@vols.utk.edu or post to the issues section on GitHub(https://github.com/sborstein/tRophic/issues).
 
 ##References:
-Boettiger C, Lang DT, and Wainwright PC. 2012. rfishbase: exploring, manipulating and visualizing FishBase data from R. Journal of Fish Biology 81:2030-2039. 10.1111/j.1095-8649.2012.03464.x
+Boettiger C, Lang DT, and Wainwright PC. 2012. rfishbase: exploring, manipulating and visualizing FishBase data from R. Journal of Fish Biology 81:2030-2039.
 
-Cortés E. 1999. Standardized diet compositions and trophic levels of sharks. ICES Journal of marine science 56:707-717. 
+Cortes E. 1999. Standardized diet compositions and trophic levels of sharks. ICES Journal of marine science 56:707-717. 
 
 Froese R, and Pauly D. 2018. FishBase. http://www.fishbase.org/2018).
 

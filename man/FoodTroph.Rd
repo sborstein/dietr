@@ -14,8 +14,7 @@ FoodTroph(FoodItems, PreyValues, Taxonomy, PreyClass = c("FoodI", "FoodII",
 
 \item{Taxonomy}{a data frame with the least inclusive level in the leftmost column progressing to more inclusive with columns to the right.Can be a single column.}
 
-\item{PreyClass}{Column names of the PreyValues used for matching between FoodItems and 
-PreyValues, exclusive of TL and SE. Default is those of FishBase.}
+\item{PreyClass}{Column names of the PreyValues used for matching between FoodItems and PreyValues, exclusive of TL and SE. Default is those of FishBase.}
 }
 \value{
 a list containing estimated trophic levels from food items at each taxonomic level provided by the user.
