@@ -120,26 +120,31 @@ $(document).ready(function () {
 
 <h1 class="title toc-ignore">tRophic Tutorial</h1>
 <h4 class="author"><em>Samuel R. Borstein</em></h4>
-<h4 class="date"><em>16 May, 2018</em></h4>
+<h4 class="date"><em>22 May, 2018</em></h4>
 
 </div>
 
 
 <div id="introduction" class="section level1">
 <h1>1: Introduction</h1>
-<p>This is a tutorial for using the R package <code>tRophic</code>. <code>tRophic</code> uses diet or food item data to calculate trophic levels following the procedures described in <code>TrophLab</code> (Pauly et al., 2000), which is only avaialbleas a Microsoft Access database program. Our implementation is very easy to use and extremely fast asusers can specify all their data as dataframes. It also differs from TrophLab in that users can specifya taxonomic hierarchy and measure trophic levels from their data at various levels (e.x. individual,population, species,genus, etc.). tRophic also works well with FishBase (Froese &amp; Pauly, 2018) dataand can use diet and food item data obtained in R using the rfishbase package (Boettiger et al., 2012).</p>
-<p>In this tutorial we will cover the basics of how to use tRophic to measure trophic levels. We will discuss both how to read in data from FishBase using rfishbase and how to pass that data into tRophic. We will also show how one can use their own data and input that</p>
+<p>This is a tutorial for using the R package <code>tRophic</code>. <code>tRophic</code> uses diet or food item data to calculate trophic levels following the procedures described in <code>TrophLab</code> (Pauly et al., 2000), which currently is only avaialble as a Microsoft Access database program. Our implementation is very easy to use and extremely fast as users can specify all their data as dataframes. It also differs from TrophLab in that users can specify a taxonomic hierarchy and measure trophic levels from their data at various levels (e.x. individual,population, species,genus, etc.). <code>tRophic</code> also works well with FishBase (Froese &amp; Pauly, 2018) data and can use diet and food item data obtained in R using the rfishbase package (Boettiger et al., 2012).</p>
+<p>For this tutorial we will refer to diet data as stomach content data where the proportion of prey items are known (e.x. percent volume or weight of prey items, be cautious using percent frequency as various literature suggest it may be misleading). In this case, trophic level is simply estimated by adding one to the sum of trophic levels of the prey items consumed weighted by their contribution to the diet. The trophic level of consumer i(<span class="math inline">\(Troph_i\)</span>) is defined by the equation below:</p>
+<p><span class="math display">\[Troph_i=1+\sum_{j=1}^{G}DC_{ij}\times Troph_j\]</span> Here <span class="math inline">\(Troph_j\)</span> is the trophic level of the jth prey item consumed in the diet of i, <span class="math inline">\(DC_{ij}\)</span> is the fraction of prey item j in the diet of i, and G is the number of prey species in the diet.</p>
+<p>For estimating trophic levels from food items found in the diet that don’t have proportions, a random sampling and ranking of the food items is used to get an estimate of the trophic level. The simulated proportion of prey items for calculating trophic level, <code>P</code> is calculated using the following equation:</p>
+<p><span class="math display">\[log_{10}P=2-1.9log_{10}R-0.16log_{10}G\]</span> Here, <code>R</code> is the rank of the food item and G is the number of food items, up to 10. If more than 10 food items are listed, then a subsample of ten are randomly selected. The trophic level is then calculated using the following equation:</p>
+<p><span class="math display">\[Troph=\sum(P_i*Troph_i)/\sum{P_i}\]</span> Here, <span class="math inline">\(P_i\)</span> is the simulated proportion of the prey item i in the diet and <span class="math inline">\(Troph_i\)</span> is the trophic level of prey item i. This procedure is repeated 100 times and the mean of these 100 simulations. In cases where only a single prey item is in the diet, the procedure is much simpler and the estimated trophic level is simply calculated by adding 1 to the trophic level of the single prey item.</p>
+<p>In this tutorial we will cover the basics of how to use <code>tRophic</code> to measure trophic levels. We will first discuss how to read in data from FishBase using rfishbase and how to pass that data into tRophic. We will then show how one can input their own raw data and use the package to estimate trophic levels.</p>
 </div>
 <div id="installation" class="section level1">
 <h1>2: Installation</h1>
 <div id="installation-from-cran" class="section level2">
 <h2>2.1: Installation From CRAN</h2>
-<p>In order to install the stable CRAN version of the AnnotationBustR package:</p>
+<p>In order to install the stable CRAN version of the <code>tRophic</code> package:</p>
 <pre><code>install.packages(&quot;tRophic&quot;)</code></pre>
 </div>
 <div id="installation-of-development-version-from-github" class="section level2">
 <h2>2.2: Installation of Development Version From GitHub</h2>
-<p>While we recommend use of the stable CRAN version of this package, we recommend using the package <code>devtools</code> to temporarily install the development version of the package from GitHub if for any reason you wish to use it :</p>
+<p>While we recommend use of the stable CRAN version of this package, we recommend using the package <code>devtools</code> to temporarily install the development version of the package from GitHub if for any reason you wish to use it:</p>
 <pre><code>#1. Install 'devtools' if you do not already have it installed:
 install.packages(&quot;devtools&quot;)
 
@@ -160,56 +165,33 @@ dev_mode(on=F)</code></pre>
 <pre><code>library(tRophic)</code></pre>
 <div id="basic-data-necessary-to-run-trophic" class="section level2">
 <h2>3.0: Basic data necessary to run tRophic</h2>
+<p>To run tRophic you will need the following data as inputs. First is diet or food item data, which our functions call in DietTroph and FoodTroph as <code>DietItems</code> and <code>FoodItems</code> respectively. These should be organized from most inclusive to least inclusive from left to right and have column names.</p>
+<p>The second is a dataframe of trophic levels of the prey, or as we name them in the functions, <code>PreyValues</code>. We include a few different datasets with prey values users can use, though you can also supply your own. <code>FishBasePreyVals</code> are the values FishBase/TrophLab use to calculate trophic levels. <code>CortesPreyVals</code> are standardized diet prey values for sharks from Cortes, 1999. Both of these can be loaded into R from tRophic using the <code>data()</code> function:</p>
+<pre><code>data(FishBasePreyVals)#Load the Fishbase trophic levels of prey items 
+data(CortesPreyVals)#Load the Cortes standardized trophic levels of prey items</code></pre>
+<p>The last data object we need is a data frame we call <code>Taxonomy</code>. Columns of this dataframe should move from least inclusive to most inclusive from left to right. This data is used to assign individuals to groups for measuring hierarchical trophic levels (ex. trophic levels for an individuals, populations, species, etc.). This can be as simple as just a single column data frame if you only want to measure trophic levels for each individual and not at a higher level.</p>
 </div>
 <div id="using-trophic-to-calculate-trophic-levels-from-fishbase-diet-data" class="section level2">
 <h2>3.1: Using tRophic to calculate trophic levels from FishBase diet data</h2>
 <p>Our first example will use FishBase diet data. For this, we will get data for two species: The Goliath Grouper, <em>Epinephelus itajara</em>, and the Schoolmaster snapper, <em>Lutjanus apodus</em>.</p>
+<p>First, let us load rfishbase and use the diet function to obtain diet data.</p>
 <pre><code>#load fishbase
-library(fishbase)
+library(rfishbase)
 #Use FishBase diet function to read in  
-my.longest.seqs&lt;-FindLongestSeq(accessions)#Run the FindLongestSeq function
-my.longest.seqs#returns the longest seqs found per species</code></pre>
-<p>In this case we can see that the function worked as it only returned accession AP011317.1 (16577 bp) for <em>Barbonymus schwanefeldii</em> which was longer than accessions KU498040.2, KU233186.2, KJ573467.1 (16570,16478, and 16576 bp respectively) as well as the single accessions for <em>Barbonymus altus</em> and <em>Barbonymus gonionnotus</em>. The table returns a three-column data frame with the species name, the corresponding accession number, and the length.</p>
+my.diets&lt;-rfishbase::diet(c(&quot;Lutjanus apodus&quot;,&quot;Epinephelus itajara&quot;))</code></pre>
+<p>This object contains a lot of info, most of which is metadata for the diet records. It is always good to look at this metadata to assess possible issues, but we will want to strip out the metadata leaving us with just the columns containing data we need to calculate trophic level. We can do this by using <code>tRophic</code>’s <code>ConvertFishbaseDiet</code> function. This function has two arguments. <code>FishBaseDiet</code> is the data frame we obtained through <code>rfishbase</code>. ExcludeStage is an argument that excludes records of a certain life-history stage. For example, we may want to exclude larvae and immature fishes from our data. We could do this with the following code:</p>
+<pre><code>cleaned.diets&lt;-ConvertFishbaseDiet(FishBaseDiet=my.diets, ExcludeStage=c(&quot;larvae&quot;,&quot;recruits/juv.&quot;))
+</code></pre>
+<p>We can see that <code>cleaned.diets</code> object we created is a list containing two data frames. The first one, called DietItems, contains the information about diet composition, with <code>FoodI</code>, <code>FoodII</code>,<code>FoodIII</code>, <code>Stage</code> and <code>Volume</code> being the fields with descriptors for the various diets. In this case, each diet item has its own row in the data frame. The first column, <code>Individual</code>, contains the fish base diet reference number unique to that study. By including this, one can have multiple studies of the same species and then pool the data using the Taxonomy, which is the second data frame in our list. The <code>Species</code> column in the <code>DietItems</code> data frame contains the species name. For example, from the <code>cleaned.diets$DietItems</code> object we created above, we can see that <em>Lutjanus apodus</em> with the diet record number of 1337 ate three different items, bony fish, crabs, and other benthic crustaceans. If we look at <code>cleaned.diets$Taxonomy</code> we will see it is a data frame of two columns. For FishBase data, our function returns each individual diet study for a species in the column <code>Individual</code>. The next column has the respective species name. So, for this example, using this Taxonomy, we can expect the trophic level for <em>Lutjanus apodus</em> to be calculated for two studies, and then also return a single values for the species.</p>
+<p>We can now measure the trophic level from diet items using the function <code>DietTroph</code>. Here, we will specify our <code>DietItems</code> and <code>Taxonomy</code> using the <code>cleaned.diets</code> object we generated above. We will also specify the <code>PreyValues</code> as being the included <code>FishBasePreyVals</code> that are part of the package. As the columns for the <code>PreyVals</code> and <code>DietItems</code> use a calssification of “FoodI”,“FoodII”,“FoodIII”,“Stage”, we will specify these as a vector for the <code>PreyClass</code> argument.</p>
+<pre><code>data(FishBasePreyVals)#load the FishBase prey values that are part of the tRophic package
+#Calculate trophic level with DietTroph function
+my.TL&lt;-DietTroph(DietItems = converted.diet$DietItems,PreyValues = FishBasePreyVals, Taxonomy = converted.diet$Taxonomy, PreyClass=c(&quot;FoodI&quot;,&quot;FoodII&quot;,&quot;FoodIII&quot;,&quot;Stage&quot;))</code></pre>
+<p>We can see that the <code>my.TL</code> object we just created contains a list of length two, each with a data frame, with the names of these data frames matching the <code>Taxonomy</code> we provided. We can see that the first data frame in this list, named <code>Individual</code> contains the trophic levels for each individual study that we input, while the data frame named <code>Species</code> provides the mean trophic level and SE and the number of studies across all individuals for each species.</p>
 </div>
-<div id="load-a-data-frame-of-search-terms-of-gene-synonyms-to-search-with" class="section level2">
-<h2>3.2: Load a Data Frame of Search Terms of Gene Synonyms to Search With:</h2>
-<p>AnnotationBustR works by searching through the annotation features table for a locus of interest using search terms for it (i.e. possible synonyms it may be listed under). These search terms are formatted to have three columns:</p>
-<ul>
-<li>Locus: The name of the locus and the name of the FASTA of the file for that locus to be written. It is important that you use names that will not confuse R, so don’t start these with numbers or include other characters like “.” or “-” that R uses for math.</li>
-<li>Type: The type of sequence to search for. Can be one of CDS, tRNA, rRNA, misc_RNA, D-Loop, or misc_feature.</li>
-<li>Name: A possible synonym that the locus could be listed under.</li>
-</ul>
-<p>For extracting introns and exons, an additional fourth column is needed (which will be discussed in more detail later in the tutorial): -IntronExonNumber: The number of the intron or exon to extract</p>
-<p>So, if we wanted to use AnnotationBustR to capture these and write them to a FASTA, we could set up a data frame that looks like the following.</p>
-<pre><code>##   Locus Type    Name
-## 1  ATP8  CDS ATPase8
-## 2  ATP6  CDS ATPase6</code></pre>
-<p>While AnnotationBustR will work with any data frame formatted as discussed above, we have included in it pre-made search terms for animal and plant mitochondrial DNA (mtDNA), chloroplast DNA (cpDNA), and ribosomal DNA (rDNA). These can be loaded from AnnotationBustR using:</p>
-<pre><code>#Load in pre-made data frames of search terms
-data(mtDNAterms)#loads the mitochondrial DNA search terms for metazoans
-data(mtDNAtermsPlants)#loads the mitochondrial DNA search terms for plants
-data(cpDNAterms)#loads the chloroplast DNA search terms
-data(rDNAterms)#loads the ribosomal DNA search terms</code></pre>
-<p>These data frames can also easily be manipulated to select only the loci of interest. For instance, if we were only interested in tRNAs from mitochondrial genomes, we could easily subset out the tRNAs from the premade <code>mtDNAterms</code> object by:</p>
-<pre><code>data(mtDNAterms)#load the data frame of mitochondrial DNA terms
-tRNA.terms&lt;-mtDNAterms[mtDNAterms$Type==&quot;tRNA&quot;,]#subset out the tRNAs into a new data frame</code></pre>
-</div>
-<div id="optional-step-merge-search-terms-if-neccessary" class="section level2">
-<h2>3.3:(Optional Step) Merge Search Terms If Neccessary</h2>
-<p>While we have tried to cover as many synonyms for genes in our pre-made data frames, it is likely that some synonyms may not be represented due to the vast array of synonyms a single gene may be listed under in the features table. To solve this we have included the function <code>MergeSearchTerms</code>.</p>
-<p>For example, let’s imagine that we found a completely new annotation for the gene cytochrome oxidase subunit 1 (COI) listed as CX1. The <code>MergeSearchTerms</code> function only has two arguments, <code>...</code>, which takes two or more objects of class <code>data.frame</code> and the logical <code>Sort.Genes</code>, which We could easily add this to other mitochondrial gene terms by:</p>
-<pre><code>add.name&lt;-data.frame(&quot;COI&quot;,&quot;CDS&quot;, &quot;CX1&quot;, stringsAsFactors = FALSE)#Add imaginary gene synonym for cytochrome oxidase subunit 1, CX1
-colnames(add.name)&lt;-colnames(mtDNAterms)#make the columnames for this synonym those needed for AnnotationBustR
-
-#Run the merge search term function without sorting based on gene name.
-new.terms&lt;-MergeSearchTerms(add.name, mtDNAterms, SortGenes=FALSE)
-
-#Run the merge search term function with sorting based on gene name.
-new.terms&lt;-MergeSearchTerms(add.name, mtDNAterms, SortGenes=TRUE)</code></pre>
-<p>We will use this function again in a more realistic example later in this vignette.</p>
-</div>
-<div id="extract-sequences-with-annotationbust" class="section level2">
-<h2>3.4 Extract sequences with AnnotationBust</h2>
+<div id="using-trophic-to-calculate-trophic-levels-from-fishbase-food-item-data" class="section level2">
+<h2>3.2: Using tRophic to calculate trophic levels from FishBase food item data</h2>
+<p>Our second example will estimate trophic level from food item data.</p>
 </div>
 <div id="troubleshooting" class="section level2">
 <h2>3.5 Troubleshooting</h2>
@@ -217,6 +199,13 @@ new.terms&lt;-MergeSearchTerms(add.name, mtDNAterms, SortGenes=TRUE)</code></pre
 <div id="final-comments" class="section level2">
 <h2>4: Final Comments</h2>
 <p>Further information on the functions and their usage can be found in the helpfiles <code>help(package=tRophic)</code>. For any further issues and questions send an email with subject ‘tRophic support’ to <a href="mailto:sborstei@vols.utk.edu">sborstei@vols.utk.edu</a> or post to the issues section on GitHub(<a href="https://github.com/sborstein/tRophic/issues" class="uri">https://github.com/sborstein/tRophic/issues</a>).</p>
+</div>
+<div id="references" class="section level2">
+<h2>References:</h2>
+<p>Boettiger C, Lang DT, and Wainwright PC. 2012. rfishbase: exploring, manipulating and visualizing FishBase data from R. Journal of Fish Biology 81:2030-2039. 10.1111/j.1095-8649.2012.03464.x</p>
+<p>Cortés E. 1999. Standardized diet compositions and trophic levels of sharks. ICES Journal of marine science 56:707-717.</p>
+<p>Froese R, and Pauly D. 2018. FishBase. <a href="http://www.fishbase.org/2018" class="uri">http://www.fishbase.org/2018</a>).</p>
+<p>Pauly D, Froese R, Sa-a P, Palomares M, Christensen V, and Rius J. 2000. TrophLab manual. ICLARM, Manila, Philippines.</p>
 </div>
 </div>
 
