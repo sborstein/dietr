@@ -25,7 +25,8 @@
 #' #Load Prey Values
 #' data(FishBasePreyVals)
 #' #Calculate Trophic Levels
-#' my.TL<-DietTroph(DietItems = converted.diet$DietItems,PreyValues = FishBasePreyVals, Taxonomy = converted.diet$Taxonomy, PreyClass=c("FoodI","FoodII","FoodIII","Stage"))
+#' my.TL<-DietTroph(DietItems = converted.diet$DietItems,PreyValues = FishBasePreyVals, Taxonomy = 
+#' converted.diet$Taxonomy, PreyClass=c("FoodI","FoodII","FoodIII","Stage"))
 #' @export
 
 DietTroph<-function(DietItems, PreyValues,Taxonomy,PreyClass=c("FoodI","FoodII","FoodIII","Stage")){

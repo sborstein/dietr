@@ -31,5 +31,6 @@ converted.foods<-ConvertFishbaseFood(my.food)
 #Load Prey Values
 data(FishBasePreyVals)
 #Calculate Trophic Levels
-my.TL<-FoodTroph(FoodItems = converted.foods$FoodItems,PreyValues = FishBasePreyVals, Taxonomy = converted.foods$Taxonomy,PreyClass=c("FoodI","FoodII","FoodIII","Stage"))
+my.TL<-FoodTroph(FoodItems = converted.foods$FoodItems,PreyValues = FishBasePreyVals, Taxonomy =
+ converted.foods$Taxonomy,PreyClass=c("FoodI","FoodII","FoodIII","Stage"))
 }
