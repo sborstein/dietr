@@ -49,6 +49,7 @@ DietTroph<-function(DietItems, PreyValues,Taxonomy,PreyClass=c("FoodI","FoodII",
   individual.TL$TrophicLevel[rounding.error.herbivore]<-2
   tax.list<-list()
   tax.list[[1]]<-individual.TL
+  if(dim(Taxonomy)[2]>1){
   for(tax.rank.index in 2:dim(Taxonomy)[2]){
     uni.taxa<-unique(Taxonomy[,tax.rank.index])
     current.level<-as.data.frame(matrix(nrow = length(uni.taxa),ncol = 4), stringsAsFactors = F)
@@ -66,6 +67,7 @@ DietTroph<-function(DietItems, PreyValues,Taxonomy,PreyClass=c("FoodI","FoodII",
     }
     tax.list[[tax.rank.index]]<-current.level
     names(tax.list)<-colnames(Taxonomy)[1:tax.rank.index]
+  }
   }
   tax.list
 }

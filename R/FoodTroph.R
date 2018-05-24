@@ -52,4 +52,27 @@ FoodTroph<-function(FoodItems, PreyValues,Taxonomy,PreyClass=c("FoodI","FoodII",
     }
   }
   individual.TL
+  tax.list<-list()
+  tax.list[[1]]<-individual.TL
+  if(dim(Taxonomy)[2]>1){
+  for(tax.rank.index in 2:dim(Taxonomy)[2]){
+    uni.taxa<-unique(Taxonomy[,tax.rank.index])
+    current.level<-as.data.frame(matrix(nrow = length(uni.taxa),ncol = 4), stringsAsFactors = F)
+    colnames(current.level)<-c(colnames(Taxonomy)[tax.rank.index],"TrophicLevel","SE", "nObs")
+    for(taxa.index in 1:length(uni.taxa)){
+      current.taxa<-subset(Taxonomy,Taxonomy[,tax.rank.index]==uni.taxa[taxa.index])
+      current.TL.calcs<-individual.TL[individual.TL[,1]%in%unique(current.taxa[,1]),]
+      #current.TL.calcs<-subset(individual.TL,individual.TL$Individual==unique(current.taxa$Individual))
+      current.TL.Mean<-sum(current.TL.calcs$TrophicLevel)/dim(current.TL.calcs)[1]
+      current.SE.Mean<-sum(current.TL.calcs$SE)/dim(current.TL.calcs)[1]
+      current.level[taxa.index,1]<-as.character(uni.taxa[taxa.index])
+      current.level$TrophicLevel[taxa.index]<-current.TL.Mean
+      current.level$SE[taxa.index]<-current.SE.Mean
+      current.level$nObs[taxa.index]<-dim(current.TL.calcs)[1]
+    }
+    tax.list[[tax.rank.index]]<-current.level
+    names(tax.list)<-colnames(Taxonomy)[1:tax.rank.index]
+  }
+  }
+  tax.list
 }
