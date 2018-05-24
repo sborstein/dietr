@@ -38,8 +38,8 @@ DietTroph<-function(DietItems, PreyValues,Taxonomy,PreyClass=c("FoodI","FoodII",
     individual.TL[record.index,1]<-unique.records[record.index]#put record name in final table
     current.rec<-subset(DietItems,DietItems$Individual==unique.records[record.index])#subset the current records data
     Troph.Match <- merge(current.rec, PreyValues, by.y=PreyClass,all.x = TRUE)#match the volumes with corresponding prey TL
-    TrophLevel<- 1.0 + sum(as.numeric(Troph.Match$TL)*as.numeric(Troph.Match$Volume))/100#calculate Trophic Level for record
-    seTroph=sqrt(sum(as.numeric(Troph.Match$Volume)*as.numeric(Troph.Match$SE^2)/100))#Calculate S.E. of Trophic Level
+    TrophLevel<- 1.0 + sum(as.numeric(Troph.Match$TL)*as.numeric(Troph.Match$Percent))/100#calculate Trophic Level for record
+    seTroph=sqrt(sum(as.numeric(Troph.Match$Percent)*as.numeric(Troph.Match$SE^2)/100))#Calculate S.E. of Trophic Level
     #individual.TL$TrophicLevel[record.index]<-TrophLevel#add Trophic Level to final table
     ifelse(dim(current.rec)[1]>dim(Troph.Match)[1],individual.TL$TrophicLevel[record.index]<-"ERROR",individual.TL$TrophicLevel[record.index]<-TrophLevel)#
     individual.TL$SE[record.index]<-seTroph#add SE to final table
