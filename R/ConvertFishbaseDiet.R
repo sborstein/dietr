@@ -27,7 +27,7 @@ ConvertFishbaseDiet<-function(FishBaseDiet,ExcludeStage=NULL){
       }
     Taxonomy<-as.data.frame(cbind(FishBaseDiet$DietCode,FishBaseDiet$sciname),stringsAsFactors = F)
     colnames(Taxonomy)<-c("Individual","Species")
-    Volumes<-cbind(FishBaseDiet$DietCode,FishBaseDiet$sciname,FishBaseDiet$FoodI,FishBaseDiet$FoodII,FishBaseDiet$FoodIII,FishBaseDiet$Stage, FishBaseDiet$DietPercent)
+    Volumes<-cbind.data.frame(FishBaseDiet$DietCode,FishBaseDiet$sciname,FishBaseDiet$FoodI,FishBaseDiet$FoodII,FishBaseDiet$FoodIII,FishBaseDiet$Stage, FishBaseDiet$DietPercent)
     colnames(Volumes)<-c("Individual","Species","FoodI","FoodII","FoodIII","Stage","Volume")
     Volumes<-as.data.frame(Volumes, stringsAsFactors = F)
     ConvertedStuff<-list(Volumes,Taxonomy)
