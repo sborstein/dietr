@@ -26,3 +26,6 @@ my.food<-rfishbase::fooditems(c("Lutjanus apodus","Epinephelus itajara"))
 #use the ConvertFishbaseFood function to format it for TrophicLevelR and exclude recruits/juveniles
 cleaned.food<-ConvertFishbaseFood(FishBaseFood=my.food, ExcludeStage=c("larvae","recruits/juv."))
 }
+\author{
+Samuel Borstein
+}

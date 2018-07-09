@@ -9,6 +9,7 @@
 #' individual diet study and then the mean for each species.
 #' @details A function to convert the data frame produced by rfishbase diet into a usable form for calculating 
 #' trophic levels in dietr.
+#' @author Samuel Borstein
 #' @examples
 #' #Get rfishbase diet data for a few species
 #' my.diets<-rfishbase::diet(c("Lutjanus apodus","Epinephelus itajara"))
