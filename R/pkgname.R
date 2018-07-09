@@ -3,13 +3,13 @@
 #' @description Trophic level estimation from diet and food item data in R
 #'
 #' @details 
-#' Package: tRophic
+#' Package: dietr
 #' 
 #' Type: Package
 #' 
 #' Title: An R package to estimate trophic level from diet and food item data
 #' 
-#' Version: 1.0a
+#' Version: 1.0
 #' 
 #' Date: 2018-4-4
 #' 
@@ -28,7 +28,7 @@
 #' @seealso \code{\link{ConvertFishbaseDiet}},\code{\link{ConvertFishbaseFood}},\code{\link{DietTroph}},\code{\link{FoodTroph}}
 #' 
 #' @docType package
-#' @name tRophic
+#' @name dietr
 #"_PACKAGE"
 #> [1] "_PACKAGE"
 NULL

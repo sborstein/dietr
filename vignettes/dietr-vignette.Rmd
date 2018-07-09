@@ -1,21 +1,21 @@
 ---
-title: "tRophic Tutorial"
+title: "dietr Tutorial"
 author: "Samuel R. Borstein"
-date: "24 May, 2018"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
   html_document:
     keep_md: true
 vignette: >
-  %\VignetteIndexEntry{tRophic Tutorial}
+  %\VignetteIndexEntry{dietr Tutorial}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
 # 1: Introduction
 
-This is a tutorial for using the R package `tRophic`. `tRophic` uses diet or food item data to calculate trophic levels following the procedures described in `TrophLab` (Pauly et al., 2000), which currently is only avaialble as a Microsoft Access database program. Our implementation is very easy to use and extremely fast as users can specify all their data as dataframes. It also differs from TrophLab in that users can specify a taxonomic hierarchy and measure trophic levels from their data at various levels (e.x. individual,population, species,genus, etc.). `tRophic` also works well with FishBase (Froese & Pauly, 2018) data and can use diet and food item data obtained in R using the rfishbase package (Boettiger et al., 2012). 
+This is a tutorial for using the R package `dietr`. `dietr` uses diet or food item data to calculate trophic levels following the procedures described in `TrophLab` (Pauly et al., 2000), which currently is only avaialble as a Microsoft Access database program. Our implementation is very easy to use and extremely fast as users can specify all their data as dataframes. It also differs from TrophLab in that users can specify a taxonomic hierarchy and measure trophic levels from their data at various levels (e.x. individual,population, species,genus, etc.). `dietr` also works well with FishBase (Froese & Pauly, 2018) data and can use diet and food item data obtained in R using the rfishbase package (Boettiger et al., 2012). 
 
-For this tutorial we will refer to diet data as stomach content data where the proportion of prey items are known (e.x. percent volume or weight of prey items, be cautious using percent frequency as various literature suggest it may be misleading). In this case, trophic level is simply estimated by adding one to the sum of trophic levels of the prey items consumed weighted by their contribution to the diet. The trophic level of consumer i($Troph_i$) is defined by the equation below: 
+For this tutorial we will refer to diet data as quantitative stomach content data where the proportion of prey items are known (e.x. percent volume or weight of prey items, be cautious using percent frequency as various literature suggest it may be misleading). In this case, trophic level is simply estimated by adding one to the sum of trophic levels of the prey items consumed weighted by their contribution to the diet. The trophic level of consumer i($Troph_i$) is defined by the equation below: 
 
 $$Troph_i=1+\sum_{j=1}^{G}DC_{ij}\times Troph_j$$
 Here $Troph_j$ is the trophic level of the jth prey item consumed in the diet of i, $DC_{ij}$ is the fraction of prey item j in the diet of i, and G is the number of prey species in the diet.
@@ -28,13 +28,13 @@ Here, `R` is the rank of the food item and G is the number of food items, up to 
 $$Troph=\sum(P_i*Troph_i)/\sum{P_i}$$
 Here, $P_i$ is the simulated proportion of the prey item i in the diet and $Troph_i$ is the trophic level of prey item i. This procedure is repeated 100 times and the mean of these 100 simulations. In cases where only a single prey item is in the diet, the procedure is much simpler and the estimated trophic level is simply calculated by adding 1 to the trophic level of the single prey item.
 
-In this tutorial we will cover the basics of how to use `tRophic` to measure trophic levels. We will first discuss how to read in data from FishBase using rfishbase and how to pass that data into tRophic. We will then show how one can input their own raw data and use the package to estimate trophic levels.
+In this tutorial we will cover the basics of how to use `dietr` to measure trophic levels. We will first discuss how to read in data from FishBase using rfishbase and how to pass that data into `dietr`. We will then show how one can input their own raw data and use the package to estimate trophic levels.
 
 # 2: Installation
 ## 2.1: Installation From CRAN
-In order to install the stable CRAN version of the `tRophic` package:
+In order to install the stable CRAN version of the `dietr` package:
 ```
-install.packages("tRophic")
+install.packages("dietr")
 ```
 ## 2.2: Installation of Development Version From GitHub
 While we recommend use of the stable CRAN version of this package, we recommend using the package `devtools` to temporarily install the development version of the package from GitHub if for any reason you wish to use it:
@@ -43,33 +43,33 @@ While we recommend use of the stable CRAN version of this package, we recommend 
 install.packages("devtools")
 
 #2. Load the 'devtools' package and temporarily install the development version of
-#'tRophic' from GitHub:
+#'dietr' from GitHub:
 library(devtools)
 dev_mode(on=T)
-install_github("sborstein/tRophic")  # install the package from GitHub
-library(tRophic)# load the package
+install_github("sborstein/dietr")  # install the package from GitHub
+library(dietr)# load the package
 
 #3. Leave developers mode after using the development version of 'AnnotationBustR' so it will not #remain on your system permanently.
 dev_mode(on=F)
 ```
-# 3: Using tRophic
-To load tRophic and all of its functions/data:
+# 3: Using dietr
+To load `dietr` and all of its functions/data:
 ```
-library(tRophic)
+library(dietr)
 ```
-## 3.0: Basic data necessary to run tRophic
-To run tRophic you will need the following data as inputs. First is diet or food item data, which our functions call in DietTroph and FoodTroph as `DietItems` and `FoodItems` respectively. These should be organized from most inclusive to least inclusive from left to right and have column names.
+## 3.0: Basic data necessary to run dietr
+To run `dietr` you will need the following data as inputs. First is diet or food item data, which our functions call in DietTroph and FoodTroph as `DietItems` and `FoodItems` respectively. These should be organized from most inclusive to least inclusive from left to right and have column names.
 
 The second is a dataframe of trophic levels of the prey, or as we name them in the functions, `PreyValues`. We include a few different datasets with prey values users can use, though you can also supply your own. `FishBasePreyVals` are the values FishBase/TrophLab use to calculate trophic levels. `CortesPreyVals`
 are standardized diet prey values for sharks from Cortes, 1999. Both of these can be loaded into R
-from tRophic using the `data()` function:
+from `dietr` using the `data()` function:
 ```
 data(FishBasePreyVals)#Load the Fishbase trophic levels of prey items 
 data(CortesPreyVals)#Load the Cortes standardized trophic levels of prey items
 ```
 The last data object we need is a data frame we call `Taxonomy`. Columns of this dataframe should move from least inclusive to most inclusive from left to right. This data is used to assign individuals to groups for measuring hierarchical trophic levels (ex. trophic levels for an individuals, populations, species, etc.). This can be as simple as just a single column data frame if you only want to measure trophic levels for each individual and not at a higher level.
 
-## 3.1: Using tRophic to calculate trophic levels from FishBase diet data
+## 3.1: Using dietr to calculate trophic levels from FishBase diet data
 Our first example will use FishBase diet data. For this, we will get data for two species: The Goliath
 Grouper, *Epinephelus itajara*, and the Schoolmaster snapper, *Lutjanus apodus*.
 
@@ -81,7 +81,7 @@ library(rfishbase)
 #Use FishBase diet function to read in  
 my.diets<-rfishbase::diet(c("Lutjanus apodus","Epinephelus itajara"))
 ```
-This object contains a lot of info, most of which is metadata for the diet records. It is always good to look at this metadata to assess possible issues, but we will want to strip out the metadata leaving us with just the columns containing data we need to calculate trophic level. We can do this by using `tRophic`'s `ConvertFishbaseDiet` function. This function has two arguments. `FishBaseDiet` is the data frame we obtained through `rfishbase`. ExcludeStage is an argument that excludes records of a certain life-history stage. For example, we may want to exclude larvae and immature fishes from our data. We could do this with the following code:
+This object contains a lot of info, most of which is metadata for the diet records. It is always good to look at this metadata to assess possible issues, but we will want to strip out the metadata leaving us with just the columns containing data we need to calculate trophic level. We can do this by using `dietr`'s `ConvertFishbaseDiet` function. This function has two arguments. `FishBaseDiet` is the data frame we obtained through `rfishbase`. ExcludeStage is an argument that excludes records of a certain life-history stage. For example, we may want to exclude larvae and immature fishes from our data. We could do this with the following code:
 
 ```
 cleaned.diets<-ConvertFishbaseDiet(FishBaseDiet=my.diets, ExcludeStage=c("larvae","recruits/juv."))
@@ -92,14 +92,14 @@ We can see that `cleaned.diets` object we created is a list containing two data 
 We can now measure the trophic level from diet items using the function `DietTroph`. Here, we will specify our `DietItems` and `Taxonomy` using the `cleaned.diets` object we generated above. We will also specify the `PreyValues` as being the included `FishBasePreyVals` that are part of the package. As the columns for the `PreyVals` and `DietItems` use a calssification of "FoodI","FoodII","FoodIII","Stage", we will specify these as a vector for the `PreyClass` argument.
 
 ```
-data(FishBasePreyVals)#load the FishBase prey values that are part of the tRophic package
+data(FishBasePreyVals)#load the FishBase prey values that are part of the dietr package
 #Calculate trophic level with DietTroph function
 my.TL<-DietTroph(DietItems = converted.diet$DietItems,PreyValues = FishBasePreyVals, Taxonomy = converted.diet$Taxonomy, PreyClass=c("FoodI","FoodII","FoodIII","Stage"))
 ```
 
 We can see that the `my.TL` object we just created contains a list of length two, each with a data frame, with the names of these data frames matching the `Taxonomy` we provided. We can see that the first data frame in this list, named `Individual` contains the trophic levels for each individual study that we input, while the data frame named `Species` provides the mean trophic level and SE and the number of studies across all individuals for each species.
 
-## 3.2: Using tRophic to calculate trophic levels from FishBase food item data
+## 3.2: Using dietr to calculate trophic levels from FishBase food item data
 
 Our second example will estimate trophic level from food item data. The process is extremely similar to the above. For this example, let's get some data from rfishbase using the `fooditems` function for the same two species we did above. 
 
@@ -108,7 +108,7 @@ Our second example will estimate trophic level from food item data. The process 
 my.food<-rfishbase::fooditems(c("Lutjanus apodus","Epinephelus itajara"))
 ```
 
-In order to use this in `tRophic`, we will need to convert it using the function `ConvertFishbaseFood`. This function is basically identical to the  `ConvertFishbaseDiet` function we used above, except our data frame is from the `fooditems` function. We will then use `FoodTroph` function to calculate the trophic level. It is important to note that as this method randomly samples food items and ranks them for calculating the trophic level, that each time you run the function you will get a slightly different result, though they should largey be close in value. 
+In order to use this in `dietr`, we will need to convert it using the function `ConvertFishbaseFood`. This function is basically identical to the  `ConvertFishbaseDiet` function we used above, except our data frame is from the `fooditems` function. We will then use `FoodTroph` function to calculate the trophic level. It is important to note that as this method randomly samples food items and ranks them for calculating the trophic level, that each time you run the function you will get a slightly different result, though they should largey be close in value. 
 
 ```
 #Convert FishBase food item data to a format usable for FoodTroph
@@ -121,8 +121,8 @@ my.TL<-FoodTroph(FoodItems = converted.foods$FoodItems,PreyValues = FishBasePrey
 
 
 ## 4: Final Comments
-Further information on the functions and their usage can be found in the helpfiles `help(package=tRophic)`.
-For any further issues and questions send an email with subject 'tRophic support' to sborstei@vols.utk.edu or post to the issues section on GitHub(https://github.com/sborstein/tRophic/issues).
+Further information on the functions and their usage can be found in the helpfiles `help(package=dietr)`.
+For any further issues and questions send an email with subject 'dietr support' to sborstei@vols.utk.edu or post to the issues section on GitHub(https://github.com/sborstein/dietr/issues).
 
 ##References:
 Boettiger C, Lang DT, and Wainwright PC. 2012. rfishbase: exploring, manipulating and visualizing FishBase data from R. Journal of Fish Biology 81:2030-2039.

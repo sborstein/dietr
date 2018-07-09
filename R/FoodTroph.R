@@ -1,9 +1,14 @@
-#' Calculates trophic level from food item data for species, populations, and individuals using a random subsampling routine.
+#' Calculates trophic level from qualitative food item data for species, populations, and individuals using a random subsampling routine.
 #' @param FoodItems a data frame with rows as individuals and each row consisting of a prey item name.
 #' @param PreyValues a data frame with rows as prey item names and columns containing the trophic level of the prey item and the standard error of that trophic item.
 #' @param Taxonomy a data frame with the least inclusive level in the leftmost column progressing to more inclusive with columns to the right.Can be a single column.
 #' @param PreyClass Column names of the PreyValues used for matching between FoodItems and PreyValues, exclusive of TL and SE. Default is those of FishBase.
 #' @return a list containing estimated trophic levels from food items at each taxonomic level provided by the user.
+#' @description 
+#' Calculates trophic level from food items where quantitative contribution is unknown. Follows the routine described in TrophLab. 
+#' While FishBase data obtained from rfishbase can be used, users can also upload their own data for
+#' use with the function.
+#' @author Samuel Borstein
 #' @examples 
 #' #Get some food item data from rfishbase
 #' library(rfishbase)

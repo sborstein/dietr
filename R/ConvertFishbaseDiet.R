@@ -8,7 +8,7 @@
 #' you were to run this in the DietTroph function, it would return trophic level estimates for each
 #' individual diet study and then the mean for each species.
 #' @details A function to convert the data frame produced by rfishbase diet into a usable form for calculating 
-#' trophic levels in TrophicLevelR.
+#' trophic levels in dietr.
 #' @examples
 #' #Get rfishbase diet data for a few species
 #' my.diets<-rfishbase::diet(c("Lutjanus apodus","Epinephelus itajara"))

@@ -1,8 +1,8 @@
-#' Calculates trophic level from volumetric diet data for species, populations, and individuals.
-#' @param DietItems a data frame with rows as individual entries and each row consisting of a prey 
-#' classification and a corresponding diet percentage. The column names for prey classification of 
+#' Calculates trophic level from percentage based quantitative diet data (volumetric, weight, etc.) for species, populations, and individuals.
+#' @param DietItems A data frame with rows as individual entries and each row consisting of a prey 
+#' classification and a corresponding diet percentages. The column names for prey classification of 
 #' the diets should match those of PreyValues. The first column should contain the identifier of 
-#' the individual.
+#' the individual and be named "Individual", The last column should contain the percent of the prey in the diet and be labelled "Percent".
 #' @param PreyValues a data frame with rows as prey item names and columns containing the trophic 
 #' level of the prey item and the standard error of that trophic item. The column names of 
 #' PreyValues except for TL and SE should match those in DietItems.
@@ -13,9 +13,10 @@
 #' @return a list length of the columns in taxonomy, each containing trophic level estimation at 
 #' the respective taxonomic level.
 #' @description 
-#' Calculates trophic level from volumetric diet data following the routine described in TrophLab. 
+#' Calculates trophic level from percentage based diet data following the routine described in TrophLab. 
 #' While FishBase data obtained from rfishbase can be used, users can also upload their own data for
-#' use in the function. 
+#' use in with function. 
+#' @author Samuel Borstein
 #' @examples 
 #' #Get some food item data from rfishbase
 #' library(rfishbase)

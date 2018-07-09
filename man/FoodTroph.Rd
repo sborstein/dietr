@@ -2,7 +2,7 @@
 % Please edit documentation in R/FoodTroph.R
 \name{FoodTroph}
 \alias{FoodTroph}
-\title{Calculates trophic level from food item data for species, populations, and individuals using a random subsampling routine.}
+\title{Calculates trophic level from qualitative food item data for species, populations, and individuals using a random subsampling routine.}
 \usage{
 FoodTroph(FoodItems, PreyValues, Taxonomy, PreyClass = c("FoodI", "FoodII",
   "FoodIII", "Stage"))
@@ -20,7 +20,9 @@ FoodTroph(FoodItems, PreyValues, Taxonomy, PreyClass = c("FoodI", "FoodII",
 a list containing estimated trophic levels from food items at each taxonomic level provided by the user.
 }
 \description{
-Calculates trophic level from food item data for species, populations, and individuals using a random subsampling routine.
+Calculates trophic level from food items where quantitative contribution is unknown. Follows the routine described in TrophLab. 
+While FishBase data obtained from rfishbase can be used, users can also upload their own data for
+use with the function.
 }
 \examples{
 #Get some food item data from rfishbase
@@ -33,4 +35,7 @@ data(FishBasePreyVals)
 #Calculate Trophic Levels
 my.TL<-FoodTroph(FoodItems = converted.foods$FoodItems,PreyValues = FishBasePreyVals, Taxonomy =
  converted.foods$Taxonomy,PreyClass=c("FoodI","FoodII","FoodIII","Stage"))
+}
+\author{
+Samuel Borstein
 }

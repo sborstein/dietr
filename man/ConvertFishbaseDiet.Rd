@@ -24,7 +24,7 @@ Converts FishBase/SealifBase volumetric diet data obtained from the diet functio
 }
 \details{
 A function to convert the data frame produced by rfishbase diet into a usable form for calculating 
-trophic levels in TrophicLevelR.
+trophic levels in dietr.
 }
 \examples{
 #Get rfishbase diet data for a few species

@@ -1,7 +1,7 @@
-Package: tRophic
+Package: dietr
 Version: 1.0
-Date: 2018-4-4
-Title: An R package to estimate trophic level from diet and food item data
+Date: 2018-7-9
+Title: Diet Estimated Trophic Levels in R
 Author: Samuel R. Borstein <sam@borstein.com>
 Maintainer: Samuel R. Borstein <sam@borstein.com>
 Depends:
@@ -9,7 +9,7 @@ Depends:
 Imports:
     rfishbase (>= 2.1),
 	mgcv
-Description: Trophic level estimation from diet and food item data in R.
+Description: Estimates fractional trophic level from diet and food item data records in R.
 License: GPL (>= 2)
 LazyData: true
 RoxygenNote: 6.0.1
