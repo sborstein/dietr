@@ -30,15 +30,22 @@
 #' converted.diet$Taxonomy, PreyClass=c("FoodI","FoodII","FoodIII","Stage"))
 #' @export
 
-DietTroph<-function(DietItems, PreyValues,Taxonomy,PreyClass=c("FoodI","FoodII","FoodIII","Stage")){
+DietTroph<-function(DietItems, PreyValues,Taxonomy,PreyClass=c("FoodI","FoodII","FoodIII","Stage"),SumCheck=TRUE){
   PreyValues<-mgcv::uniquecombs(PreyValues)
   individual.TL<-data.frame(matrix(nrow = length(unique(Taxonomy[,1])), ncol = 3))#make final table
   colnames(individual.TL)<-c("Individual","TrophicLevel","SE")#make column names for final table
   unique.records<-as.vector(unique(Taxonomy[,1]))#get the number of unique records
   for(record.index in 1:length(unique(unique.records))){#for each record
     individual.TL[record.index,1]<-unique.records[record.index]#put record name in final table
-    current.rec<-subset(DietItems,DietItems$Individual==unique.records[record.index])#subset the current records data
-    Troph.Match <- merge(current.rec, PreyValues, by.y=PreyClass,all.x = TRUE)#match the volumes with corresponding prey TL
+    current.rec<-subset(DietItems,DietItems[,1]==unique.records[record.index])#subset the current records data
+   # Troph.Match <- merge(current.rec, PreyValues, by.y=PreyClass,all.x = TRUE)#match the volumes with corresponding prey TL
+    Troph.Match <- merge(current.rec, PreyValues, by.x = PreyClass,by.y = PreyClass)
+    if(SumCheck==TRUE){
+      if(!sum(Troph.Match$Percent)==100){
+        fix.percent<-Troph.Match$Percent/sum(Troph.Match$Percent)*100
+        Troph.Match$Percent<-fix.percent
+      }
+    }
     TrophLevel<- 1.0 + sum(as.numeric(Troph.Match$TL)*as.numeric(Troph.Match$Percent))/100#calculate Trophic Level for record
     seTroph=sqrt(sum(as.numeric(Troph.Match$Percent)*as.numeric(Troph.Match$SE^2)/100))#Calculate S.E. of Trophic Level
     #individual.TL$TrophicLevel[record.index]<-TrophLevel#add Trophic Level to final table
