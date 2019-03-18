@@ -31,7 +31,8 @@ FoodTroph<-function(FoodItems, PreyValues,Taxonomy,PreyClass=c("FoodI","FoodII",
   for(record.index in 1:length(unique(unique.records))){#for each record
     individual.TL$Individual[record.index]<-unique.records[record.index]#put record name in final table
     current.rec<-subset(FoodItems,FoodItems[,1]==unique.records[record.index])#subset the current records data
-    Food.Match <- merge(current.rec, PreyValues, by.y=PreyClass)#match the food with corresponding prey TL
+    #merge(current.rec, PreyValues, by.x = c("FoodI","FoodII","FoodIII","Stage"),by.y = c("FoodI","FoodII","FoodIII","Stage"))
+    Food.Match<-merge(current.rec, PreyValues, by.x = PreyClass,by.y = PreyClass)
     ifelse(dim(Food.Match)[1]<dim(current.rec)[1],check.food.items[record.index]<-"bad",check.food.items[record.index]<-"good")
     if(length(unique(Food.Match$TL))==1 && length(unique(Food.Match$SE))==1){#If only a single food item, use that without subsampling
       individual.TL$TrophicLevel[record.index]<-1+unique(Food.Match$TL)#add 1 to the single food items trophic level
