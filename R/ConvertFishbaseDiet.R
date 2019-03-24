@@ -10,18 +10,12 @@
 #' @details A function to convert the data frame produced by rfishbase diet into a usable form for calculating 
 #' trophic levels in dietr.
 #' @author Samuel Borstein
-#' @examples
-#' #Get rfishbase diet data for a few species
-#' my.diets<-rfishbase::diet_items(c("Lutjanus apodus","Epinephelus itajara"))
-#' #use the ConvertFishbaseDiet function to format it for TrophicLevelR and exclude recruits/juveniles
-#' cleaned.diets<-ConvertFishbaseDiet(FishBaseDiet=my.diets, ExcludeStage=c("larvae","recruits/juv."))
-#' @export
 
 ConvertFishbaseDiet<-function(FishBaseDiet,ExcludeStage=NULL){
-  if(!length(colnames(FishBaseDiet))==53){#check if right format
+  if(!length(colnames(FishBaseDiet))==15){#check if right format
     stop('Error: Not Raw rfishbase Diet Data')#kill if it is not right format
   }else{
-    unique.life<-unique(FishBaseDiet$SampleStage)#get the life stages to exclude
+    unique.life<-unique(FishBaseDiet)#get the life stages to exclude
     if(!is.null(ExcludeStage)){
       for(ExcludeStage.index in 1:length(ExcludeStage)){#trim exclude lifestages out
       FishBaseDiet<-subset(FishBaseDiet,!FishBaseDiet$SampleStage==ExcludeStage[ExcludeStage.index])#subset bad lifestages

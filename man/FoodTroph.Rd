@@ -4,8 +4,8 @@
 \alias{FoodTroph}
 \title{Calculates trophic level from qualitative food item data for species, populations, and individuals using a random subsampling routine.}
 \usage{
-FoodTroph(FoodItems, PreyValues, Taxonomy, PreyClass = c("FoodI", "FoodII",
-  "FoodIII", "Stage"))
+FoodTroph(FoodItems, PreyValues, Taxonomy, PreyClass = c("FoodI",
+  "FoodII", "FoodIII", "Stage"))
 }
 \arguments{
 \item{FoodItems}{a data frame with rows as individuals and each row consisting of a prey item name.}

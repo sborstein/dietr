@@ -4,8 +4,8 @@
 \alias{DietTroph}
 \title{Calculates trophic level from percentage based quantitative diet data (volumetric, weight, etc.) for species, populations, and individuals.}
 \usage{
-DietTroph(DietItems, PreyValues, Taxonomy, PreyClass = c("FoodI", "FoodII",
-  "FoodIII", "Stage"))
+DietTroph(DietItems, PreyValues, Taxonomy, PreyClass = c("FoodI",
+  "FoodII", "FoodIII", "Stage"), SumCheck = TRUE)
 }
 \arguments{
 \item{DietItems}{A data frame with rows as individual entries and each row consisting of a prey 

@@ -1,7 +1,7 @@
 #' Converts FishBase/SealifBase food item diet data obtained from the diet function into a usable format for TrophicLevelR
 #' @param FishBaseFood a data frame produced by the rfishbase fooditem function
 #' @param ExcludeStage a character, indicating which life stages to exclude. Must match stage names given by rfishbase (i.e. larvae, rec./juveniles, juv./adults, adults).
-#' @return a list of length two, with two data frames. One containing the re-formatted food item data and one containing the Taxonomy.
+#' @return a list of length two, with two data frames. One containing the re-formatted food item data and one containing the Taxonomy with species names.
 #' @details This converts the data frame produced by rfishbase fooditem function into a usable fortmat for dietr.
 #' @author Samuel Borstein
 #' @examples
@@ -27,9 +27,9 @@ ConvertFishbaseFood<-function(FishBaseFood,ExcludeStage=NULL){
       ConvertedStuff<-list(FoodItems,Taxonomy)
       names(ConvertedStuff)<-c("FoodItems","Taxonomy") 
     }else{
-    Taxonomy<-as.data.frame(FishBaseFood$sciname,stringsAsFactors = F)
+    Taxonomy<-as.data.frame(unique(FishBaseFood$Species),stringsAsFactors = F)
     colnames(Taxonomy)<-"Species"
-    FoodItems<-cbind(FishBaseFood$sciname,FishBaseFood$FoodI,FishBaseFood$FoodII,FishBaseFood$FoodIII,FishBaseFood$PreyStage)
+    FoodItems<-cbind(FishBaseFood$Species,FishBaseFood$FoodI,FishBaseFood$FoodII,FishBaseFood$FoodIII,FishBaseFood$PreyStage)
     colnames(FoodItems)<-c("Species","FoodI","FoodII","FoodIII","Stage")
     FoodItems<-as.data.frame(FoodItems, stringsAsFactors = F)
     ConvertedStuff<-list(FoodItems,Taxonomy)

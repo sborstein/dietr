@@ -12,7 +12,7 @@ ConvertFishbaseFood(FishBaseFood, ExcludeStage = NULL)
 \item{ExcludeStage}{a character, indicating which life stages to exclude. Must match stage names given by rfishbase (i.e. larvae, rec./juveniles, juv./adults, adults).}
 }
 \value{
-a list of length two, with two data frames. One containing the re-formatted food item data and one containing the Taxonomy.
+a list of length two, with two data frames. One containing the re-formatted food item data and one containing the Taxonomy with species names.
 }
 \description{
 Converts FishBase/SealifBase food item diet data obtained from the diet function into a usable format for TrophicLevelR
