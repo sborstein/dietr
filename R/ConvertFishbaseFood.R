@@ -20,9 +20,9 @@ ConvertFishbaseFood<-function(FishBaseFood,ExcludeStage=NULL){
     for(ExcludeStage.index in 1:length(ExcludeStage)){#trim exclude lifestages out
       FishBaseFood<-subset(FishBaseFood,!FishBaseFood$PredatorStage==ExcludeStage[ExcludeStage.index])#subset bad lifestages
     }
-      Taxonomy<-as.data.frame(FishBaseFood$sciname,stringsAsFactors = F)
+      Taxonomy<-as.data.frame(FishBaseFood$Species,stringsAsFactors = F)
       colnames(Taxonomy)<-"Species"
-      FoodItems<-cbind.data.frame(FishBaseFood$sciname,FishBaseFood$FoodI,FishBaseFood$FoodII,FishBaseFood$FoodIII,FishBaseFood$PreyStage)
+      FoodItems<-cbind.data.frame(FishBaseFood$Species,FishBaseFood$FoodI,FishBaseFood$FoodII,FishBaseFood$FoodIII,FishBaseFood$PreyStage)
       colnames(FoodItems)<-c("Species","FoodI","FoodII","FoodIII","Stage")
       ConvertedStuff<-list(FoodItems,Taxonomy)
       names(ConvertedStuff)<-c("FoodItems","Taxonomy") 

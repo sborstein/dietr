@@ -10,6 +10,7 @@
 #'  towards the right.
 #' @param PreyClass Column names of the PreyValues used for matching between DietItems and 
 #' PreyValues, exclusive of TL and SE. Default is those of FishBase.
+#' @param SumCheck Logical. Should the sum of diet items be checked, and if not equal to 100, recalculated?
 #' @return a list length of the columns in taxonomy, each containing trophic level estimation at 
 #' the respective taxonomic level.
 #' @description 
