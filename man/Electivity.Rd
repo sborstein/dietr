@@ -4,14 +4,14 @@
 \alias{Electivity}
 \title{Calculates a variety of electivity indices and foraging ratios}
 \usage{
-Electivity(diet, available, Indices = c("ForageRatio", "Ivlev",
+Electivity(Diet, Available, Indices = c("ForageRatio", "Ivlev",
   "Strauss", "JacobsQ", "JacobsD", "Chesson", "VanderploegScavia"),
   Depleting = FALSE)
 }
 \arguments{
-\item{diet}{Data frame with data corresponding to consumed resources found in the diet. See details for formatting.}
+\item{Diet}{Data frame with data corresponding to consumed resources found in the diet. See details for formatting.}
 
-\item{available}{Data frame with data corresponding to the available resources. See details for formatting.}
+\item{Available}{Data frame with data corresponding to the available resources. See details for formatting.}
 
 \item{Indices}{Character vector containing the names of the desired indices to calculate. See description for information on availabble indices.}
 
@@ -25,6 +25,6 @@ Chesson, J. 1983. The estimation and analysis of preference and its relatioship 
 Ivlev, U. 1961. Experimental ecology of the feeding of fish. Yale University Press, New Haven.
 Jacobs, J. 1974. Quantitative measurement of food selection. Oecologia 14:413-417.
 Manly, B. 1974. A model for certain types of selection experiments. Biometrics 30:281-294.
-Strauss, R. E. 1979. Reliability Estimates for Ivlevˈs Electivity Index, the Forage Ratio, and a Proposed Linear Index of Food Selection. Transactions of the American Fisheries Society 108:344-352.
+Strauss, R. E. 1979. Reliability Estimates for Ivlev's Electivity Index, the Forage Ratio, and a Proposed Linear Index of Food Selection. Transactions of the American Fisheries Society 108:344-352.
 Vanderploeg, H., and D. Scavia. 1979. Two electivity indices for feeding with special reference to zooplankton grazing. Journal of the Fisheries Board of Canada 36:362-365.
 }
