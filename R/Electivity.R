@@ -1,6 +1,6 @@
 #' Calculates a variety of electivity indices and foraging ratios
-#' @param diet Data frame with data corresponding to consumed resources found in the diet. See details for formatting.
-#' @param available Data frame with data corresponding to the available resources. See details for formatting.
+#' @param Diet Data frame with data corresponding to consumed resources found in the diet. See details for formatting.
+#' @param Available Data frame with data corresponding to the available resources. See details for formatting.
 #' @param Indices Character vector containing the names of the desired indices to calculate. See description for information on availabble indices. 
 #' @param Depleting Logical. If true, will assume the food source is depleting and perform calculations following Manly. Default is FALSE.
 #' @references
@@ -11,8 +11,15 @@
 #' Strauss, R. E. 1979. Reliability Estimates for Ivlevˈs Electivity Index, the Forage Ratio, and a Proposed Linear Index of Food Selection. Transactions of the American Fisheries Society 108:344-352.
 #' Vanderploeg, H., and D. Scavia. 1979. Two electivity indices for feeding with special reference to zooplankton grazing. Journal of the Fisheries Board of Canada 36:362-365.
 
-Electivity<-function(diet, available,Indices=c("ForageRatio","Ivlev","Strauss","JacobsQ","JacobsD","Chesson","VanderploegScavia"),Depleting=FALSE){
-
+Electivity<-function(Diet, Available,Hierarchy, Indices=c("ForageRatio","Ivlev","Strauss","JacobsQ","JacobsD","Chesson","VanderploegScavia"),Depleting=FALSE){
+  individual.Elect<-data.frame(matrix(nrow = length(unique(Hierarchy[,1])), ncol = 1+length(Indices)))#make final table
+  colnames(individual.Elect)<-c(Individual,Indices)
+  unique.records<-as.vector(unique(Hierarchy[,1]))#get the number of unique records
+  for(record.index in 1:length(unique(unique.records))){#for each record
+    current.rec<-Diet[Diet$Species==unique.records[record.index],]#subset the current records data
+    current.hab<-Available[Available$Habitat==current.rec$Habitat,]#subset the current records data
+    
+  }
 #Forage Ratio  
 ForageRatio<-diet/available
 
