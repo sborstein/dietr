@@ -13,6 +13,7 @@ Description: Estimates fractional trophic level from diet and food item data rec
 License: GPL (>= 2)
 LazyData: true
 RoxygenNote: 6.1.1
+Encoding: UTF-8
 Suggests:
 	knitr,
 	rmarkdown,
