@@ -20,15 +20,15 @@
 #' @author Samuel Borstein
 #' @examples 
 #' #Get some food item data from rfishbase
-#' library(rfishbase)
-#' my.diets<-rfishbase::diet(c("Lutjanus apodus","Epinephelus itajara"))
+#' #library(rfishbase)
+#' #my.diets<-rfishbase::diet(c("Lutjanus apodus","Epinephelus itajara"))
 #' #convert FishBase data into data for trophic calculation using TrophicLevelR
-#' converted.diet<-ConvertFishbaseDiet(my.diets,ExcludeStage=c("larvae","recruits/juv."))
+#' #converted.diet<-ConvertFishbaseDiet(my.diets,ExcludeStage=c("larvae","recruits/juv."))
 #' #Load Prey Values
-#' data(FishBasePreyVals)
+#' #data(FishBasePreyVals)
 #' #Calculate Trophic Levels
-#' my.TL<-DietTroph(DietItems = converted.diet$DietItems,PreyValues = FishBasePreyVals, Taxonomy = 
-#' converted.diet$Taxonomy, PreyClass=c("FoodI","FoodII","FoodIII","Stage"))
+#' #my.TL<-DietTroph(DietItems = converted.diet$DietItems,PreyValues = FishBasePreyVals, Taxonomy = 
+#' #converted.diet$Taxonomy, PreyClass=c("FoodI","FoodII","FoodIII","Stage"))
 #' @export
 
 DietTroph<-function(DietItems, PreyValues,Taxonomy,PreyClass=c("FoodI","FoodII","FoodIII","Stage"),SumCheck=TRUE){

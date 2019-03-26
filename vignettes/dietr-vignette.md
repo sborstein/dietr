@@ -1,7 +1,7 @@
 ---
 title: "dietr Tutorial"
 author: "Samuel R. Borstein"
-date: "09 July, 2018"
+date: "26 March, 2019"
 output:
   html_document:
     keep_md: true
@@ -76,15 +76,12 @@ Grouper, *Epinephelus itajara*, and the Schoolmaster snapper, *Lutjanus apodus*.
 First, let us load rfishbase and use the diet function to obtain diet data.
 
 ```
-#load fishbase
-library(rfishbase)
-#Use FishBase diet function to read in  
-my.diets<-rfishbase::diet(c("Lutjanus apodus","Epinephelus itajara"))
+print("to do")
 ```
 This object contains a lot of info, most of which is metadata for the diet records. It is always good to look at this metadata to assess possible issues, but we will want to strip out the metadata leaving us with just the columns containing data we need to calculate trophic level. We can do this by using `dietr`'s `ConvertFishbaseDiet` function. This function has two arguments. `FishBaseDiet` is the data frame we obtained through `rfishbase`. ExcludeStage is an argument that excludes records of a certain life-history stage. For example, we may want to exclude larvae and immature fishes from our data. We could do this with the following code:
 
 ```
-cleaned.diets<-ConvertFishbaseDiet(FishBaseDiet=my.diets, ExcludeStage=c("larvae","recruits/juv."))
+print("to do")
 
 ```
 We can see that `cleaned.diets` object we created is a list containing two data frames. The first one, called DietItems, contains the information about diet composition, with `FoodI`, `FoodII`,`FoodIII`, `Stage` and `Volume` being the fields with descriptors for the various diets. In this case, each diet item has its own row in the data frame. The first column, `Individual`, contains the fish base diet reference number unique to that study. By including this, one can have multiple studies of the same species and then pool the data using the Taxonomy, which is the second data frame in our list. The `Species` column in the `DietItems` data frame contains the species name. For example, from the `cleaned.diets$DietItems` object we created above, we can see that *Lutjanus apodus* with the diet record number of 1337 ate three different items, bony fish, crabs, and other benthic crustaceans. If we look at `cleaned.diets$Taxonomy` we will see it is a data frame of two columns. For FishBase data, our function returns each individual diet study for a species in the column `Individual`. The next column has the respective species name. So, for this example, using this Taxonomy, we can expect the trophic level for *Lutjanus apodus* to be calculated for two studies, and then also return a single values for the species.

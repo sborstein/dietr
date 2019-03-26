@@ -18,5 +18,4 @@
 #'   \item Pauly D, Froese R, Sa-a P, Palomares M, Christensen V, and Rius J. 2000. TrophLab manual. ICLARM, Manila, Philippines. 
 #'   }
 #' }
-#' @seealso \code{\link{DietTroph}}
 "FishBasePreyVals"

@@ -29,7 +29,7 @@ trophic level given a corresponding "taxonomy" data frame (i.e. estimate trophic
 individual,population,species, etc.).
 }
 \seealso{
-\code{\link{ConvertFishbaseDiet}},\code{\link{ConvertFishbaseFood}},\code{\link{DietTroph}},\code{\link{FoodTroph}}
+\code{\link{Electivity}},\code{\link{ConvertFishbaseFood}},\code{\link{DietTroph}},\code{\link{FoodTroph}}
 }
 \author{
 Samuel Borstein

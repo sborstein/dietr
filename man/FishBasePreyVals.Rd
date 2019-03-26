@@ -28,7 +28,4 @@ A data frame containing prey items and their respective trophic levels following
   }
 }
 }
-\seealso{
-\code{\link{DietTroph}}
-}
 \keyword{datasets}
