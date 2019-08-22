@@ -1,8 +1,13 @@
 #' Calculates a variety of electivity indices and foraging ratios
+#' @description Calculates forage ratio and a variety of popular electivity indices.
 #' @param Diet Data frame with data corresponding to consumed resources found in the diet. See details for formatting.
 #' @param Available Data frame with data corresponding to the available resources. See details for formatting.
 #' @param Indices Character vector containing the names of the desired indices to calculate. See description for information on availabble indices. 
 #' @param Depleting Logical. If true, will assume the food source is depleting and perform calculations following Manly. Default is FALSE.
+#' @details This function calculates the forage ratio and a variety of electivity indices. Included indices include Ivlev's (1961),
+#' Strauss' (1979), Jacob's Q and D (1974), Chesson's (1983)(Which is similar to Manl'y Alpha (1974)), and Vanderploeg & Scavia (1979).
+#' The function takes two 
+#' @return List containing data frames for each electivity index selected.
 #' @references
 #' Chesson, J. 1983. The estimation and analysis of preference and its relatioship to foraging models. Ecology 64:1297-1304.
 #' Ivlev, U. 1961. Experimental ecology of the feeding of fish. Yale University Press, New Haven.

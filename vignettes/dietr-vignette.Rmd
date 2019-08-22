@@ -119,7 +119,7 @@ my.TL<-FoodTroph(FoodItems = converted.foods$FoodItems,PreyValues = FishBasePrey
 
 ## 4: Final Comments
 Further information on the functions and their usage can be found in the helpfiles `help(package=dietr)`.
-For any further issues and questions send an email with subject 'dietr support' to sborstei@vols.utk.edu or post to the issues section on GitHub(https://github.com/sborstein/dietr/issues).
+For any further issues and questions send an email with subject 'dietr support' to sam@borstein.com or post to the issues section on GitHub(https://github.com/sborstein/dietr/issues).
 
 ##References:
 Boettiger C, Lang DT, and Wainwright PC. 2012. rfishbase: exploring, manipulating and visualizing FishBase data from R. Journal of Fish Biology 81:2030-2039.

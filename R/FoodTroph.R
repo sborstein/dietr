@@ -22,7 +22,7 @@
 #'  converted.foods$Taxonomy,PreyClass=c("FoodI","FoodII","FoodIII","Stage"))
 #' @export
 
-FoodTroph<-function(FoodItems, PreyValues,Taxonomy,PreyClass=c("FoodI","FoodII","FoodIII","Stage")){
+FoodTroph<-function(FoodItems, PreyValues,Taxonomy,PreyClass=c("FoodI","FoodII","FoodIII","Stage"), iter = 100){
   PreyValues<-mgcv::uniquecombs(PreyValues)
   individual.TL<-data.frame(matrix(nrow = length(unique(Taxonomy[,1])), ncol = 4))#make final table
   colnames(individual.TL)<-c("Individual","TrophicLevel","SE","Items")#make column names for final table
@@ -41,9 +41,9 @@ FoodTroph<-function(FoodItems, PreyValues,Taxonomy,PreyClass=c("FoodI","FoodII",
     }else{
       samps2take<-ifelse(dim(Food.Match)[1]>10, 10, dim(Food.Match)[1])#if more than 10 items, only take first 10 as it is based off log10
       individual.TL$Items[record.index]<-samps2take
-      resamps<-data.frame(matrix(nrow = 100, ncol = 2))#make table to house
+      resamps<-data.frame(matrix(nrow = iter, ncol = 2))#make table to house
       colnames(resamps)<-c("TL","SE")#make column names for table
-      for(samp.index in 1:100){#for 100 random samplings of items
+      for(samp.index in 1:iter){#for 100 random samplings of items
         ranks<-sample(1:dim(Food.Match)[1],size = samps2take, replace = F)#sample data
         Food.Order<-Food.Match[c(ranks),]#reorganize by rank
         expo = 2 - (0.16 * (log(samps2take) / log(10))) - (1.9 * (log(1:samps2take) / log(10)))#basic predictor function for TL
@@ -53,8 +53,8 @@ FoodTroph<-function(FoodItems, PreyValues,Taxonomy,PreyClass=c("FoodI","FoodII",
         #resamps$SE[samp.index]<-sqrt(sum((Food.Order$SE^2)*(PreyWeight-1))/(sum(PreyWeight)-samps2take))
         resamps$SE[samp.index]<-sqrt(sum((Food.Order$SE^2)*(check.SE.weight))/(sum(PreyWeight)-samps2take))
       }
-      individual.TL$TrophicLevel[record.index]<-1+sum(resamps$TL)/100
-      individual.TL$SE[record.index]<-sum(resamps$SE)/100
+      individual.TL$TrophicLevel[record.index]<-1+sum(resamps$TL)/iter
+      individual.TL$SE[record.index]<-sum(resamps$SE)/iter
     }
   }
   individual.TL
