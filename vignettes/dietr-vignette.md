@@ -1,9 +1,9 @@
 ---
 title: "dietr Tutorial"
 author: "Samuel R. Borstein"
-date: "26 March, 2019"
+date: "26 August, 2019"
 output:
-  html_document:
+  pdf_document:
     keep_md: true
 vignette: >
   %\VignetteIndexEntry{dietr Tutorial}
@@ -18,15 +18,19 @@ This is a tutorial for using the R package `dietr`. `dietr` uses diet or food it
 For this tutorial we will refer to diet data as quantitative stomach content data where the proportion of prey items are known (e.x. percent volume or weight of prey items, be cautious using percent frequency as various literature suggest it may be misleading). In this case, trophic level is simply estimated by adding one to the sum of trophic levels of the prey items consumed weighted by their contribution to the diet. The trophic level of consumer i($Troph_i$) is defined by the equation below: 
 
 $$Troph_i=1+\sum_{j=1}^{G}DC_{ij}\times Troph_j$$
+
 Here $Troph_j$ is the trophic level of the jth prey item consumed in the diet of i, $DC_{ij}$ is the fraction of prey item j in the diet of i, and G is the number of prey species in the diet.
 
 For estimating trophic levels from food items found in the diet that don't have proportions, a random sampling and ranking of the food items is used to get an estimate of the trophic level. The simulated proportion of prey items for calculating trophic level, `P` is calculated using the following equation:
 
 $$log_{10}P=2-1.9log_{10}R-0.16log_{10}G$$
-Here, `R` is the rank of the food item and G is the number of food items, up to 10. If more than 10 food items are listed, then a subsample of ten are randomly selected. The trophic level is then calculated using the following equation:
+
+Here, `R` is the rank of the food item and `G` is the number of food items, up to 10. If more than 10 food items are listed, then a subsample of ten are randomly selected. The trophic level is then calculated using the following equation:
 
 $$Troph=\sum(P_i*Troph_i)/\sum{P_i}$$
-Here, $P_i$ is the simulated proportion of the prey item i in the diet and $Troph_i$ is the trophic level of prey item i. This procedure is repeated 100 times and the mean of these 100 simulations. In cases where only a single prey item is in the diet, the procedure is much simpler and the estimated trophic level is simply calculated by adding 1 to the trophic level of the single prey item.
+
+
+Here, $P_i$ is the simulated proportion of the prey item i in the diet and $Troph_i$ is the trophic level of prey item i. This procedure is repeated n times and the mean of these n simulations is taken as the trophic level. In cases where only a single prey item is in the diet, the procedure is much simpler and the estimated trophic level is simply calculated by adding 1 to the trophic level of the single prey item.
 
 In this tutorial we will cover the basics of how to use `dietr` to measure trophic levels. We will first discuss how to read in data from FishBase using rfishbase and how to pass that data into `dietr`. We will then show how one can input their own raw data and use the package to estimate trophic levels.
 
@@ -75,15 +79,9 @@ Grouper, *Epinephelus itajara*, and the Schoolmaster snapper, *Lutjanus apodus*.
 
 First, let us load rfishbase and use the diet function to obtain diet data.
 
-```
-print("to do")
-```
 This object contains a lot of info, most of which is metadata for the diet records. It is always good to look at this metadata to assess possible issues, but we will want to strip out the metadata leaving us with just the columns containing data we need to calculate trophic level. We can do this by using `dietr`'s `ConvertFishbaseDiet` function. This function has two arguments. `FishBaseDiet` is the data frame we obtained through `rfishbase`. ExcludeStage is an argument that excludes records of a certain life-history stage. For example, we may want to exclude larvae and immature fishes from our data. We could do this with the following code:
 
-```
-print("to do")
 
-```
 We can see that `cleaned.diets` object we created is a list containing two data frames. The first one, called DietItems, contains the information about diet composition, with `FoodI`, `FoodII`,`FoodIII`, `Stage` and `Volume` being the fields with descriptors for the various diets. In this case, each diet item has its own row in the data frame. The first column, `Individual`, contains the fish base diet reference number unique to that study. By including this, one can have multiple studies of the same species and then pool the data using the Taxonomy, which is the second data frame in our list. The `Species` column in the `DietItems` data frame contains the species name. For example, from the `cleaned.diets$DietItems` object we created above, we can see that *Lutjanus apodus* with the diet record number of 1337 ate three different items, bony fish, crabs, and other benthic crustaceans. If we look at `cleaned.diets$Taxonomy` we will see it is a data frame of two columns. For FishBase data, our function returns each individual diet study for a species in the column `Individual`. The next column has the respective species name. So, for this example, using this Taxonomy, we can expect the trophic level for *Lutjanus apodus* to be calculated for two studies, and then also return a single values for the species.
 
 We can now measure the trophic level from diet items using the function `DietTroph`. Here, we will specify our `DietItems` and `Taxonomy` using the `cleaned.diets` object we generated above. We will also specify the `PreyValues` as being the included `FishBasePreyVals` that are part of the package. As the columns for the `PreyVals` and `DietItems` use a calssification of "FoodI","FoodII","FoodIII","Stage", we will specify these as a vector for the `PreyClass` argument.
@@ -119,7 +117,7 @@ my.TL<-FoodTroph(FoodItems = converted.foods$FoodItems,PreyValues = FishBasePrey
 
 ## 4: Final Comments
 Further information on the functions and their usage can be found in the helpfiles `help(package=dietr)`.
-For any further issues and questions send an email with subject 'dietr support' to sborstei@vols.utk.edu or post to the issues section on GitHub(https://github.com/sborstein/dietr/issues).
+For any further issues and questions send an email with subject 'dietr support' to sam@borstein.com or post to the issues section on GitHub(https://github.com/sborstein/dietr/issues).
 
 ##References:
 Boettiger C, Lang DT, and Wainwright PC. 2012. rfishbase: exploring, manipulating and visualizing FishBase data from R. Journal of Fish Biology 81:2030-2039.
@@ -128,4 +126,4 @@ Cortes E. 1999. Standardized diet compositions and trophic levels of sharks. ICE
 
 Froese R, and Pauly D. 2018. FishBase. http://www.fishbase.org/2018).
 
-Pauly D, Froese R, Sa-a P, Palomares M, Christensen V, and Rius J. 2000. TrophLab manual. ICLARM, Manila, Philippines. 
+Pauly D, Froese R, Sa-a P, Palomares M, Christensen V, and Rius J. 2000. TrophLab manual. ICLARM, Manila, Philippines.

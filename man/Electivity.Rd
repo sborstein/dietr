@@ -17,8 +17,16 @@ Electivity(Diet, Available, Indices = c("ForageRatio", "Ivlev",
 
 \item{Depleting}{Logical. If true, will assume the food source is depleting and perform calculations following Manly. Default is FALSE.}
 }
+\value{
+List containing data frames for each electivity index selected.
+}
 \description{
-Calculates a variety of electivity indices and foraging ratios
+Calculates forage ratio and a variety of popular electivity indices.
+}
+\details{
+This function calculates the forage ratio and a variety of electivity indices. Included indices include Ivlev's (1961),
+Strauss' (1979), Jacob's Q and D (1974), Chesson's (1983)(Which is similar to Manl'y Alpha (1974)), and Vanderploeg & Scavia (1979).
+The function takes two
 }
 \references{
 Chesson, J. 1983. The estimation and analysis of preference and its relatioship to foraging models. Ecology 64:1297-1304.

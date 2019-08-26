@@ -5,7 +5,7 @@
 \title{Calculates trophic level from qualitative food item data for species, populations, and individuals using a random subsampling routine.}
 \usage{
 FoodTroph(FoodItems, PreyValues, Taxonomy, PreyClass = c("FoodI",
-  "FoodII", "FoodIII", "Stage"))
+  "FoodII", "FoodIII", "Stage"), Iter = 100, SE.Type = "TrophLab")
 }
 \arguments{
 \item{FoodItems}{a data frame with rows as individuals and each row consisting of a prey item name.}
@@ -15,14 +15,26 @@ FoodTroph(FoodItems, PreyValues, Taxonomy, PreyClass = c("FoodI",
 \item{Taxonomy}{a data frame with the least inclusive level in the leftmost column progressing to more inclusive with columns to the right.Can be a single column.}
 
 \item{PreyClass}{Column names of the PreyValues used for matching between FoodItems and PreyValues, exclusive of TL and SE. Default is those of FishBase.}
+
+\item{Iter}{Numeric representing how many iterations of the subsampling routine should be performed. Default is 100 (same as in TrophLab)}
+
+\item{SE.Type}{Type of SE to perform. Can be either TrophLab, Sims, or Both. Default is TrophLab. See details for a more in-depth description of these options.}
 }
 \value{
-a list containing estimated trophic levels from food items at each taxonomic level provided by the user.
+a list of data frames containing estimated trophic levels from food items at each taxonomic level provided by the user.
 }
 \description{
 Calculates trophic level from food items where quantitative contribution is unknown. Follows the routine described in TrophLab. 
 While FishBase data obtained from rfishbase can be used, users can also upload their own data for
 use with the function.
+}
+\details{
+Users can set the number of iterations for the subsampling routine for the simulated ranking of trophic items used in calculating trophic levels. We have this set currently to match
+how it is implemented in TrophLab, at 100. We find this performs relatively well and is quite quick to do, but users could also increase thios value with minimal impacts on runtime.
+
+For calculating the SE (SE.Type parameter) around the estimated trophic level users have a few options. The current default follows TrophLab and uses the SE around the trophic levels of prey to estimate
+the SE which they also refer to as the omnivory index. Alternatively, users can select the Sims option, in which case the SE is estimated based on the estimated TL of the n number
+of subsampling routines.Users can also select "Both" if they would like to calculate both types of SE.
 }
 \examples{
 #Get some food item data from rfishbase
