@@ -21,6 +21,7 @@ $$Troph_i=1+\sum_{j=1}^{G}DC_{ij}\times Troph_j$$
 
 Here $Troph_j$ is the trophic level of the jth prey item consumed in the diet of i, $DC_{ij}$ is the fraction of prey item j in the diet of i, and G is the number of prey species in the diet.
 
+
 For estimating trophic levels from food items found in the diet that don't have proportions, a random sampling and ranking of the food items is used to get an estimate of the trophic level. The simulated proportion of prey items for calculating trophic level, `P` is calculated using the following equation:
 
 $$log_{10}P=2-1.9log_{10}R-0.16log_{10}G$$
@@ -28,7 +29,6 @@ $$log_{10}P=2-1.9log_{10}R-0.16log_{10}G$$
 Here, `R` is the rank of the food item and `G` is the number of food items, up to 10. If more than 10 food items are listed, then a subsample of ten are randomly selected. The trophic level is then calculated using the following equation:
 
 $$Troph=\sum(P_i*Troph_i)/\sum{P_i}$$
-
 
 Here, $P_i$ is the simulated proportion of the prey item i in the diet and $Troph_i$ is the trophic level of prey item i. This procedure is repeated n times and the mean of these n simulations is taken as the trophic level. In cases where only a single prey item is in the diet, the procedure is much simpler and the estimated trophic level is simply calculated by adding 1 to the trophic level of the single prey item.
 
@@ -67,9 +67,10 @@ To run `dietr` you will need the following data as inputs. First is diet or food
 The second is a dataframe of trophic levels of the prey, or as we name them in the functions, `PreyValues`. We include a few different datasets with prey values users can use, though you can also supply your own. `FishBasePreyVals` are the values FishBase/TrophLab use to calculate trophic levels. `CortesPreyVals`
 are standardized diet prey values for sharks from Cortes, 1999. Both of these can be loaded into R
 from `dietr` using the `data()` function:
+
 ```
 data(FishBasePreyVals)#Load the Fishbase trophic levels of prey items 
-data(CortesPreyVals)#Load the Cortes standardized trophic levels of prey items
+data(CortesPreyVals)#Load the Cortes (1992) standardized trophic levels of prey items for elasmobranchs
 ```
 The last data object we need is a data frame we call `Taxonomy`. Columns of this dataframe should move from least inclusive to most inclusive from left to right. This data is used to assign individuals to groups for measuring hierarchical trophic levels (ex. trophic levels for an individuals, populations, species, etc.). This can be as simple as just a single column data frame if you only want to measure trophic levels for each individual and not at a higher level.
 
@@ -111,19 +112,36 @@ converted.foods<-ConvertFishbaseFood(my.food)
 #Calculate trophic level from food items
 my.TL<-FoodTroph(FoodItems = converted.foods$FoodItems,PreyValues = FishBasePreyVals, Taxonomy = converted.foods$Taxonomy,PreyClass=c("FoodI","FoodII","FoodIII","Stage"))
 ```
-## 3.5 Troubleshooting
 
+## 3.3: Using dietr to calculate trophic levels from your own data
 
+`dietr` was written with flexability in mind so it is easy for users to use their own data they collected to estimate trophic levels. 
 
-## 4: Final Comments
+## 3.4: Electivity Indices
+
+While `dietr` can estimate trophic levels from food item and diet composition data as highlighted above, it can also measure a number of popular elevtivity indices used in studies of trophic ecology. The `dietr` function `electivity` implements Ivlev's (1961), Strauss' (1979), Jacob's Q and D (1974), Chesson's (1983)(Which is similar to Manl'y Alpha (1974)), and Vanderploeg & Scavia (1979) electivity indices. 
+
+# 4: Final Comments
 Further information on the functions and their usage can be found in the helpfiles `help(package=dietr)`.
 For any further issues and questions send an email with subject 'dietr support' to sam@borstein.com or post to the issues section on GitHub(https://github.com/sborstein/dietr/issues).
 
-##References:
+# 5: References
 Boettiger C, Lang DT, and Wainwright PC. 2012. rfishbase: exploring, manipulating and visualizing FishBase data from R. Journal of Fish Biology 81:2030-2039.
+
+Chesson, J. 1983. The estimation and analysis of preference and its relatioship to foraging models. Ecology 64:1297-1304.
 
 Cortes E. 1999. Standardized diet compositions and trophic levels of sharks. ICES Journal of marine science 56:707-717. 
 
-Froese R, and Pauly D. 2018. FishBase. http://www.fishbase.org/2018).
+Froese R, and Pauly D. 2019. FishBase. http://www.fishbase.org/2019).
+
+Ivlev, U. 1961. Experimental ecology of the feeding of fish. Yale University Press, New Haven.
+
+Jacobs, J. 1974. Quantitative measurement of food selection. Oecologia 14:413-417.
+
+Manly, B. 1974. A model for certain types of selection experiments. Biometrics 30:281-294.
 
 Pauly D, Froese R, Sa-a P, Palomares M, Christensen V, and Rius J. 2000. TrophLab manual. ICLARM, Manila, Philippines.
+
+Strauss, R. E. 1979. Reliability Estimates for Ivlev's Electivity Index, the Forage Ratio, and a Proposed Linear Index of Food Selection. Transactions of the American Fisheries Society 108:344-352.
+
+Vanderploeg, H., and D. Scavia. 1979. Two electivity indices for feeding with special reference to zooplankton grazing. Journal of the Fisheries Board of Canada 36:362-365.

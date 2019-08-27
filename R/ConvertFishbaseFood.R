@@ -1,4 +1,4 @@
-#' Converts FishBase/SealifBase food item diet data obtained from the diet function into a usable format for TrophicLevelR
+#' Converts FishBase/SealifBase food item diet data obtained from the diet function into a usable format for dietr
 #' @param FishBaseFood a data frame produced by the rfishbase fooditem function
 #' @param ExcludeStage a character, indicating which life stages to exclude. Must match stage names given by rfishbase (i.e. larvae, rec./juveniles, juv./adults, adults).
 #' @return a list of length two, with two data frames. One containing the re-formatted food item data and one containing the Taxonomy with species names.
@@ -7,7 +7,7 @@
 #' @examples
 #' #Get rfishbase food item data for a few species
 #' my.food<-rfishbase::fooditems(c("Lutjanus apodus","Epinephelus itajara"))
-#' #use the ConvertFishbaseFood function to format it for TrophicLevelR and exclude recruits/juveniles
+#' #use the ConvertFishbaseFood function to format it for dietr and exclude recruits/juveniles
 #' cleaned.food<-ConvertFishbaseFood(FishBaseFood=my.food, ExcludeStage=c("larvae","recruits/juv."))
 #' @export
 

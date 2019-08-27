@@ -2,7 +2,7 @@
 % Please edit documentation in R/ConvertFishbaseFood.R
 \name{ConvertFishbaseFood}
 \alias{ConvertFishbaseFood}
-\title{Converts FishBase/SealifBase food item diet data obtained from the diet function into a usable format for TrophicLevelR}
+\title{Converts FishBase/SealifBase food item diet data obtained from the diet function into a usable format for dietr}
 \usage{
 ConvertFishbaseFood(FishBaseFood, ExcludeStage = NULL)
 }
@@ -15,7 +15,7 @@ ConvertFishbaseFood(FishBaseFood, ExcludeStage = NULL)
 a list of length two, with two data frames. One containing the re-formatted food item data and one containing the Taxonomy with species names.
 }
 \description{
-Converts FishBase/SealifBase food item diet data obtained from the diet function into a usable format for TrophicLevelR
+Converts FishBase/SealifBase food item diet data obtained from the diet function into a usable format for dietr
 }
 \details{
 This converts the data frame produced by rfishbase fooditem function into a usable fortmat for dietr.
@@ -23,7 +23,7 @@ This converts the data frame produced by rfishbase fooditem function into a usab
 \examples{
 #Get rfishbase food item data for a few species
 my.food<-rfishbase::fooditems(c("Lutjanus apodus","Epinephelus itajara"))
-#use the ConvertFishbaseFood function to format it for TrophicLevelR and exclude recruits/juveniles
+#use the ConvertFishbaseFood function to format it for dietr and exclude recruits/juveniles
 cleaned.food<-ConvertFishbaseFood(FishBaseFood=my.food, ExcludeStage=c("larvae","recruits/juv."))
 }
 \author{
