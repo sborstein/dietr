@@ -14,7 +14,6 @@
 #' #Convert Fishbase Diet Data and exclude juvenile and larval records
 #' my.diets<-ConvertFishbaseDiet(ExcludeStage=c("recruits/juv.","larvae"))
 #' @author Samuel Borstein
-#' @examples
 #' @export
 
 ConvertFishbaseDiet<-function(ExcludeStage=NULL){

@@ -32,7 +32,7 @@
 #' @export
 
 FoodTroph<-function(FoodItems, PreyValues,Taxonomy,PreyClass=c("FoodI","FoodII","FoodIII","Stage"), Iter = 100, SE.Type = "TrophLab"){
-  PreyValues<-mgcv::uniquecombs(PreyValues)
+  PreyValues<-unique(PreyValues)
   #individual.TL<-data.frame(matrix(nrow = length(unique(Taxonomy[,1])), ncol = 4))#make final table
   individual.TL<-data.frame(matrix(nrow = length(unique(Taxonomy[,1])), ncol = ifelse(SE.Type == "Both", 5, 4)))#make final table
   ifelse(ncol(individual.TL)==5,colnames(individual.TL)<-c("Individual","TrophicLevel","TrophLabSE","SimsSE","Items"),colnames(individual.TL)<-c("Individual","TrophicLevel","SE","Items"))#make column names for final table

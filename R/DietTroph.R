@@ -32,7 +32,7 @@
 #' @export
 
 DietTroph<-function(DietItems, PreyValues,Taxonomy,PreyClass=c("FoodI","FoodII","FoodIII","Stage"),SumCheck=TRUE){
-  PreyValues<-mgcv::uniquecombs(PreyValues)
+  PreyValues<-unique(PreyValues)
   individual.TL<-data.frame(matrix(nrow = length(unique(Taxonomy[,1])), ncol = 3))#make final table
   colnames(individual.TL)<-c("Individual","TrophicLevel","SE")#make column names for final table
   unique.records<-as.vector(unique(Taxonomy[,1]))#get the number of unique records
