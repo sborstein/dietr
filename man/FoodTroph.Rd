@@ -37,6 +37,7 @@ the SE which they also refer to as the omnivory index. Alternatively, users can 
 of subsampling routines.Users can also select "Both" if they would like to calculate both types of SE.
 }
 \examples{
+\dontrun{
 #Get some food item data from rfishbase
 library(rfishbase)
 my.food <- rfishbase::fooditems(c("Lutjanus apodus","Epinephelus itajara"))
@@ -47,6 +48,7 @@ data(FishBasePreyVals)
 #Calculate Trophic Levels
 my.TL <- FoodTroph(FoodItems = converted.foods$FoodItems,PreyValues = FishBasePreyVals, Taxonomy =
 converted.foods$Taxonomy,PreyClass=c("FoodI","FoodII","FoodIII","Stage"))
+}
 }
 \author{
 Samuel Borstein

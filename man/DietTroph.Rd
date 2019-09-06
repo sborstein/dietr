@@ -35,6 +35,7 @@ While FishBase data obtained from rfishbase can be used, users can also upload t
 use in with function.
 }
 \examples{
+\dontrun{
 #Get some food item data from rfishbase
 #library(rfishbase)
 #convert FishBase data into data for trophic calculation using dietr
@@ -47,6 +48,7 @@ data(FishBasePreyVals)
 #Calculate Trophic Levels
 my.TL <- DietTroph(DietItems = my.diets,PreyValues = FishBasePreyVals, Taxonomy = 
 my.taxonomy, PreyClass=c("FoodI","FoodII","FoodIII","Stage"))
+}
 }
 \author{
 Samuel Borstein

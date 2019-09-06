@@ -18,7 +18,8 @@
 #' While FishBase data obtained from rfishbase can be used, users can also upload their own data for
 #' use in with function. 
 #' @author Samuel Borstein
-#' @examples 
+#' @examples
+#'\dontrun{
 #' #Get some food item data from rfishbase
 #' #library(rfishbase)
 #' #convert FishBase data into data for trophic calculation using dietr
@@ -31,6 +32,7 @@
 #' #Calculate Trophic Levels
 #' my.TL <- DietTroph(DietItems = my.diets,PreyValues = FishBasePreyVals, Taxonomy = 
 #' my.taxonomy, PreyClass=c("FoodI","FoodII","FoodIII","Stage"))
+#' }
 #' @export
 
 DietTroph<-function(DietItems, PreyValues,Taxonomy,PreyClass=c("FoodI","FoodII","FoodIII","Stage"),SumCheck=TRUE){
