@@ -39,14 +39,14 @@ of subsampling routines.Users can also select "Both" if they would like to calcu
 \examples{
 #Get some food item data from rfishbase
 library(rfishbase)
-my.food<-rfishbase::fooditems(c("Lutjanus apodus","Epinephelus itajara"))
+my.food <- rfishbase::fooditems(c("Lutjanus apodus","Epinephelus itajara"))
 #convert FishBase data into data for trophic calculation using TrophicLevelR
-converted.foods<-ConvertFishbaseFood(my.food)
+converted.foods <- ConvertFishbaseFood(my.food)
 #Load Prey Values
 data(FishBasePreyVals)
 #Calculate Trophic Levels
-my.TL<-FoodTroph(FoodItems = converted.foods$FoodItems,PreyValues = FishBasePreyVals, Taxonomy =
- converted.foods$Taxonomy,PreyClass=c("FoodI","FoodII","FoodIII","Stage"))
+my.TL <- FoodTroph(FoodItems = converted.foods$FoodItems,PreyValues = FishBasePreyVals, Taxonomy =
+converted.foods$Taxonomy,PreyClass=c("FoodI","FoodII","FoodIII","Stage"))
 }
 \author{
 Samuel Borstein

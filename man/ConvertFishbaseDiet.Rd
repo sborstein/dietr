@@ -25,9 +25,9 @@ those of interest for them. We have implemented in this function a way to join t
 }
 \examples{
 #Convert Fishbase Diet Data
-my.diets<-ConvertFishbaseDiet(ExcludeStage=NULL)
+my.diets <- ConvertFishbaseDiet(ExcludeStage=NULL)
 #Convert Fishbase Diet Data and exclude juvenile and larval records
-my.diets<-ConvertFishbaseDiet(ExcludeStage=c("recruits/juv.","larvae"))
+my.diets <- ConvertFishbaseDiet(ExcludeStage=c("recruits/juv.","larvae"))
 }
 \author{
 Samuel Borstein

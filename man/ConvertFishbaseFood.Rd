@@ -22,9 +22,9 @@ This converts the data frame produced by rfishbase fooditem function into a usab
 }
 \examples{
 #Get rfishbase food item data for a few species
-my.food<-rfishbase::fooditems(c("Lutjanus apodus","Epinephelus itajara"))
+my.food <- rfishbase::fooditems(c("Lutjanus apodus","Epinephelus itajara"))
 #use the ConvertFishbaseFood function to format it for dietr and exclude recruits/juveniles
-cleaned.food<-ConvertFishbaseFood(FishBaseFood=my.food, ExcludeStage=c("larvae","recruits/juv."))
+cleaned.food <- ConvertFishbaseFood(FishBaseFood=my.food, ExcludeStage=c("larvae","recruits/juv."))
 }
 \author{
 Samuel Borstein

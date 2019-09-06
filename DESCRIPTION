@@ -5,10 +5,9 @@ Title: Diet Estimated Trophic Levels in R
 Author: Samuel R. Borstein <sam@borstein.com>
 Maintainer: Samuel R. Borstein <sam@borstein.com>
 Depends:
-    R (>= 3.4)
+    R (>= 3.5)
 Imports:
-    rfishbase (>= 2.1),
-	mgcv
+    rfishbase (>= 2.1)
 Description: Estimates fractional trophic level from diet and food item data records in R.
 License: GPL (>= 2)
 LazyData: true
