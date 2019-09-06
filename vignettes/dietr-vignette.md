@@ -1,7 +1,7 @@
 ---
 title: "dietr Tutorial"
 author: "Samuel R. Borstein"
-date: "26 August, 2019"
+date: "04 September, 2019"
 output:
   pdf_document:
     keep_md: true
@@ -13,7 +13,7 @@ vignette: >
 
 # 1: Introduction
 
-This is a tutorial for using the R package `dietr`. `dietr` uses diet or food item data to calculate trophic levels following the procedures described in `TrophLab` (Pauly et al., 2000), which currently is only avaialble as a Microsoft Access database program. Our implementation is very easy to use and extremely fast as users can specify all their data as dataframes. It also differs from TrophLab in that users can specify a taxonomic hierarchy and measure trophic levels from their data at various levels (e.x. individual,population, species,genus, etc.). `dietr` also works well with FishBase (Froese & Pauly, 2018) data and can use diet and food item data obtained in R using the rfishbase package (Boettiger et al., 2012). 
+This is a tutorial for using the R package `dietr`. `dietr` uses diet or food item data to calculate trophic levels following the procedures described in `TrophLab` (Pauly et al., 2000), which currently is only avaialble as a Microsoft Access database program. Our implementation is very easy to use and extremely fast as users can specify all their data as dataframes. It also differs from TrophLab in that users can specify a taxonomic hierarchy and measure trophic levels from their data at various levels (e.x. individual,population, species,genus, etc.). `dietr` also works well with FishBase (Froese & Pauly, 2018) data and can use diet and food item data obtained in R using the rfishbase package (Boettiger et al., 2012). In addition to estimating trophic levels, `dietr` can also estimate various electivity indices used in diet studies.
 
 For this tutorial we will refer to diet data as quantitative stomach content data where the proportion of prey items are known (e.x. percent volume or weight of prey items, be cautious using percent frequency as various literature suggest it may be misleading). In this case, trophic level is simply estimated by adding one to the sum of trophic levels of the prey items consumed weighted by their contribution to the diet. The trophic level of consumer i($Troph_i$) is defined by the equation below: 
 
@@ -21,6 +21,9 @@ $$Troph_i=1+\sum_{j=1}^{G}DC_{ij}\times Troph_j$$
 
 Here $Troph_j$ is the trophic level of the jth prey item consumed in the diet of i, $DC_{ij}$ is the fraction of prey item j in the diet of i, and G is the number of prey species in the diet.
 
+As estimates of prey trophic levels may not be exact, the standard error around the estimate of the trophic level can be calculated with equation 2. TrophLab gets around this by assigning a standard error for each trophic level and using the below equation to measure the standard error (which they also refer to as the omnivory index). Here, the standard error of the focal species i, $s.e._{i}$, is calculated as the square root of the sum of the product of the standard errors of the prey items $s.e._{j}$ to the second weighted by their respective contribution in the diet, $DC_{ij}$ over 100.
+
+$$s.e_{i}=\sqrt{\frac{\sum_{j=1}^{G}DC_{ij}*s.e._{j}^2}{100}}$$
 
 For estimating trophic levels from food items found in the diet that don't have proportions, a random sampling and ranking of the food items is used to get an estimate of the trophic level. The simulated proportion of prey items for calculating trophic level, `P` is calculated using the following equation:
 
@@ -31,6 +34,10 @@ Here, `R` is the rank of the food item and `G` is the number of food items, up t
 $$Troph=\sum(P_i*Troph_i)/\sum{P_i}$$
 
 Here, $P_i$ is the simulated proportion of the prey item i in the diet and $Troph_i$ is the trophic level of prey item i. This procedure is repeated n times and the mean of these n simulations is taken as the trophic level. In cases where only a single prey item is in the diet, the procedure is much simpler and the estimated trophic level is simply calculated by adding 1 to the trophic level of the single prey item.
+
+The estimate of the standard error around the trophic level from food item data is defined below. Here, the standard error is the square root of the sum of the product of the standard error of a prey item squared and the contribution of the prey item minus 1 divided by the sum of the contribution of the prey items, P, minus the total number of prey items, G. For food item data, the random sampling routine and calculation to estimate trophic level and standard error is repeated 100 times, with the final trophic level and standard error being the mean of these 100 calculations.
+
+$$s.e_{i}=\sqrt{\frac{(s.e_{1})^2*(P_{1}-1)+(s.e._{2})^2*(P_{2}-1)...(s.e_{G})^2*(P_{G}-1)}{100}}$$
 
 In this tutorial we will cover the basics of how to use `dietr` to measure trophic levels. We will first discuss how to read in data from FishBase using rfishbase and how to pass that data into `dietr`. We will then show how one can input their own raw data and use the package to estimate trophic levels.
 
@@ -53,7 +60,8 @@ dev_mode(on=T)
 install_github("sborstein/dietr")  # install the package from GitHub
 library(dietr)# load the package
 
-#3. Leave developers mode after using the development version of 'AnnotationBustR' so it will not #remain on your system permanently.
+#3. Leave developers mode after using the development version of 'dietr' so it will not 
+#remain on your system permanently.
 dev_mode(on=F)
 ```
 # 3: Using dietr
@@ -115,7 +123,7 @@ my.TL<-FoodTroph(FoodItems = converted.foods$FoodItems,PreyValues = FishBasePrey
 
 ## 3.3: Using dietr to calculate trophic levels from your own data
 
-`dietr` was written with flexability in mind so it is easy for users to use their own data they collected to estimate trophic levels. 
+`dietr` was written with flexability in mind so it is easy for users to use their own data they collected to estimate trophic levels. For instance, users may want to analyze their own data or may be interested in using a different set of prey values. 
 
 ## 3.4: Electivity Indices
 
