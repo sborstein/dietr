@@ -1,7 +1,7 @@
 ---
 title: "dietr Tutorial"
 author: "Samuel R. Borstein"
-date: "04 September, 2019"
+date: "28 September, 2019"
 output:
   pdf_document:
     keep_md: true
@@ -78,27 +78,38 @@ from `dietr` using the `data()` function:
 
 ```
 data(FishBasePreyVals)#Load the Fishbase trophic levels of prey items 
-data(CortesPreyVals)#Load the Cortes (1992) standardized trophic levels of prey items for elasmobranchs
+#Standardized trophic levels of prey items for elasmobranchs
+data(CortesPreyVals)#Load the Cortes (1992)
 ```
 The last data object we need is a data frame we call `Taxonomy`. Columns of this dataframe should move from least inclusive to most inclusive from left to right. This data is used to assign individuals to groups for measuring hierarchical trophic levels (ex. trophic levels for an individuals, populations, species, etc.). This can be as simple as just a single column data frame if you only want to measure trophic levels for each individual and not at a higher level.
 
 ## 3.1: Using dietr to calculate trophic levels from FishBase diet data
-Our first example will use FishBase diet data. For this, we will get data for two species: The Goliath
-Grouper, *Epinephelus itajara*, and the Schoolmaster snapper, *Lutjanus apodus*.
+Our first example will use FishBase diet data. Unfortunately, this was easier to do with previous versions of `rfishbase` where you could specify the taxa you wanted data for from the `diet function` and this function had to be re-written to work with `rfishbase 3.0`. In version 3.0 and above, the `rfishbase` seperated the function into two different functions that are not intuitively useful as one returns the actual diet data (`diet_items`) and the other returns the metadata for the diet records (`diet`). Unfortunately, one must manually merge these records together to see what species belong to which diet data and uses can no longer specify a single taxon to retrieve data for. `dietr`'s `ConvertFishBaseDiet` function does the merging of these two data sets for you and allows you to exclude life history stages while converting the data into a format that can be used to calculate trophic levels in `dietr`. However, as `rfishbase` no longer allows you to specify species to return, the function downloads all available diet data, thus, users will need to filter out their focal taxa. 
 
-First, let us load rfishbase and use the diet function to obtain diet data.
+The function has only one argument, `ExcludeStage`, in which users specify if they want to exclude a stage (ex. larvae) or not (in which case `ExcludeStage = NULL`). It returns a list of two data frames. The first, named `DietItems` contains the diet items while the second, `Taxonomy` , contains the taxonomy for calculating heirarchical trophic levels. Below, we will get FishBase diet for use with `dietr` while removind records from immature specimens.
 
-This object contains a lot of info, most of which is metadata for the diet records. It is always good to look at this metadata to assess possible issues, but we will want to strip out the metadata leaving us with just the columns containing data we need to calculate trophic level. We can do this by using `dietr`'s `ConvertFishbaseDiet` function. This function has two arguments. `FishBaseDiet` is the data frame we obtained through `rfishbase`. ExcludeStage is an argument that excludes records of a certain life-history stage. For example, we may want to exclude larvae and immature fishes from our data. We could do this with the following code:
+```
+# Convert Fishbase Diet Data and exclude juvenile and larval records
+my.diets <- ConvertFishbaseDiet(ExcludeStage=c("recruits/juv.","larvae"))
+```
 
 
-We can see that `cleaned.diets` object we created is a list containing two data frames. The first one, called DietItems, contains the information about diet composition, with `FoodI`, `FoodII`,`FoodIII`, `Stage` and `Volume` being the fields with descriptors for the various diets. In this case, each diet item has its own row in the data frame. The first column, `Individual`, contains the fish base diet reference number unique to that study. By including this, one can have multiple studies of the same species and then pool the data using the Taxonomy, which is the second data frame in our list. The `Species` column in the `DietItems` data frame contains the species name. For example, from the `cleaned.diets$DietItems` object we created above, we can see that *Lutjanus apodus* with the diet record number of 1337 ate three different items, bony fish, crabs, and other benthic crustaceans. If we look at `cleaned.diets$Taxonomy` we will see it is a data frame of two columns. For FishBase data, our function returns each individual diet study for a species in the column `Individual`. The next column has the respective species name. So, for this example, using this Taxonomy, we can expect the trophic level for *Lutjanus apodus* to be calculated for two studies, and then also return a single values for the species.
+We can see that `my.diets` object we created is a list containing two data frames. The first one, called DietItems, contains the information about diet composition, with `FoodI`, `FoodII`,`FoodIII`, `Stage` and `DietPercent` being the fields with descriptors for the various diets. In this case, each diet item has its own row in the data frame. The first column, `Individual`, contains the fish base diet reference number unique to that study. By including this, one can have multiple studies of the same species and then pool the data using the Taxonomy, which is the second data frame in our list. The `Species` column in the `DietItems` data frame contains the species name. For example, from the `my.diets$DietItems` object we created above, we can see that the first record in our dataset *Merlangius merlangus* with the diet record number of `4` ate eight different items, mollusks, squids/cuttlefish, bony fish, n.a./other annelids, and a variety of other invertebrates. If we look at `my.diets$Taxonomy` we will see it is a data frame of two columns. For FishBase data, our function returns each individual diet study for a species in the column `Individual`. The next column has the respective species name. This information will then be used to calculate the trophic levels for each individual diet record and then for all records belonging to that species.
 
-We can now measure the trophic level from diet items using the function `DietTroph`. Here, we will specify our `DietItems` and `Taxonomy` using the `cleaned.diets` object we generated above. We will also specify the `PreyValues` as being the included `FishBasePreyVals` that are part of the package. As the columns for the `PreyVals` and `DietItems` use a calssification of "FoodI","FoodII","FoodIII","Stage", we will specify these as a vector for the `PreyClass` argument.
+We can now measure the trophic level from diet items using the function `DietTroph`. Here, we will specify our `DietItems` and `Taxonomy` using the `cleaned.diets` object we generated above. We will also specify the `PreyValues` as being the included `FishBasePreyVals` that are part of the package. As the columns for the `PreyVals` and `DietItems` use a calssification of "FoodI","FoodII","FoodIII","Stage", we will specify these as a vector for the `PreyClass` argument. For this example, lets just focus on a single species with multiple diet records, *Epinephelus itjara*, which has a total of three records.
+
+```
+#Remove Data for Epinephelus itajara
+my.diets$DietItems <- my.diets$DietItems[my.diets$DietItems$Species == "Epinephelus itajara",]
+my.diets$Taxonomy <- my.diets$Taxonomy[my.diets$Taxonomy$Species == "Epinephelus itajara",]
+```
+We can now calculate the trophic levels. We will use the trophic levels of prey from FishBase, which is a data object that can be loaded named `FishBasePreyVals`. We will specify our diet data and taxonomy with the parameter `DietItems` and `Taxonomy` respectively. We also need to specify how the prey is classified. This is meant to be flexible and tells `dietr` how to relate the values in `DietItems` to the values in `PreyValues`. If we look at the columns of both, we can see they use a classification scheme of `FoodI`, `FoodII`, "FoodIII` and `Stage`, so we will input that information in `PreyClass`. We will show the flexibility of this parameter a little later in this vignette in another example.The final parameter, `SumCheck` checks that the diet data do infact sum to 100 as would be expected if they are percent composition and will recalculate if they are not. I strongly recommend this always be set to `TRUE`.
 
 ```
 data(FishBasePreyVals)#load the FishBase prey values that are part of the dietr package
 #Calculate trophic level with DietTroph function
-my.TL<-DietTroph(DietItems = converted.diet$DietItems,PreyValues = FishBasePreyVals, Taxonomy = converted.diet$Taxonomy, PreyClass=c("FoodI","FoodII","FoodIII","Stage"))
+my.TL<-DietTroph(DietItems = my.diets$DietItems,PreyValues = FishBasePreyVals, 
+Taxonomy = my.diets$Taxonomy, PreyClass=c("FoodI","FoodII","FoodIII","Stage"), SumCheck = TRUE)
 ```
 
 We can see that the `my.TL` object we just created contains a list of length two, each with a data frame, with the names of these data frames matching the `Taxonomy` we provided. We can see that the first data frame in this list, named `Individual` contains the trophic levels for each individual study that we input, while the data frame named `Species` provides the mean trophic level and SE and the number of studies across all individuals for each species.
@@ -118,16 +129,95 @@ In order to use this in `dietr`, we will need to convert it using the function `
 #Convert FishBase food item data to a format usable for FoodTroph
 converted.foods<-ConvertFishbaseFood(my.food)
 #Calculate trophic level from food items
-my.TL<-FoodTroph(FoodItems = converted.foods$FoodItems,PreyValues = FishBasePreyVals, Taxonomy = converted.foods$Taxonomy,PreyClass=c("FoodI","FoodII","FoodIII","Stage"))
+my.TL<-FoodTroph(FoodItems = converted.foods$FoodItems,PreyValues = FishBasePreyVals, Taxonomy = 
+converted.foods$Taxonomy,PreyClass=c("FoodI","FoodII","FoodIII","Stage"), Iter = 100,
+SE.Type = "TrophLab")
 ```
 
 ## 3.3: Using dietr to calculate trophic levels from your own data
 
-`dietr` was written with flexability in mind so it is easy for users to use their own data they collected to estimate trophic levels. For instance, users may want to analyze their own data or may be interested in using a different set of prey values. 
+`dietr` was written with flexability in mind so it is easy for users to use their own data or data from non-FishBase sources to calculate trophic levels. In this section, we will discuss how we can use this flexibility to customize trophic level calculations for a dataset. For this example, we will use data from Magalhaes et al., 2015, which analyzed the stomach contents of the cichlid *Herichthys minckleyi* volumetrically.
+
+First we can load the data. We will mostly be focusing on the last ten columns, which contain the volumetric proportions of the prey items as well as the first three columns which contain information on the individual fish, the lake it was caught, and the year in which it was caught.
+
+```
+data(Herichthys)
+```
+
+Note, this is the raw data from their paper and contains other data on morphology and genotypes. As such, not all individuals have diet data associated with them, so we will want to remove them. 
+
+```
+#Subset out individuals with diet data
+HMdat<-Herichthys[Herichthys$total==100,]
+```
+
+For this tutorial lets measure four hierarchical trophic levels. Specifically, we will measure trophic levels at the individual, lake by year, lake (across all years), and for the species inclusive of all *Herichthys minckleyi* individuals. To do this, we will need to generate a four column data frame to input as our `Taxonomy` parameter. We can do this by doing the following.
+
+```
+#Make a data frame of the individuals, lake by year, and lake.
+HMtax<-cbind.data.frame(HMdat$individual,paste(HMdat$lake,HMdat$year),HMdat$lake)
+#Name the data frame
+colnames(HMtax)<-c("Individual","Lake x Year","Lake (all years)")
+#To calculate trophic level for the entire species, add a vecotr to the data frame of the species name
+HMtax$species<-"Herichthys minckleyi"
+```
+Next, we need to organize the data for input with dietr. First, lets grab out the data.
+```
+HMdat<-HMdat[,c("individual","X.Gastrop","X.Insect","X.Fish","X.Zoopl","X.plants","X.algae",
+"X.detritus")]
+```
+
+Remember that `dietr` requires each row to be a unique diet item per individual and that the first column contains the individual's name. We will need to format our data to work. Currently, we can see that for each individual, there are columns for the prey items, so we will need to take the data in these columns and make each prey item a row.
+```
+#Repeat the individual name the number of unique prey types (6)
+Inds<-rep(x = HMdat$individual, times=6)[order(rep(x = HMdat$individual, times=6))]
+#Repeat the number of food typed the length of the number of individuals
+FoodTypes<-rep(x = colnames(HMdat[2:7]),times=length(unique(HMtax$Individual)))
+#Make a data frame, the length of the individuals with three columns
+HM.mat<-as.data.frame(matrix(nrow = length(Inds),ncol = 3))
+#Name these columns
+colnames(HM.mat)<-c("Individual","FoodItem","Percent")
+#Populate the dataframes first column with the individual and the second column with the prey type
+HM.mat$Individual<-Inds
+HM.mat$FoodItem<-FoodTypes
+#Run this for loop to find the diet data based on the individual and then match the diet percentage
+#based on the name of the prey type
+for(i in 1:nrow(HMdat)){
+  rows2match<-which(HM.mat$Individual==HMdat$individual[i])
+  HM.mat$Percent[rows2match]<-as.vector(as.numeric(HMdat[i,2:7]))
+}
+#Remove prey that do not contribute to diets
+HM.mat<-HM.mat[!HM.mat$Percent==0,]
+```
+We can see that our data frame `HM.mat` is of three columns. The first row has our individual names, the second, the prey name, and the third, the dietary contribution of that prey. We now need to generate the prey values we want to use for calculating trophic levels into a format that can be used with `dietr`. For our example, we can easily do this by creating a data frame, which we will call PreyMat. The dimensions of this data frame will be three columns, so we can input the prey name, prey trophic level, and prey SE (if we want to have one, we can also just set them to 0, and functionally not measure it). Note for this example, the values of the prey will be equivalent to those in `FishBasePreyVals`, but as an example, I will show a simple way one could make prey values with vectors.
+
+```
+#Create a empty data frame for prey values
+PreyMat<-as.data.frame(matrix(ncol = 3,nrow = 6))
+#Name the columns something useful
+colnames(PreyMat)<-c("FoodItem","TL","SE")
+#Add in the prey name to the PreyMat
+PreyMat[,1]<-unique(FoodTypes)
+#Add in the trophic levels of the prey
+PreyMat[,2]<-c(2.37,2.2,3.5,2.1,2,2)
+#Add in the SE of the prey
+PreyMat[,3]<-c(.58,.4,.8,.3,0,0)
+```
+We now have all our needed information to calculate trophic levels (`DietItems`, `Taxonomy`, and `PreyValues`). We can now call `dietr's` `DietTroph` function and calculate trophic levels at the individual, lake by year, lake, and species level we defined in our Taxonomy data frame.
+
+```
+HM.TL<-DietTroph(DietItems = HM.mat,PreyValues = PreyMat, PreyClass = "FoodItem",Taxonomy = HMtax,
+SumCheck = TRUE)
+```
+We can see that the object returned `HM.TL` is a list that has a length of four (one for each of our specified levels in taxonomy). Each element of the list is a data frame containing the trophic level calculations at the respective hierarchical levels.
 
 ## 3.4: Electivity Indices
 
 While `dietr` can estimate trophic levels from food item and diet composition data as highlighted above, it can also measure a number of popular elevtivity indices used in studies of trophic ecology. The `dietr` function `electivity` implements Ivlev's (1961), Strauss' (1979), Jacob's Q and D (1974), Chesson's (1983)(Which is similar to Manl'y Alpha (1974)), and Vanderploeg & Scavia (1979) electivity indices. 
+
+
+
+
 
 # 4: Final Comments
 Further information on the functions and their usage can be found in the helpfiles `help(package=dietr)`.
@@ -145,6 +235,8 @@ Froese R, and Pauly D. 2019. FishBase. http://www.fishbase.org/2019).
 Ivlev, U. 1961. Experimental ecology of the feeding of fish. Yale University Press, New Haven.
 
 Jacobs, J. 1974. Quantitative measurement of food selection. Oecologia 14:413-417.
+
+Magalhaes IS, Ornelas-Garcia CP, Leal-Cardin M, Ramirez T, and Barluenga M. 2015. Untangling the evolutionary history of a highly polymorphic species: introgressive hybridization and high genetic structure in the desert cichlid fish Herichtys minckleyi. Mol Ecol 24:4505-4520. 10.1111/mec.13316.
 
 Manly, B. 1974. A model for certain types of selection experiments. Biometrics 30:281-294.
 
