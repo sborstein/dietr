@@ -33,6 +33,7 @@ ConvertFishbaseDiet<-function(ExcludeStage=NULL){
   }else{
   ExcludeDat<-merged.diets[!merged.diets$SampleStage%in%ExcludeStage,]
   ConvertDat<-cbind.data.frame(ExcludeDat$DietCode,ExcludeDat$Species,ExcludeDat$FoodI,ExcludeDat$FoodII,ExcludeDat$FoodIII,ExcludeDat$Stage,ExcludeDat$DietPercent)
+  colnames(ConvertDat)<-c("Individual","Species","FoodI","FoodII","FoodIII","Stage","Percentage")
   Taxonomy<-as.data.frame(cbind(ExcludeDat$DietCode,ExcludeDat$Species),stringsAsFactors = F)
   Taxonomy<-unique(Taxonomy)
   colnames(Taxonomy)<-c("Individual","Species")

@@ -38,3 +38,14 @@
 #'   }
 #' }
 "CortesPreyVals"
+#' Herichthys
+#'
+#' Raw supplementary data from Magalhaes et al., 2015 for the diets of Herichthys minckleyi used in a tutorial for the vignette.
+#'
+#' @format A data frame of of 519 rows and 40 columns
+#' @references{
+#' \itemize{
+#'   \item Magalhaes IS, Ornelas-Garcia CP, Leal-Cardin M, Ramirez T, and Barluenga M. 2015. Untangling the evolutionary history of a highly polymorphic species: introgressive hybridization and high genetic structure in the desert cichlid fish Herichtys minckleyi. Mol Ecol 24:4505-4520. 10.1111/mec.13316
+#'   }
+#' }
+"Herichthys"
