@@ -4,9 +4,9 @@
 \name{dietr}
 \alias{dietr}
 \alias{dietr-package}
-\title{An R package to estimate trophic level from diet and food item data}
+\title{Diet Estimated Trophic Levels in R}
 \description{
-Trophic level estimation from diet and food item data in R
+Estimates fractional trophic level from quantitative and qualitative diet data and calculates electivity indices in R.
 }
 \details{
 Package: dietr
@@ -17,7 +17,7 @@ Title: An R package to estimate trophic level from diet and food item data
 
 Version: 1.0
 
-Date: 2018-4-4
+Date: 2019-10-5
 
 License: GPL (>= 2)
 

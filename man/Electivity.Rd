@@ -6,7 +6,7 @@
 \usage{
 Electivity(Diet, Available, Indices = c("ForageRatio", "Ivlev",
   "Strauss", "JacobsQ", "JacobsD", "Chesson", "VanderploegScavia"),
-  Depleting = FALSE)
+  LogQ = TRUE, Depleting = FALSE)
 }
 \arguments{
 \item{Diet}{Data frame with data corresponding to consumed resources found in the diet. See details for formatting.}
@@ -15,18 +15,38 @@ Electivity(Diet, Available, Indices = c("ForageRatio", "Ivlev",
 
 \item{Indices}{Character vector containing the names of the desired indices to calculate. See description for information on availabble indices.}
 
-\item{Depleting}{Logical. If true, will assume the food source is depleting and perform calculations following Manly. Default is FALSE.}
+\item{LogQ}{Logical. If true, should Jacob's Q be logged? This is the recommendation of Jacob, 1974.Default is TRUE, following the recommendation.}
+
+\item{Depleting}{Logical. If true, calculates Chesson's Case 2, where food depletion occurs and the available food is not constant. Default is False.}
 }
 \value{
 List containing data frames for each electivity index selected.
 }
 \description{
-Calculates forage ratio and a variety of popular electivity indices.
-}
-\details{
 This function calculates the forage ratio and a variety of electivity indices. Included indices include Ivlev's (1961),
 Strauss' (1979), Jacob's Q and D (1974), Chesson's (1983)(Which is similar to Manl'y Alpha (1974)), and Vanderploeg & Scavia (1979).
-The function takes two
+}
+\details{
+This function calculates one or multiple electivity indices for one or more diet records for which one or more records of prey availability exists.For example,
+it is possible to calculate multiple indices for multiple diet records that may be from a number of sites with different prey
+availability all in one call of the function (see example which ). Specifically, this function measures the following indices (and their input for the Indices argument)
+Ivlev's (1961) Forage Ratio ("ForageRatio") and electivity ("Ivlev"), Strauss'(1979) ("Strauss"), Jacobs (1974) Q ("JacobsQ") and D ("JacobsD"), Chesson (1983)(Which is similar to Manly's Alpha (1974))("Chesson"),
+and Vanderploeg & Scavia (1979) ("VanderploegScavia"). For those wishing to calculate Vanderploeg and Scavia's selectivity coefficient (W), please select "Chesson" as an argument for indices, which
+will calculate Chesson's alpha, which is identical to Vanderploeg and Scavia's selectivity coefficient (W).
+
+The function takes two dataframes as input. The first argument, Diet, should be formatted as followed. Each row in the data frame should be a diet record. 
+The first column should contain the name of the record to be calculated. The second column should contain the name linking the consumed prey in Diet to that in Available (example, name of the different habitats), which will be described below.
+All remaining columns should contain the abundance or relative abundance of the prey in the diet. These columns should also be named so they can be matched to Those in Available. The second data frame, Available should be formatted similar to Diet where each row describes a unique record for available prey.
+The remaining columns should contain the abundance or relative abundance of the prey that are available to be consumed. These columns should also be named so they can be matched to Those in Diet. #' Users should define if their data is raw or relative abundance by using the Abundance argument. 
+Note that these indices rely on relative abundance data for calculations. While it is recommended to have input data as relative abundances, the function automatically will calculate relative abundances (which has no effect on data that are already in units of relative abundance).
+ 
+Indices are bounded by the following values. Ivlev's, Strauss', and Jacobs' D, and Vanderploeg & Scavia's indices are bounded between -1 and 1, with items closer to -1 representing avoided items, 0 randomly feeding, and 1 preferential items.
+Forage ratio values range between 1 and infinity for preffered items while values between 0 and 1 represent avoided prey. Similar to forage ratio, Jacobs' Q ranges  
+between 1 and infinity for preffered items and 0 and 1 for avoided prey, however log10(Q) is the preffered as it provides 
+the advantage of equal ranges and ranges from -infinity to +infinity for avoidance and preference respectively. This option can be selected in the function with the logQ argument, which by default is set to TRUE. 
+Finally, Chesson's index ranges between 0 and 1 and preference is typically assessed using 1/n, where n is the number of prey types. The value of 1/n represents random feeding while values 
+above and below 1/n represent preference and avoidance respectively. For Chesson's index, users can also specify if the available resources are 
+depleting, in which case the equation from case 2 of Chesson, 1983 is calculated. Note, this takes the log of (p-r)/p) and values of 0 or negatives will return NaN.
 }
 \references{
 Chesson, J. 1983. The estimation and analysis of preference and its relatioship to foraging models. Ecology 64:1297-1304.
@@ -35,4 +55,7 @@ Jacobs, J. 1974. Quantitative measurement of food selection. Oecologia 14:413-41
 Manly, B. 1974. A model for certain types of selection experiments. Biometrics 30:281-294.
 Strauss, R. E. 1979. Reliability Estimates for Ivlev's Electivity Index, the Forage Ratio, and a Proposed Linear Index of Food Selection. Transactions of the American Fisheries Society 108:344-352.
 Vanderploeg, H., and D. Scavia. 1979. Two electivity indices for feeding with special reference to zooplankton grazing. Journal of the Fisheries Board of Canada 36:362-365.
+}
+\author{
+Samuel Borstein
 }
