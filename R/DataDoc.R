@@ -49,3 +49,18 @@
 #'   }
 #' }
 "Herichthys"
+#' VirginRiverForage
+#'
+#' Data from Magalhaes et al., 2015 for the diet of two species of Cyprinidae in the Vergin River, Neveda over four months and prey abundance.
+#'
+#' @format A list of length 2 containing two data frames.
+#' \itemize{
+#'   \item Available A data frame with four rows and seven columns containing data on prey availability in the Virgin River over four months.
+#'   \item Consumed A data frame with four rows and seven columns containing data on prey consumption by two species over four months.
+#'   }
+#' @references{
+#' \itemize{
+#'   \item Greger PD, and Deacon JE. 1988. Food partitioning among fishes of the Virgin River. Copeia 1988:314-323.
+#'   }
+#'  }
+"VirginRiverForage"

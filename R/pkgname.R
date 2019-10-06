@@ -1,6 +1,6 @@
-#' An R package to estimate trophic level from diet and food item data
+#' Diet Estimated Trophic Levels in R
 #'
-#' @description Trophic level estimation from diet and food item data in R
+#' @description Estimates fractional trophic level from quantitative and qualitative diet data and calculates electivity indices in R.
 #'
 #' @details 
 #' Package: dietr
@@ -11,7 +11,7 @@
 #' 
 #' Version: 1.0
 #' 
-#' Date: 2018-4-4
+#' Date: 2019-10-5
 #' 
 #' License: GPL (>= 2)
 #' 
