@@ -49,18 +49,19 @@
 #'   }
 #' }
 "Herichthys"
-#' VirginRiverForage
+#' Horn1982
 #'
-#' Data from Magalhaes et al., 2015 for the diet of two species of Cyprinidae in the Vergin River, Neveda over four months and prey abundance.
+#' Data from Horn, 1982 for the diet of two species of Stichaeidae and prey availability over two years. 
 #'
 #' @format A list of length 2 containing two data frames.
 #' \itemize{
-#'   \item Available A data frame with four rows and seven columns containing data on prey availability in the Virgin River over four months.
-#'   \item Consumed A data frame with four rows and seven columns containing data on prey consumption by two species over four months.
+#'   \item Available A data frame with four rows and seven columns containing data on prey availability in two different years.
+#'   \item Consumed A data frame with four rows and seven columns containing data on prey consumption by two species in two different years..
 #'   }
+#' @description Raw data from Horn, 1982. Prey consumption and availability are in percent weight. Not that as the values do not sum to 100, the relative abundance will be calculated.
 #' @references{
 #' \itemize{
-#'   \item Greger PD, and Deacon JE. 1988. Food partitioning among fishes of the Virgin River. Copeia 1988:314-323.
+#'   \item Horn M, Murray S, and Edwards T. 1982. Dietary selectivity in the field and food preferences in the laboratory for two herbivorous fishes (Cebidichthys violaceus and Xiphister mucosus) from a temperate intertidal zone. Marine Biology 67:237-246.
 #'   }
 #'  }
-"VirginRiverForage"
+"Horn1982"
