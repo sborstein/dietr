@@ -55,8 +55,8 @@
 #'
 #' @format A list of length 2 containing two data frames.
 #' \itemize{
-#'   \item Available A data frame with four rows and seven columns containing data on prey availability in two different years.
-#'   \item Consumed A data frame with four rows and seven columns containing data on prey consumption by two species in two different years..
+#'   \item Available A data frame with 2 rows and 18 columns containing data on prey availability in two different years.
+#'   \item Consumed A data frame with four rows and 19 columns containing data on prey consumption by two species in two different years..
 #'   }
 #' @description Raw data from Horn, 1982. Prey consumption and availability are in percent weight. Not that as the values do not sum to 100, the relative abundance will be calculated.
 #' @references{

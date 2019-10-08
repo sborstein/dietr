@@ -37,7 +37,7 @@ Here, $P_i$ is the simulated proportion of the prey item i in the diet and $Trop
 
 The estimate of the standard error around the trophic level from food item data is defined below. Here, the standard error is the square root of the sum of the product of the standard error of a prey item squared and the contribution of the prey item minus 1 divided by the sum of the contribution of the prey items, P, minus the total number of prey items, G. For food item data, the random sampling routine and calculation to estimate trophic level and standard error is repeated 100 times, with the final trophic level and standard error being the mean of these 100 calculations.
 
-$$s.e_{i}=\sqrt{\frac{(s.e_{1})^2*(P_{1}-1)+(s.e._{2})^2*(P_{2}-1)...(s.e_{G})^2*(P_{G}-1)}{100}}$$
+$$s.e_{i}=\sqrt{\frac{(s.e_{1})^2*(P_{1}-1)+(s.e._{2})^2*(P_{2}-1)...(s.e_{G})^2*(P_{G}-1)}{\sum{P-G}}}$$
 
 In this tutorial we will cover the basics of how to use `dietr` to measure trophic levels. We will first discuss how to read in data from FishBase using rfishbase and how to pass that data into `dietr`. We will then show how one can input their own raw data and use the package to estimate trophic levels.
 
@@ -92,7 +92,6 @@ The function has only one argument, `ExcludeStage`, in which users specify if th
 # Convert Fishbase Diet Data and exclude juvenile and larval records
 my.diets <- ConvertFishbaseDiet(ExcludeStage=c("recruits/juv.","larvae"))
 ```
-
 
 We can see that `my.diets` object we created is a list containing two data frames. The first one, called DietItems, contains the information about diet composition, with `FoodI`, `FoodII`,`FoodIII`, `Stage` and `DietPercent` being the fields with descriptors for the various diets. In this case, each diet item has its own row in the data frame. The first column, `Individual`, contains the fish base diet reference number unique to that study. By including this, one can have multiple studies of the same species and then pool the data using the Taxonomy, which is the second data frame in our list. The `Species` column in the `DietItems` data frame contains the species name. For example, from the `my.diets$DietItems` object we created above, we can see that the first record in our dataset *Merlangius merlangus* with the diet record number of `4` ate eight different items, mollusks, squids/cuttlefish, bony fish, n.a./other annelids, and a variety of other invertebrates. If we look at `my.diets$Taxonomy` we will see it is a data frame of two columns. For FishBase data, our function returns each individual diet study for a species in the column `Individual`. The next column has the respective species name. This information will then be used to calculate the trophic levels for each individual diet record and then for all records belonging to that species.
 
@@ -213,11 +212,24 @@ We can see that the object returned `HM.TL` is a list that has a length of four 
 
 ## 3.4: Electivity Indices
 
-While `dietr` can estimate trophic levels from food item and diet composition data as highlighted above, it can also measure a number of popular elevtivity indices used in studies of trophic ecology. The `dietr` function `electivity` implements Ivlev's (1961), Strauss' (1979), Jacob's Q and D (1974), Chesson's (1983)(Which is similar to Manl'y Alpha (1974)), and Vanderploeg & Scavia (1979) electivity indices. 
+While `dietr` can estimate trophic levels from food item and diet composition data as highlighted above, it can also measure a number of popular elevtivity indices used in studies of trophic ecology. The `dietr` function `Electivity` implements Ivlev's (1961), Strauss' (1979), Jacob's Q and D (1974), Chesson's (1983)(Which is similar to Manl'y Alpha (1974)), and Vanderploeg & Scavia (1979) electivity indices. `Electivity` takes two data frames as input. One should contain the relative abundance of consumed prey (argument `Diet`) and the other should contain the relative abundance of available prey items in the habitat  (argument `Available`. These should be formatted as such. The data frame for `Diet` should have each individual row as a diet record. The first column should contain the name of the diet record, the second, a identifier that links that record to an identifier in the first row in the data frame for `Available` (i.e. a habitat name, year, etc.). All following columns should contain a unique prey item and its relative abundance in the diet. The `Available` data frame contains similar data, however, in this data frame, the first column contains the identifier for the available prey relative abundance and all remaining columns should represent prey items available in the habitat and match those in `Diet`
 
+To highlight an example of how to use this function and how data should be formatted for it, we can load data from Horn, 1982. This is a dataset containing data on consumption and availability of macroalgae prey for two species of Stichaeidae in two different years. We can load it as such and see the format of the data by doing the following.
 
+```
+data(Horn1982)# load data
+Horn1982$Consumed#See data for prey consumption
+Horn1982$Available#See data for available prey
+```
+We can see here that we are identifying available prey her by year and month in the first column of `Horn1982$Available` and that all remaining columns are prey items available during those two time periods. In `Horn1982$Consumed` we can see that the first column is the name of the record and the second column matches a record in the first column of `Horn1982$Available` to link it to prey availability. We can then run one or any of the indices using the following code and arguments. We will define the consumed prey with the `Diet` argument as `Horn1982$Consumed`, `Available` prey as `Horn1982$Available`, and we will denote we want to calculate all of the indices using the `Indices` argument. For calculating Jacobs' Q, we will use the argument `LogQ` which takes `log10` of Q, which is recommended. We will also denote that we do not want to account for prey depletion in the calculation of Chesson's index. If set to true, Chesson's case 2 will be calculated.
 
+```
+my.indices <- Electivity(Diet = Horn1982$Consumed, Available = Horn1982$Available, Indices = 
+  c("ForageRatio","Ivlev","Strauss","JacobsQ","JacobsD","Chesson","VanderploegScavia"),LogQ = TRUE,
+  Depleting = FALSE)
+```
 
+We can see that the `Electivity` function returned a list of data frames. Each data frame contains a calculated index and is named respective of the index calculated. Do not that in some cases of these calculations, certain calculations may yield `NaN` values or `Inf` values, for instance due to division by 0 or log of zero or negative number. These typically arise when a prey item is either present in the habitat but not consumed, present in the diet but not in the habitat, or where they are both absent from a record. In these cases, `NA` is returned.
 
 # 4: Final Comments
 Further information on the functions and their usage can be found in the helpfiles `help(package=dietr)`.
@@ -231,6 +243,8 @@ Chesson, J. 1983. The estimation and analysis of preference and its relatioship 
 Cortes E. 1999. Standardized diet compositions and trophic levels of sharks. ICES Journal of marine science 56:707-717. 
 
 Froese R, and Pauly D. 2019. FishBase. http://www.fishbase.org/2019).
+
+Horn M, Murray S, and Edwards T. 1982. Dietary selectivity in the field and food preferences in the laboratory for two herbivorous fishes (Cebidichthys violaceus and Xiphister mucosus) from a temperate intertidal zone. Marine Biology 67:237-246. 
 
 Ivlev, U. 1961. Experimental ecology of the feeding of fish. Yale University Press, New Haven.
 

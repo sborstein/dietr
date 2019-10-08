@@ -48,6 +48,14 @@ Finally, Chesson's index ranges between 0 and 1 and preference is typically asse
 above and below 1/n represent preference and avoidance respectively. For Chesson's index, users can also specify if the available resources are 
 depleting, in which case the equation from case 2 of Chesson, 1983 is calculated. Note, this takes the log of (p-r)/p) and values of 0 or negatives will return NaN.
 }
+\examples{
+#Load Electivity Data from Horn 1982
+data(Horn1982)
+#Run all electivity indices
+my.indices <- Electivity(Diet = Horn1982$Consumed, Available = Horn1982$Available, Indices = 
+c("ForageRatio","Ivlev","Strauss","JacobsQ","JacobsD","Chesson","VanderploegScavia"),LogQ = TRUE,
+Depleting = FALSE)
+}
 \references{
 Chesson, J. 1983. The estimation and analysis of preference and its relatioship to foraging models. Ecology 64:1297-1304.
 Ivlev, U. 1961. Experimental ecology of the feeding of fish. Yale University Press, New Haven.
