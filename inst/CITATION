@@ -6,7 +6,7 @@ citEntry(entry = "Manual",
          author  = "Samuel Borstein",
          year    = "2019",
          note    = "R package version 1.0",
-         url     = "https://github.com/sborstein/rcatfish",
+         url     = "https://github.com/sborstein/dietr",
          
          textVersion =
            paste("Samuel Borstein. (2019) : dietr: Diet Estimated Trophic Levels in R. R package version 1.0. https://github.com/sborstein/dietr")
