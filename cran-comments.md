@@ -7,10 +7,9 @@ This is a resubmission. In this version I have:
 *I have added a citation to the book describing the equations used in the package. These are also cited in the documentation of the functions.
 
 ## Test environments
-* local OS X install, R 3.6.1
-* ubuntu 16.04 (on travis-ci), R 3.6.1
+* ubuntu 16.04 (local and on travis-ci), R 3.6.1
 * win-builder (devel and release), R 3.6.1
 
 ## R CMD check results
 0 errors | 0 warnings | 0 notes
-For R CMD check ran with ubuntu, OS X,win-builder (dev), and win-builder (release)
+For R CMD check ran with ubuntu, win-builder (dev), and win-builder (release)
