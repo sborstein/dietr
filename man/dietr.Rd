@@ -17,7 +17,7 @@ Title: An R package to estimate trophic level from diet and food item data
 
 Version: 1.0
 
-Date: 2019-10-5
+Date: 2019-10-8
 
 License: GPL (>= 2)
 

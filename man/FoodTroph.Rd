@@ -37,7 +37,7 @@ the SE which they also refer to as the omnivory index. Alternatively, users can 
 of subsampling routines.Users can also select "Both" if they would like to calculate both types of SE.
 }
 \examples{
-\dontrun{
+\donttest{
 #Get some food item data from rfishbase
 library(rfishbase)
 my.food <- rfishbase::fooditems(c("Lutjanus apodus","Epinephelus itajara"))

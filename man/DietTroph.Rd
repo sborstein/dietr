@@ -17,13 +17,13 @@ the individual and be named "Individual", The last column should contain the per
 level of the prey item and the standard error of that trophic item. The column names of 
 PreyValues except for TL and SE should match those in DietItems.}
 
-\item{Taxonomy}{a data frame with the least inclusive level progressing to more inclusive moving
+\item{Taxonomy}{a data frame starting with the least inclusive level progressing to more inclusive moving
 towards the right.}
 
 \item{PreyClass}{Column names of the PreyValues used for matching between DietItems and 
 PreyValues, exclusive of TL and SE. Default is those of FishBase.}
 
-\item{SumCheck}{Logical. Should the sum of diet items be checked, and if not equal to 100, recalculated?}
+\item{SumCheck}{Logical. Should the sum of diet items be checked, and, if not equal to 100, recalculated?}
 }
 \value{
 a list length of the columns in taxonomy, each containing trophic level estimation at 
@@ -32,12 +32,12 @@ the respective taxonomic level.
 \description{
 Calculates trophic level from percentage based diet data following the routine described in TrophLab. 
 While FishBase data obtained from rfishbase can be used, users can also upload their own data for
-use in with function.
+use in with function (see vignette for a tutorial).
 }
 \examples{
-\dontrun{
+\donttest{
 #Get some food item data from rfishbase
-#library(rfishbase)
+library(rfishbase)
 #convert FishBase data into data for trophic calculation using dietr
 converted.diet <- ConvertFishbaseDiet(ExcludeStage=NULL)
 #Subset three studies out, as this contains all  studies from FishBase

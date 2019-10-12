@@ -6,22 +6,22 @@
 #' @param PreyValues a data frame with rows as prey item names and columns containing the trophic 
 #' level of the prey item and the standard error of that trophic item. The column names of 
 #' PreyValues except for TL and SE should match those in DietItems.
-#' @param Taxonomy a data frame with the least inclusive level progressing to more inclusive moving
+#' @param Taxonomy a data frame starting with the least inclusive level progressing to more inclusive moving
 #'  towards the right.
 #' @param PreyClass Column names of the PreyValues used for matching between DietItems and 
 #' PreyValues, exclusive of TL and SE. Default is those of FishBase.
-#' @param SumCheck Logical. Should the sum of diet items be checked, and if not equal to 100, recalculated?
+#' @param SumCheck Logical. Should the sum of diet items be checked, and, if not equal to 100, recalculated?
 #' @return a list length of the columns in taxonomy, each containing trophic level estimation at 
 #' the respective taxonomic level.
 #' @description 
 #' Calculates trophic level from percentage based diet data following the routine described in TrophLab. 
 #' While FishBase data obtained from rfishbase can be used, users can also upload their own data for
-#' use in with function. 
+#' use in with function (see vignette for a tutorial). 
 #' @author Samuel Borstein
 #' @examples
-#'\dontrun{
+#'\donttest{
 #' #Get some food item data from rfishbase
-#' #library(rfishbase)
+#' library(rfishbase)
 #' #convert FishBase data into data for trophic calculation using dietr
 #' converted.diet <- ConvertFishbaseDiet(ExcludeStage=NULL)
 #' #Subset three studies out, as this contains all  studies from FishBase

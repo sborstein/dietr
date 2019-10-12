@@ -19,7 +19,7 @@
 #' of subsampling routines.Users can also select "Both" if they would like to calculate both types of SE.
 #' @author Samuel Borstein
 #' @examples 
-#' \dontrun{
+#' \donttest{
 #' #Get some food item data from rfishbase
 #' library(rfishbase)
 #' my.food <- rfishbase::fooditems(c("Lutjanus apodus","Epinephelus itajara"))
