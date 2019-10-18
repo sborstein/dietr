@@ -1,10 +1,7 @@
 ## Resubmission
 This is a resubmission. In this version I have:
 
-* Removed redundant elements from the title in DESCRIPTION
-* Changed examples using \dontrun to \donttest. These examples connect to an external database and take more than 5 seconds to run.
-* Eliminated an accidentally commented out code line in examples for the function DietTroph. Comments explaining the example were left in.
-* I have added a citation to the book describing the equations used in the package. These are also cited in the documentation of the functions.
+* Created unit tests for functions in which the examples are wrapped with /donttest. These functions are ConvertFishbaseFood, ConvertFishbaseDiet, FoodTroph, and DietTroph. These functions and the examples connect to a remote database and take longer than 5 seconds to run.
 
 ## Test environments
 * local OS X install, R 3.6.1
