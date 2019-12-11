@@ -4,3 +4,7 @@
 ##Ignore the cran-comments.rd
 ^cran-comments\.md$
 ^README\.md$
+
+##Ignore manuscript files
+^dietr_AnalysisCode\.RData
+^dietr_AnalysisCode\.R
