@@ -5,7 +5,7 @@ This is a resubmission. In this version I have:
 
 ## Test environments
 * local Windows 10 install, R 4.0.1
-* ubuntu 16.04 (on travis-ci), R 4.0.1
+* ubuntu 16.04 (on travis-ci), R 4.0.0
 * win-builder (devel and release), R 4.0.1
 
 ## R CMD check results
