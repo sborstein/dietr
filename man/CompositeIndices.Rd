@@ -45,7 +45,7 @@ and the percent weight. These indices can be returned as just a percentage or th
 
 The main input for this function is DietData, which requires minimal formatting. It is mandatory for this function that the first column contain the diet record identifier and the second column the names of
 the prey. The diet record identifier should be a unique name for each record, which allows one to calculate feeding indices for numerous records with a single call of the function. As the second column
-contains the prey identifier, if a species feeds upon three different prey, we would have the first three rows of the dataset would have the same record identifier. The remaining columns should contain
+contains the prey identifier, if a species feeds upon three different prey, the first three rows of the dataset should have the same record identifier. The remaining columns should contain
 information on the the contribution of the various prey to the diet of the record required to calculate the indices. Note that the order of these columns does not matter as the frequency of occurence, 
 precent number, and percent volume or weight are specified with the arguments PercentNumber, PercentOccurence, and PercentVolWeight respectively. Users should enter in the column number for these arguments 
 that corresponds to their respective position in DietDat. If you are having difficulty formatting data, I highly recommend seeing the format of the diet data used in the example below, which can be loaded
@@ -53,8 +53,8 @@ by running data(Casaux1998). This example is for two unique diet records for the
 percent number, and percent mass of the prey in the diets of the fish from these two populations.
 }
 \examples{
-#Load diet data from Casaux1998, which contains diet for two populations
-#and is listed in percent frequency, percent number, and percent mass.
+#Load diet data from Casaux1998, which contains diet for two populations of Harpagifer
+# antarcticus in percent frequency, percent number, and percent mass.
 data(Casaux1998)
 #Calculate all three diet indices (IOP, IRI, FQ), return the raw data, and all calculations.
 CompositeIndices(DietData = Casaux1998, Indices = c("IOP","IRI","FQ"), PercentNumber = 4, 

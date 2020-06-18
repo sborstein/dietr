@@ -49,15 +49,15 @@ the function Electivity.
 #Load Electivity Data from Horn 1982
 data(Horn1982)
 #Run all electivity indices
-my.indices <- Electivity(Diet = Horn1982$Consumed, Available = Horn1982$Available, Indices = 
-c("Ivlev","Strauss","JacobsD","VanderploegScavia"),LogQ = TRUE,
-Depleting = FALSE)
+my.indices <- Electivity(Diet = Horn1982$Consumed, Available = Horn1982$Available, 
+Indices = c("Ivlev","Strauss","JacobsD","VanderploegScavia"),LogQ = TRUE, Depleting = FALSE)
 
 #Plot All Indices with default colors
 PlotElectivity(Electivity.Calcs = my.indices)
-#Plot only VanderploegScavia and Ivlev and set colors. Note, there are four records, so we need 
-# to set four colors
-PlotElectivity(Electivity.Calcs = my.indices, BarColor = c("Red","Purple","Black","Grey"))
+#Plot only VanderploegScavia and set colors. Note, there are four records, so we need 
+#to set four colors
+PlotElectivity(Electivity.Calcs = my.indices, Indices = "VanderploegScavia", 
+BarColor = c("Red","Purple","Black","Grey"))
 }
 \seealso{
 \code{\link{Electivity}}

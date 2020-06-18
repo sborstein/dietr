@@ -22,7 +22,7 @@ their stomach.
 This function calculates the vacuity index (Hureau, 1970). This is simply the percentage
 ofempty stomachs. The function takes a data frame of stomach data, which should be formatted as 
 follows. The first column should contain the specimen identifier and the second column should 
-contain the stomach weight. If users also have information on fish weight, they can calculate the
+contain the weight of the stomach contents. If users also have information on fish weight, they can calculate the
 Gastro-somatic index, using the function GastrosomaticIndex, which has an option to calculate the 
 vaucity index utilizing this function.
 }

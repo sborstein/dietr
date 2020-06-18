@@ -31,8 +31,7 @@ PreyValues, exclusive of TL and SE. Default is those of FishBase.}
 \item{SumCheck}{Logical. Should the sum of diet items be checked, and, if not equal to 100, recalculated?}
 }
 \value{
-a list length of the columns in taxonomy, each containing trophic level estimation at 
-the respective taxonomic level.
+A list length of the columns in taxonomy, each containing trophic level estimation at the respective taxonomic level.
 }
 \description{
 Calculates trophic level from percentage based diet data following the routine described in TrophLab. 

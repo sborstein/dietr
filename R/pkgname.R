@@ -9,9 +9,9 @@
 #' 
 #' Title: An R package to estimate trophic level from diet and food item data
 #' 
-#' Version: 1.0
+#' Version: 1.1
 #' 
-#' Date: 2019-10-17
+#' Date: 2020-6-18
 #' 
 #' License: GPL (>= 2)
 #' 
@@ -20,7 +20,9 @@
 #' the procedures from TrophLab, which was a microsoft access program. This implementation is faster
 #' than the original microsoft access program and also allows for a hierarchical estimation of 
 #' trophic level given a corresponding "taxonomy" data frame (i.e. estimate trophic level for a 
-#' individual,population,species, etc.). 
+#' individual,population,species, etc.). It also contains other functions for measuring electivity 
+#' indices, compound trophic indices (ex. Feeding Quotient, Index of Preponderance), Vacuity Index,
+#' and Gastro-somatic Index.
 #'  
 #' @author Samuel Borstein
 #' Maintainer: Samuel Borstein <sborstei@vols.utk.edu>

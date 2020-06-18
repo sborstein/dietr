@@ -11,8 +11,7 @@
 #' @param PreyClass Column names of the PreyValues used for matching between DietItems and 
 #' PreyValues, exclusive of TL and SE. Default is those of FishBase.
 #' @param SumCheck Logical. Should the sum of diet items be checked, and, if not equal to 100, recalculated?
-#' @return a list length of the columns in taxonomy, each containing trophic level estimation at 
-#' the respective taxonomic level.
+#' @return A list length of the columns in taxonomy, each containing trophic level estimation at the respective taxonomic level.
 #' @description 
 #' Calculates trophic level from percentage based diet data following the routine described in TrophLab. 
 #' While FishBase data obtained from rfishbase can be used, users can also upload their own data for
@@ -35,7 +34,7 @@
 #' }
 #' @export
 
-DietTroph<-function(DietItems, PreyValues,Taxonomy,PreyClass=c("FoodI","FoodII","FoodIII","Stage"),SumCheck=TRUE){
+DietTroph <- function(DietItems, PreyValues, Taxonomy, PreyClass=c("FoodI","FoodII","FoodIII", "Stage"),SumCheck=TRUE){
   PreyValues<-unique(PreyValues)
   individual.TL<-data.frame(matrix(nrow = length(unique(Taxonomy[,1])), ncol = 3))#make final table
   colnames(individual.TL)<-c("Individual","TrophicLevel","SE")#make column names for final table
