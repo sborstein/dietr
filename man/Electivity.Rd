@@ -25,7 +25,7 @@ Electivity(
 \item{Depleting}{Logical. If true, calculates Chesson's Case 2, where food depletion occurs and the available food is not constant. Default is False.}
 }
 \value{
-List containing data frames for each electivity index selected.
+Object of class Electivity which is a list containing data frames for each electivity index selected.
 }
 \description{
 This function calculates the forage ratio and a variety of electivity indices. Included indices include Ivlev's (1961),

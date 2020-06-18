@@ -27,7 +27,7 @@
 #' Finally, Chesson's index ranges between 0 and 1 and preference is typically assessed using 1/n, where n is the number of prey types. The value of 1/n represents random feeding while values 
 #' above and below 1/n represent preference and avoidance respectively. For Chesson's index, users can also specify if the available resources are 
 #' depleting, in which case the equation from case 2 of Chesson, 1983 is calculated. Note, this takes the log of (p-r)/p) and values of 0 or negatives will return NaN.
-#' @return List containing data frames for each electivity index selected. 
+#' @return Object of class Electivity which is a list containing data frames for each electivity index selected.
 #' @author Samuel Borstein
 #' @seealso \code{\link{PlotElectivity}}
 #' @examples
