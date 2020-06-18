@@ -4,11 +4,13 @@
 \name{Horn1982}
 \alias{Horn1982}
 \title{Horn1982}
-\format{A list of length 2 containing two data frames.
+\format{
+A list of length 2 containing two data frames.
 \itemize{
   \item Available A data frame with 2 rows and 18 columns containing data on prey availability in two different years.
   \item Consumed A data frame with four rows and 19 columns containing data on prey consumption by two species in two different years..
-  }}
+  }
+}
 \usage{
 Horn1982
 }

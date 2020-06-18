@@ -4,7 +4,9 @@
 \name{Herichthys}
 \alias{Herichthys}
 \title{Herichthys}
-\format{A data frame of of 519 rows and 40 columns}
+\format{
+A data frame of of 519 rows and 40 columns
+}
 \usage{
 Herichthys
 }

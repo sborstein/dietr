@@ -4,7 +4,8 @@
 \name{CortesPreyVals}
 \alias{CortesPreyVals}
 \title{CortesPreyVals}
-\format{A data frame of of 10 rows and 6 columns
+\format{
+A data frame of of 10 rows and 6 columns
 \itemize{
   \item FoodI: Food category I.
   \item FoodII: Food category II.
@@ -12,7 +13,8 @@
   \item Stage: Life history stage of the prey item.
   \item TL: Trophic level of the prey item.
   \item SE: Standard error around trophic level estimate of the prey item.
-}}
+}
+}
 \usage{
 CortesPreyVals
 }

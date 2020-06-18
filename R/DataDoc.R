@@ -65,3 +65,40 @@
 #'   }
 #'  }
 "Horn1982"
+#' Casaux1998
+#'
+#' Data from Casaux, 1998 for the diet of Harpagifer antarcticus from two localities in the South Shetland Islands of Antarctica. 
+#'
+#' @format A data frames containing diet data for two populations (Potter Cove & Harmony Point) of Harpagifer antarcticus from the South Shetland Islands.
+#' \itemize{
+#'   \item Record: The record, in this case the name for the two populations, Harpagifer_antarcticus_PotterCove and Harpagifer_antarcticus_HarmonyPoint for populations from Potter Cover and Harmony Point respectively.
+#'   \item Prey: Name of the prey item consumes.
+#'   \item PercentOccurence: Data for the percent occurence of the prey consumed.
+#'   \item PercentNumber: Data for the percent number of the prey consumed.
+#'   \item PercentWeight: Data for the percent weight of the prey consumed.
+#'   }
+#' @description Raw data from Casaux, 1998. Prey is listed in percent frequency, percent number, and percent mass consumed.
+#' @references{
+#' \itemize{
+#'   \item Casaux R. 1998. The contrasting diet of Harpagifer antarcticus (Notothenioidei, Harpagiferidae) at two localities of the South Shetland Islands, Antarctica. Polar Biology 19:283-285.
+#'   }
+#'  }
+"Casaux1998"
+#' SebastesStomachs
+#'
+#' Stomach and specimen weights for eleven Sebastes flavidus from the Gulf of Alaska by NOAA in 2011 (available at: https://access.afsc.noaa.gov/REFM/REEM/WebDietData/DietDataIntro.php). 
+#'
+#' @format A data frames containing three columns with specimen identifier, specimen stomach weight, and specimen weight for eleven Sebastes flavidus.
+#' \itemize{
+#'   \item SpecimenSpecimen identifier. Follows the pattern of number, month, day, and year.
+#'   \item StomachWeight: Weight of stomach contents in grams.
+#'   \item PredatorWeight: Weight of the specimen in grams.
+#'   }
+#' @description Raw data from NOAA containing information on the stomach weight and specimen weight of eleven Sebastes flavidus caught in the Gulf of Alaska in 2011.
+#' @references{
+#' \itemize{
+#'   \item Livingston PA, Aydin K, Buckley TW, Lang GM, Yang M-S, and Miller BS. 2017. Quantifying food web interactions in the North Pacific - a data-based approach. Environmental Biology of Fishes 100:443-470. 10.1007/s10641-017-0587-0.
+#'   \item .
+#'   }
+#'  }
+"SebastesStomachs"

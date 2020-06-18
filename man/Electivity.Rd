@@ -4,9 +4,14 @@
 \alias{Electivity}
 \title{Calculates a variety of electivity indices and foraging ratios}
 \usage{
-Electivity(Diet, Available, Indices = c("ForageRatio", "Ivlev",
-  "Strauss", "JacobsQ", "JacobsD", "Chesson", "VanderploegScavia"),
-  LogQ = TRUE, Depleting = FALSE)
+Electivity(
+  Diet,
+  Available,
+  Indices = c("ForageRatio", "Ivlev", "Strauss", "JacobsQ", "JacobsD", "Chesson",
+    "VanderploegScavia"),
+  LogQ = TRUE,
+  Depleting = FALSE
+)
 }
 \arguments{
 \item{Diet}{Data frame with data corresponding to consumed resources found in the diet. See details for formatting.}
@@ -37,7 +42,7 @@ will calculate Chesson's alpha, which is identical to Vanderploeg and Scavia's s
 The function takes two dataframes as input. The first argument, Diet, should be formatted as followed. Each row in the data frame should be a diet record. 
 The first column should contain the name of the record to be calculated. The second column should contain the name linking the consumed prey in Diet to that in Available (example, name of the different habitats), which will be described below.
 All remaining columns should contain the abundance or relative abundance of the prey in the diet. These columns should also be named so they can be matched to Those in Available. The second data frame, Available should be formatted similar to Diet where each row describes a unique record for available prey.
-The remaining columns should contain the abundance or relative abundance of the prey that are available to be consumed. These columns should also be named so they can be matched to Those in Diet. #' Users should define if their data is raw or relative abundance by using the Abundance argument. 
+The remaining columns should contain the abundance or relative abundance of the prey that are available to be consumed. These columns should also be named so they can be matched to Those in Diet. Users should define if their data is raw or relative abundance by using the Abundance argument. 
 Note that these indices rely on relative abundance data for calculations. While it is recommended to have input data as relative abundances, the function automatically will calculate relative abundances (which has no effect on data that are already in units of relative abundance).
  
 Indices are bounded by the following values. Ivlev's, Strauss', and Jacobs' D, and Vanderploeg & Scavia's indices are bounded between -1 and 1, with items closer to -1 representing avoided items, 0 randomly feeding, and 1 preferential items.
@@ -58,10 +63,15 @@ Depleting = FALSE)
 }
 \references{
 Chesson, J. 1983. The estimation and analysis of preference and its relatioship to foraging models. Ecology 64:1297-1304.
+
 Ivlev, U. 1961. Experimental ecology of the feeding of fish. Yale University Press, New Haven.
+
 Jacobs, J. 1974. Quantitative measurement of food selection. Oecologia 14:413-417.
+
 Manly, B. 1974. A model for certain types of selection experiments. Biometrics 30:281-294.
+
 Strauss, R. E. 1979. Reliability Estimates for Ivlev's Electivity Index, the Forage Ratio, and a Proposed Linear Index of Food Selection. Transactions of the American Fisheries Society 108:344-352.
+
 Vanderploeg, H., and D. Scavia. 1979. Two electivity indices for feeding with special reference to zooplankton grazing. Journal of the Fisheries Board of Canada 36:362-365.
 }
 \author{

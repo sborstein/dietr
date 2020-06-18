@@ -11,7 +11,7 @@ Imports:
 Description: Estimates fractional trophic level from quantitative and qualitative diet data and calculates electivity indices in R. Froese & Pauly (2000, ISBN: 9718709991).
 License: GPL (>= 2)
 LazyData: true
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.0
 Encoding: UTF-8
 Suggests:
 	knitr,

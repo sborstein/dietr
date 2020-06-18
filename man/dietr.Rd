@@ -3,7 +3,6 @@
 \docType{package}
 \name{dietr}
 \alias{dietr}
-\alias{dietr-package}
 \title{Diet Estimated Trophic Levels in R}
 \description{
 Estimates fractional trophic level from quantitative and qualitative diet data and calculates electivity indices in R.

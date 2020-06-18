@@ -49,7 +49,6 @@
 #' @export
 
 CompositeIndices <- function (DietData, Indices = c("IOP","IRI","FQ"), PercentNumber = NA, PercentOccurence = NA, PercentVolWeight = NA, ReturnRaw = FALSE, PercentOnly = TRUE){
-  
   DietData <- data.frame(DietData,stringsAsFactors = FALSE)
   uni.records <- unique(DietData[,1])
   Store.Indices <- vector(mode = "list", length = length(uni.records))
