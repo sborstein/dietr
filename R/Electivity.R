@@ -29,6 +29,7 @@
 #' depleting, in which case the equation from case 2 of Chesson, 1983 is calculated. Note, this takes the log of (p-r)/p) and values of 0 or negatives will return NaN.
 #' @return List containing data frames for each electivity index selected. 
 #' @author Samuel Borstein
+#' @seealso \code{\link{PlotElectivity}}
 #' @examples
 #' #Load Electivity Data from Horn 1982
 #' data(Horn1982)
@@ -119,5 +120,6 @@ if (any(Indices=="Chesson")) {
   }
   ElectivIndices<-rapply(ElectivIndices, f=function(x) ifelse(is.infinite(x),NA,x), how="replace" )
   ElectivIndices<-rapply(ElectivIndices, f=function(x) ifelse(is.nan(x),NA,x), how="replace" )
+  class(ElectivIndices)<-"Electivity"
   return(ElectivIndices)
 }

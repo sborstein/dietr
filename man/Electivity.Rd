@@ -74,6 +74,9 @@ Strauss, R. E. 1979. Reliability Estimates for Ivlev's Electivity Index, the For
 
 Vanderploeg, H., and D. Scavia. 1979. Two electivity indices for feeding with special reference to zooplankton grazing. Journal of the Fisheries Board of Canada 36:362-365.
 }
+\seealso{
+\code{\link{PlotElectivity}}
+}
 \author{
 Samuel Borstein
 }
