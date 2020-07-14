@@ -1,6 +1,6 @@
 Package: dietr
-Version: 1.1
-Date: 2020-6-18
+Version: 1.1.0
+Date: 2020-7-14
 Title: Diet Estimated Trophic Levels
 Author: Samuel R. Borstein <sam@borstein.com>
 Maintainer: Samuel R. Borstein <sam@borstein.com>
@@ -11,7 +11,7 @@ Imports:
 Description: Estimates fractional trophic level from quantitative and qualitative diet data and calculates electivity indices in R. Froese & Pauly (2000, ISBN: 9718709991).
 License: GPL (>= 2)
 LazyData: true
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Encoding: UTF-8
 Suggests:
 	knitr,
