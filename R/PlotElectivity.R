@@ -43,7 +43,7 @@ PlotElectivity <- function(Electivity.Calcs, Indices = c("Ivlev","Strauss","Jaco
   graphics::par(mar=c(11,4,4,15))
   for(PlotIndex in 1:length(Data2Plot)){
     current.dat <- Data2Plot[[PlotIndex]]
-    current.dat.cleaned <- current.dat[,3:19]
+    current.dat.cleaned <- current.dat[,3:ncol(current.dat)]
     graphics::barplot(as.matrix(current.dat.cleaned),beside = TRUE, col = BarColor, ylim = c(-1,1),cex.axis = AxisFontSize, cex.names = NameSize, las =2, ylab = "Electivity", axis.lty = 0,border = BorderCol, main = names(Data2Plot[PlotIndex]))
     graphics::abline(h=0)
     graphics::legend("topright",legend = current.dat$Record,bty = 'n', cex = LegendFontSize, xpd = TRUE, inset = c(-.35,0), col = BarColor, pch = 15,title = LegendTitle)

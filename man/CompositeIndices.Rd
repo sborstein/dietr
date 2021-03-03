@@ -8,7 +8,7 @@ CompositeIndices(
   DietData,
   Indices = c("IOP", "IRI", "FQ"),
   PercentNumber = NA,
-  PercentOccurence = NA,
+  PercentOccurrence = NA,
   PercentVolWeight = NA,
   ReturnRaw = FALSE,
   PercentOnly = TRUE
@@ -21,7 +21,7 @@ CompositeIndices(
 
 \item{PercentNumber}{Numeric. Column number in DietData containing the percent numeric data. If calculating an index that does not require percent number data, can be left as NA.}
 
-\item{PercentOccurence}{Numeric. Column number in DietData containing the percent occurence data. If calculating an index that does not require frequency of occurence data, can be left as NA.}
+\item{PercentOccurrence}{Numeric. Column number in DietData containing the percent Occurrence data. If calculating an index that does not require frequency of occurrence data, can be left as NA.}
 
 \item{PercentVolWeight}{Numeric. Column number in DietData containing the percent volume or weight data.}
 
@@ -36,20 +36,20 @@ A list the length of the unique records in DietDat containing data frames with t
 Calculates various composite indices for studying trophic ecology
 }
 \details{
-This function calculates compund indices (indices combining various diet measurements). Specifically, this function calculates three indices: The Index of Preponderance,
+This function calculates compound indices (indices combining various diet measurements). Specifically, this function calculates three indices: The Index of Preponderance,
 the Index of Relative Importance, and the Feeding Quotient. These indices have numerous synonyms, and for a review of them, I recommend de Silviera et al., 2020. With this function 
 users can select to calculate one or more of the three compound indices mentioned above. The Index of Preponderance (Natarajan & Jhingran, 1961 AKA Feeding Index Kawakami & Vazzoler, 1980) is the 
-product of the frequency of occurence of prey with either their volumetric or weight contribution to the diet. The Index of Relative Importance (Pinkas et al., 1971) is calculated as the 
-the product of the sum of the weight or volume of a prey item and the percent number and the percent frequency occurence. The Feeding Quotient (Hureau, 1970) is the product of the percent number
+product of the frequency of occurrence of prey with either their volumetric or weight contribution to the diet. The Index of Relative Importance (Pinkas et al., 1971) is calculated as the 
+the product of the sum of the weight or volume of a prey item and the percent number and the percent frequency occurrence. The Feeding Quotient (Hureau, 1970) is the product of the percent number
 and the percent weight. These indices can be returned as just a percentage or the percentage and the raw calculations with the PercentOnly argument.
 
 The main input for this function is DietData, which requires minimal formatting. It is mandatory for this function that the first column contain the diet record identifier and the second column the names of
 the prey. The diet record identifier should be a unique name for each record, which allows one to calculate feeding indices for numerous records with a single call of the function. As the second column
 contains the prey identifier, if a species feeds upon three different prey, the first three rows of the dataset should have the same record identifier. The remaining columns should contain
-information on the the contribution of the various prey to the diet of the record required to calculate the indices. Note that the order of these columns does not matter as the frequency of occurence, 
-precent number, and percent volume or weight are specified with the arguments PercentNumber, PercentOccurence, and PercentVolWeight respectively. Users should enter in the column number for these arguments 
+information on the the contribution of the various prey to the diet of the record required to calculate the indices. Note that the order of these columns does not matter as the frequency of occurrence, 
+precent number, and percent volume or weight are specified with the arguments PercentNumber, PercentOccurrence, and PercentVolWeight respectively. Users should enter in the column number for these arguments 
 that corresponds to their respective position in DietDat. If you are having difficulty formatting data, I highly recommend seeing the format of the diet data used in the example below, which can be loaded
-by running data(Casaux1998). This example is for two unique diet records for the fish Harpagifer antarcticus from two different localities (Potter Cove and Harmony Point) and contains data on the frequency of occurence 
+by running data(Casaux1998). This example is for two unique diet records for the fish Harpagifer antarcticus from two different localities (Potter Cove and Harmony Point) and contains data on the frequency of occurrence 
 percent number, and percent mass of the prey in the diets of the fish from these two populations.
 }
 \examples{
@@ -58,10 +58,10 @@ percent number, and percent mass of the prey in the diets of the fish from these
 data(Casaux1998)
 #Calculate all three diet indices (IOP, IRI, FQ), return the raw data, and all calculations.
 CompositeIndices(DietData = Casaux1998, Indices = c("IOP","IRI","FQ"), PercentNumber = 4, 
-PercentOccurence = 3, PercentVolWeight = 5, ReturnRaw = TRUE, PercentOnly = FALSE)
+PercentOccurrence = 3, PercentVolWeight = 5, ReturnRaw = TRUE, PercentOnly = FALSE)
 #Calculate all three diet indices and return only the percent of the index
 CompositeIndices(DietData = Casaux1998, Indices = c("IOP","IRI","FQ"), PercentNumber = 4, 
-PercentOccurence = 3, PercentVolWeight = 5, ReturnRaw = FALSE, PercentOnly = TRUE)
+PercentOccurrence = 3, PercentVolWeight = 5, ReturnRaw = FALSE, PercentOnly = TRUE)
 #Calculate Feeding Quotient and return the raw data and the all calculations.
 CompositeIndices(DietData = Casaux1998, Indices = "FQ", PercentNumber = 4, PercentVolWeight = 5,
 ReturnRaw = FALSE, PercentOnly = FALSE)

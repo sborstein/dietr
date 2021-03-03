@@ -9,7 +9,7 @@ A data frames containing diet data for two populations (Potter Cove & Harmony Po
 \itemize{
   \item Record: The record, in this case the name for the two populations, Harpagifer_antarcticus_PotterCove and Harpagifer_antarcticus_HarmonyPoint for populations from Potter Cover and Harmony Point respectively.
   \item Prey: Name of the prey item consumes.
-  \item PercentOccurence: Data for the percent occurence of the prey consumed.
+  \item PercentOccurrence: Data for the percent occurrence of the prey consumed.
   \item PercentNumber: Data for the percent number of the prey consumed.
   \item PercentWeight: Data for the percent weight of the prey consumed.
   }
