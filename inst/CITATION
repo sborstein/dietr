@@ -1,13 +1,15 @@
 citHeader("To cite dietr in publications please use:")
 
 
-citEntry(entry = "Manual",
-         title   = "dietr: Diet Estimated Trophic Levels",
-         author  = "Samuel Borstein",
-         year    = "2019",
-         note    = "R package version 1.0",
+citEntry(entry = "article",
+         title   = "dietr: an R package for calculating fractional trophic levels from quantitative and qualitative diet data",
+         author  = "Samuel R. Borstein",
+		 month = 'oct',
+         year    = "2020",
+		 publisher = 'Springer',
+		 journal = 'Hydrobiologia',
          url     = "https://github.com/sborstein/dietr",
          
          textVersion =
-           paste("Samuel Borstein. (2019) : dietr: Diet Estimated Trophic Levels. R package version 1.0. https://github.com/sborstein/dietr")
+           paste("Borstein SR. 2020. dietr: an R package for calculating fractional trophic levels from quantitative and qualitative diet data. Hydrobiologia 847:4285-4294. 10.1007/s10750-020-04417-5")
 )
