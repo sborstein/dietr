@@ -18,6 +18,7 @@
 #' use in with function (see vignette for a tutorial). 
 #' @author Samuel Borstein
 #' @examples
+#' \donttest{
 #' ###EXAMPLE USING RAW DATA FROM Magalhaes et al., 2015###
 #' data(Herichthys)#load data
 #' #Subset out individuals with diet data
@@ -62,7 +63,6 @@
 #' PreyMat[,3]<-c(.58,.4,.8,.3,0,0)
 #' HM.TL<-DietTroph(DietItems = HM.mat,PreyValues = PreyMat, PreyClass = "FoodItem",
 #' Taxonomy = HMtax, SumCheck = TRUE)
-#'\donttest{
 #' ###EXAMPLE USING DATA FROM FISHBASE###
 #' #Get some food item data from rfishbase
 #' library(rfishbase)

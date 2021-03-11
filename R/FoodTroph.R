@@ -21,7 +21,6 @@
 #' @examples 
 #' \donttest{
 #' #Get some food item data from rfishbase
-#' library(rfishbase)
 #' my.food <- rfishbase::fooditems(c("Lutjanus apodus","Epinephelus itajara"))
 #' #convert FishBase data into data for trophic calculation using TrophicLevelR
 #' converted.foods <- ConvertFishbaseFood(my.food)

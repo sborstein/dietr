@@ -9,9 +9,9 @@
 #' 
 #' Title: An R package to estimate trophic level from diet and food item data
 #' 
-#' Version: 1.1
+#' Version: 1.1.1
 #' 
-#' Date: 2020-6-18
+#' Date: 2020-3-3
 #' 
 #' License: GPL (>= 2)
 #' 
@@ -25,7 +25,7 @@
 #' and Gastro-somatic Index.
 #'  
 #' @author Samuel Borstein
-#' Maintainer: Samuel Borstein <sborstei@vols.utk.edu>
+#' Maintainer: Samuel Borstein <borstein@umich.edu>
 #' 
 #' @seealso \code{\link{Electivity}},\code{\link{ConvertFishbaseFood}},\code{\link{DietTroph}},\code{\link{FoodTroph}}
 #' 
