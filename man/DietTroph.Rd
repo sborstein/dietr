@@ -39,6 +39,7 @@ While FishBase data obtained from rfishbase can be used, users can also upload t
 use in with function (see vignette for a tutorial).
 }
 \examples{
+\donttest{
 ###EXAMPLE USING RAW DATA FROM Magalhaes et al., 2015###
 data(Herichthys)#load data
 #Subset out individuals with diet data
@@ -83,7 +84,6 @@ PreyMat[,2]<-c(2.37,2.2,3.5,2.1,2,2)
 PreyMat[,3]<-c(.58,.4,.8,.3,0,0)
 HM.TL<-DietTroph(DietItems = HM.mat,PreyValues = PreyMat, PreyClass = "FoodItem",
 Taxonomy = HMtax, SumCheck = TRUE)
-\donttest{
 ###EXAMPLE USING DATA FROM FISHBASE###
 #Get some food item data from rfishbase
 library(rfishbase)
