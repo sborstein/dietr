@@ -5,9 +5,8 @@ This is a resubmission. In this version I have:
 * Addressed issues where unit tests failed on CRAN as they could not connect to a remote database. These tests will now skip if a connection can not be made. Please note that these tests ran successfully on Travis-CI as well as R WinBuilder and on my local Windows 10 and Mac OS environments, but previous submissions have had issues connecting to the database during CRAN checks.
 
 ## Test environments
-* local Windows 10 install, R 4.0.2
-* local Mac OS Catalina 10.15.5, R 3.6.0
-* ubuntu 16.04 (on travis-ci), R 4.0.0
+* local Windows 10 install, R 4.0.4
+* ubuntu 16.04 (on travis-ci), R 4.0.2
 * win-builder (devel, release, and oldrelease)
 
 ## R CMD check results
