@@ -17,8 +17,8 @@ This converts diet data from rfishbase into a format usable with dietr.
 }
 \details{
 As of rfishbase 3.0, the package handles returning diet data differently than in previous versions. As currently implemented,
-rfishbase returns two different unjoined diet tables, one with the actualy diet items and their percent contribution in the diet, and another that 
-has the metadata for the diet record. This unfortunatley is a difficult format to work with and easily extract out species of interest. Additionally, in previous
+rfishbase returns two different unjoined diet tables, one with the actual diet items and their percent contribution in the diet, and another that 
+has the metadata for the diet record. This unfortunately is a difficult format to work with and easily extract out species of interest. Additionally, in previous
 versions you could specify species names or numbers and only return those of interest, the only function options in the current version
 are specifying a server. As such, if the function is run, it will return all diet data on the site, requiring users to subset out 
 those of interest for them. We have implemented in this function a way to join the tables for use as well as filter based on life history stage (if necessary).

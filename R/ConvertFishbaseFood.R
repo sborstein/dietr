@@ -2,7 +2,7 @@
 #' @param FishBaseFood a data frame produced by the rfishbase fooditem function
 #' @param ExcludeStage a character, indicating which life stages to exclude. Must match stage names given by rfishbase (i.e. larvae, rec./juveniles, juv./adults, adults).
 #' @return a list of length two, with two data frames. One containing the re-formatted food item data and one containing the Taxonomy with species names.
-#' @details This converts the data frame produced by rfishbase fooditem function into a usable fortmat for dietr.
+#' @details This converts the data frame produced by rfishbase fooditem function into a usable format for dietr.
 #' @author Samuel Borstein
 #' @examples
 #' \donttest{

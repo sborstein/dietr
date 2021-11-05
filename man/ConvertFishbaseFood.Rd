@@ -18,7 +18,7 @@ a list of length two, with two data frames. One containing the re-formatted food
 Converts FishBase/SealifBase food item diet data obtained from the diet function into a usable format for dietr
 }
 \details{
-This converts the data frame produced by rfishbase fooditem function into a usable fortmat for dietr.
+This converts the data frame produced by rfishbase fooditem function into a usable format for dietr.
 }
 \examples{
 \donttest{

@@ -8,10 +8,10 @@ Depends:
     R (>= 3.5)
 Imports:
     rfishbase (>= 3.0)
-Description: Estimates fractional trophic level from quantitative and qualitative diet data and calculates electivity indices in R. Froese & Pauly (2000, ISBN: 9718709991).
+Description: Estimates fractional trophic level from quantitative and qualitative diet data and calculates electivity indices in R. Borstein (2020) <doi:10.1007/s10750-020-04417-5>.
 License: GPL (>= 2)
 LazyData: true
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Encoding: UTF-8
 Suggests:
 	knitr,

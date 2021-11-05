@@ -1,5 +1,5 @@
 ## Package Update
-This is a package update addressing typos in documentation and the vignette as well as a minor bug fix. Please note:
+This is a package update addressing minor typos in documentation and the vignette as well as a minor bug fix. Please note:
 
 * There are unit tests using testthat for functions in which the examples are wrapped with /donttest. It is not feasible to unwrap these functions from /donttest as the functions and examples connect to a remote database and often take longer than 5 seconds to run. These functions are ConvertFishbaseFood, ConvertFishbaseDiet, FoodTroph, and DietTroph and have testthat test files with similar names. I have checked the examples of these functions that are wrapped in /donttest using R CMD CHECK --run-donttest, and all ran without error.
 

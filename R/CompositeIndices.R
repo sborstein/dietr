@@ -4,7 +4,7 @@
 #' @param PercentNumber Numeric. Column number in DietData containing the percent numeric data. If calculating an index that does not require percent number data, can be left as NA.
 #' @param PercentOccurrence Numeric. Column number in DietData containing the percent Occurrence data. If calculating an index that does not require frequency of occurrence data, can be left as NA.
 #' @param PercentVolWeight Numeric. Column number in DietData containing the percent volume or weight data.
-#' @param ReturnRaw Logical. Should the raw input data be returned with the compund indices? Default is FALSE (i.e. only the calculated indices are returned).
+#' @param ReturnRaw Logical. Should the raw input data be returned with the compound indices? Default is FALSE (i.e. only the calculated indices are returned).
 #' @param PercentOnly Logical. Should composite indices only be returned as percentages or should the raw calculated values be returned? Default is TRUE (i.e. indices are returned as percentages only). 
 #' @details This function calculates compound indices (indices combining various diet measurements). Specifically, this function calculates three indices: The Index of Preponderance,
 #' the Index of Relative Importance, and the Feeding Quotient. These indices have numerous synonyms, and for a review of them, I recommend de Silviera et al., 2020. With this function 
@@ -18,10 +18,10 @@
 #' contains the prey identifier, if a species feeds upon three different prey, the first three rows of the dataset should have the same record identifier. The remaining columns should contain
 #' information on the the contribution of the various prey to the diet of the record required to calculate the indices. Note that the order of these columns does not matter as the frequency of occurrence, 
 #' precent number, and percent volume or weight are specified with the arguments PercentNumber, PercentOccurrence, and PercentVolWeight respectively. Users should enter in the column number for these arguments 
-#' that corresponds to their respective position in DietDat. If you are having difficulty formatting data, I highly recommend seeing the format of the diet data used in the example below, which can be loaded
+#' that corresponds to their respective position in DietData. If you are having difficulty formatting data, I highly recommend seeing the format of the diet data used in the example below, which can be loaded
 #' by running data(Casaux1998). This example is for two unique diet records for the fish Harpagifer antarcticus from two different localities (Potter Cove and Harmony Point) and contains data on the frequency of occurrence 
 #' percent number, and percent mass of the prey in the diets of the fish from these two populations.
-#' @return A list the length of the unique records in DietDat containing data frames with the calculated diet indices. The lists will be names with the respective diet record names. 
+#' @return A list the length of the unique records in DietData containing data frames with the calculated diet indices. The lists will be names with the respective diet record names. 
 #' @author Samuel Borstein
 #' @examples
 #' #Load diet data from Casaux1998, which contains diet for two populations of Harpagifer

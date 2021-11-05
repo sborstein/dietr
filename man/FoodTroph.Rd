@@ -36,7 +36,7 @@ use with the function.
 }
 \details{
 Users can set the number of iterations for the subsampling routine for the simulated ranking of trophic items used in calculating trophic levels. We have this set currently to match
-how it is implemented in TrophLab, at 100. We find this performs relatively well and is quite quick to do, but users could also increase thios value with minimal impacts on runtime.
+how it is implemented in TrophLab, at 100. We find this performs relatively well and is quite quick to do, but users could also increase this value with minimal impacts on run time.
 
 For calculating the SE (SE.Type parameter) around the estimated trophic level users have a few options. The current default follows TrophLab and uses the SE around the trophic levels of prey to estimate
 the SE which they also refer to as the omnivory index. Alternatively, users can select the Sims option, in which case the SE is estimated based on the estimated TL of the n number

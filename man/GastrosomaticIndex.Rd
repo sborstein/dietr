@@ -11,13 +11,13 @@ GastrosomaticIndex(StomachData, Calc.Vacuity = FALSE)
 up as follows. The first column should contain the specimen identifier, the second column the 
 stomach weight, and the third column the weight of the specimens.}
 
-\item{Calc.Vacuity}{Logical. Should the vaucity index also be calculated? Default is FALSE.}
+\item{Calc.Vacuity}{Logical. Should the vacuity index also be calculated? Default is FALSE.}
 }
 \value{
-Object of Class List of length 2 or 3. If Calc.Vaucity = FALSE, a list of length two 
+Object of Class List of length 2 or 3. If Calc.Vacuity = FALSE, a list of length two 
 is returned containing a named vector of individual specimen gastro-somatic index as well as a
-numeric vector length of 1 containing the mean gastro-somatic index. If Calc.Vaucity = TRUE, an
-additional numeric vector of length 1 is returned containing the calculated vaucity index.
+numeric vector length of 1 containing the mean gastro-somatic index. If Calc.Vacuity = TRUE, an
+additional numeric vector of length 1 is returned containing the calculated vacuity index.
 }
 \description{
 This function calculates Gastro-somatic fullness, the relationship between stomach

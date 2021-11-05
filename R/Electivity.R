@@ -1,9 +1,9 @@
 #' Calculates a variety of electivity indices and foraging ratios
 #' @description This function calculates the forage ratio and a variety of electivity indices. Included indices include Ivlev's (1961),
-#' Strauss' (1979), Jacob's Q and D (1974), Chesson's (1983)(Which is similar to Manl'y Alpha (1974)), and Vanderploeg & Scavia (1979).
+#' Strauss' (1979), Jacob's Q and D (1974), Chesson's (1983)(Which is similar to Manly's Alpha (1974)), and Vanderploeg & Scavia (1979).
 #' @param Diet Data frame with data corresponding to consumed resources found in the diet. See details for formatting.
 #' @param Available Data frame with data corresponding to the available resources. See details for formatting.
-#' @param Indices Character vector containing the names of the desired indices to calculate. See description for information on availabble indices. 
+#' @param Indices Character vector containing the names of the desired indices to calculate. See description for information on available indices. 
 #' @param LogQ Logical. If true, should Jacob's Q be logged? This is the recommendation of Jacob, 1974.Default is TRUE, following the recommendation. 
 #' @param Depleting Logical. If true, calculates Chesson's Case 2, where food depletion occurs and the available food is not constant. Default is False.
 #' @details 
@@ -21,8 +21,8 @@
 #' Note that these indices rely on relative abundance data for calculations. While it is recommended to have input data as relative abundances, the function automatically will calculate relative abundances (which has no effect on data that are already in units of relative abundance).
 #'  
 #' Indices are bounded by the following values. Ivlev's, Strauss', and Jacobs' D, and Vanderploeg & Scavia's indices are bounded between -1 and 1, with items closer to -1 representing avoided items, 0 randomly feeding, and 1 preferential items.
-#' Forage ratio values range between 1 and infinity for preffered items while values between 0 and 1 represent avoided prey. Similar to forage ratio, Jacobs' Q ranges  
-#' between 1 and infinity for preffered items and 0 and 1 for avoided prey, however log10(Q) is the preffered as it provides 
+#' Forage ratio values range between 1 and infinity for preferred items while values between 0 and 1 represent avoided prey. Similar to forage ratio, Jacobs' Q ranges  
+#' between 1 and infinity for preferred items and 0 and 1 for avoided prey, however log10(Q) is the preferred as it provides 
 #' the advantage of equal ranges and ranges from -infinity to +infinity for avoidance and preference respectively. This option can be selected in the function with the logQ argument, which by default is set to TRUE. 
 #' Finally, Chesson's index ranges between 0 and 1 and preference is typically assessed using 1/n, where n is the number of prey types. The value of 1/n represents random feeding while values 
 #' above and below 1/n represent preference and avoidance respectively. For Chesson's index, users can also specify if the available resources are 

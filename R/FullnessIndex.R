@@ -4,11 +4,11 @@
 #' @param StomachData Object of class data frame containing stomach data. The data frame must be set
 #' up as follows. The first column should contain the specimen identifier, the second column the 
 #' stomach weight, and the third column the weight of the specimens.
-#' @param Calc.Vacuity Logical. Should the vaucity index also be calculated? Default is FALSE.
-#' @return Object of Class List of length 2 or 3. If Calc.Vaucity = FALSE, a list of length two 
+#' @param Calc.Vacuity Logical. Should the vacuity index also be calculated? Default is FALSE.
+#' @return Object of Class List of length 2 or 3. If Calc.Vacuity = FALSE, a list of length two 
 #' is returned containing a named vector of individual specimen gastro-somatic index as well as a
-#' numeric vector length of 1 containing the mean gastro-somatic index. If Calc.Vaucity = TRUE, an
-#' additional numeric vector of length 1 is returned containing the calculated vaucity index.
+#' numeric vector length of 1 containing the mean gastro-somatic index. If Calc.Vacuity = TRUE, an
+#' additional numeric vector of length 1 is returned containing the calculated vacuity index.
 #' @references
 #' Hureau J-C. 1970. Biologie comparee de quelques poissons antarctiques (Nototheniidae). Bulletin de l'Institut Oceanographique de Monaco 68:1-244. 
 #' @author Samuel Borstein

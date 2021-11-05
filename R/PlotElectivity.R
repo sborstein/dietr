@@ -6,12 +6,12 @@
 #' combination of Ivlev, Strauss, JacobsD, and VanderploegScavia.
 #' @param BarColor Character vector. Color to be assigned for each record in Electivity.Calcs. If
 #' specified, it should be the sames as the number of rows/records in Electivity.Calcs. If not specified, 
-#' colors are randomly selected from the rainbow color pallette.
+#' colors are randomly selected from the rainbow color palette.
 #' @param NameSize Numeric. Controls the font size for names of prey on the x-axis. Default = 1.
 #' @param AxisFontSize Numeric. Contols the font size of values on the y-axis. Default = 1.
 #' @param BorderCol Character or Logical. specifying color for the border. If users wish to not 
 #' include a border between bars, they should set this to FALSE. Default = Black.
-#' @param LegendFontSize Numeric. Controls the font size of the legeng. Default = 1.
+#' @param LegendFontSize Numeric. Controls the font size of the legend. Default = 1.
 #' @param LegendTitle Character. Title of the legend. Default is called "Record" following the
 #' formatting returned by the Electivity function, but if records are distinct species, could be for
 #' example set to "species".

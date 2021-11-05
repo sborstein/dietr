@@ -19,7 +19,7 @@ A data frame of of 384 rows and 6 columns
 FishBasePreyVals
 }
 \description{
-A data frame containing prey items and their respective trophic levels following  FishBase and
+A data frame containing prey items and their respective trophic levels following FishBase and
  TrophLab.
 }
 \references{
