@@ -19,8 +19,10 @@
 #' @export
 
 ConvertFishbaseDiet<-function(ExcludeStage=NULL){
-  items<-rfishbase::diet_items()
-  records<-rfishbase::diet()
+  items.raw<-as.data.frame(rfishbase::diet_items())#Read in FishBase diet item data
+  items <- items.raw[!is.na(items.raw$DietCode),]#remove records lacking DietCode ID
+  records.raw<-as.data.frame(rfishbase::diet())#Read in FishBase diet record info
+  records <- records.raw[!is.na(records.raw),]#remove records lacking DietCode ID
   merged.diets<-merge(items,records,by.x = "DietCode")
   if(is.null(ExcludeStage)){
     ConvertDat<-cbind.data.frame(merged.diets$DietCode,merged.diets$Species,merged.diets$FoodI,merged.diets$FoodII,merged.diets$FoodIII,merged.diets$Stage,merged.diets$DietPercent)
