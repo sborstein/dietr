@@ -1,8 +1,8 @@
-dietr 1.1.1
+dietr 1.1.2
 ============
 
 ## Minor changes
-* Updated vignette. Mostly typo fixes.
-* General improvements to documentation.
-* Fixed minor plotting bug in PlotElectivity.
+* Fixed typos in documentation
+* Fixed an issue where ConvertFishbaseDiet function used lots of RAM
+* Fixed an issue introduced by an rfishbase update causing ConvertFishbaseFood function to fail CRAN checks. Thanks to the rfishbase team for support.
 
