@@ -1,5 +1,5 @@
 ## Package Update
-This package update addresses issues that caused CRAN checks to fail. It was an issue with an updated dependency and has now been fixed.Please note:
+This package update addresses issues that caused CRAN checks to fail and for the package to be archived on 2021-09-06. It was an issue with an updated dependency and has now been fixed.Please note:
 
 * There are unit tests using testthat for functions in which the examples are wrapped with /donttest. It is not feasible to unwrap these functions from /donttest as the functions and examples connect to a remote database and often take longer than 5 seconds to run. These functions are ConvertFishbaseFood, ConvertFishbaseDiet, FoodTroph, and DietTroph and have testthat test files with similar names. I have checked the examples of these functions that are wrapped in /donttest using R CMD CHECK --run-donttest, and all ran without error.
 
