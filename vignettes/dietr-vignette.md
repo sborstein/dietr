@@ -1,7 +1,7 @@
 ---
 title: "dietr Tutorial"
 author: "Samuel R. Borstein"
-date: "18 June, 2020"
+date: "12 December, 2021"
 output:
   pdf_document:
     keep_md: true
@@ -236,9 +236,9 @@ We can see that the object returned `HM.TL` is a list that has a length of four 
 
 ## 3.4: Using dietr to Calculate Electivity Indices
 
-While `dietr` can estimate trophic levels from food item and diet composition data as highlighted above, it can also measure a number of popular elevtivity indices used in studies of trophic ecology. The `dietr` function `Electivity` implements Ivlev's (1961), Strauss' (1979), Jacob's Q and D (1974), Chesson's (1983)(Which is similar to Manl'y Alpha (1974)), and Vanderploeg & Scavia (1979) electivity indices. `Electivity` takes two data frames as input. One should contain the relative abundance of consumed prey (argument `Diet`) and the other should contain the relative abundance of available prey items in the habitat  (argument `Available`. These should be formatted as such. The data frame for `Diet` should have each individual row as a diet record. The first column should contain the name of the diet record, the second, a identifier that links that record to an identifier in the first row in the data frame for `Available` (i.e. a habitat name, year, etc.). All following columns should contain a unique prey item and its relative abundance in the diet. The `Available` data frame contains similar data, however, in this data frame, the first column contains the identifier for the available prey relative abundance and all remaining columns should represent prey items available in the habitat and match those in `Diet`
+While `dietr` can estimate trophic levels from food item and diet composition data as highlighted above, it can also measure a number of popular electivity indices used in studies of trophic ecology. The `dietr` function `Electivity` implements Ivlev's (1961), Strauss' (1979), Jacob's Q and D (1974), Chesson's (1983)(Which is similar to Manl'y Alpha (1974)), and Vanderploeg & Scavia (1979) electivity indices. `Electivity` takes two data frames as input. One should contain the relative abundance of consumed prey (argument `Diet`) and the other should contain the relative abundance of available prey items in the habitat  (argument `Available`. Not that abundance percent should be as a decimal (i.e. sum to 1, not 100). If users choose, they can upload input data that is not in units of percent abundance and use the `CalcAbundance` option to do so. The input data frames should be formatted as such. The data frame for `Diet` should have each individual row as a diet record. The first column should contain the name of the diet record, the second, a identifier that links that record to an identifier in the first row in the data frame for `Available` (i.e. a habitat name, year, etc.). All remaining columns should contain a unique prey item and its relative abundance in the diet. The `Available` data frame contains similar data, however, in this data frame, the first column contains the identifier for the available prey relative abundance and all remaining columns should represent prey items available in the habitat and match those in `Diet`. Note that the prey items in `Diet` should be the same as those in `Available` and vice versa.
 
-To highlight an example of how to use this function and how data should be formatted for it, we can load data from Horn, 1982. This is a dataset containing data on consumption and availability of macroalgae prey for two species of Stichaeidae in two different years. We can load it as such and see the format of the data by doing the following.
+To highlight an example of how to use this function and how data should be formatted for it, we can load data from Horn, 1982. This is a dataset containing data on relative abundance by percent weight of macroalgae prey consumption and availability for two species of Stichaeidae in two different years. We can load it as such and see the format of the data by doing the following.
 
 ```
 data(Horn1982)# load data
@@ -251,7 +251,33 @@ We can see here that we are identifying available prey her by year and month in 
 ```r
 my.indices <- Electivity(Diet = Horn1982$Consumed, Available = Horn1982$Available, 
   Indices = c("ForageRatio","Ivlev","Strauss","JacobsQ","JacobsD","Chesson",
-  "VanderploegScavia"),LogQ = TRUE, Depleting = FALSE)
+  "VanderploegScavia"),LogQ = TRUE, CalcAbundance = FALSE, Depleting = FALSE)
+```
+
+```
+## Warning in Electivity(Diet = Horn1982$Consumed, Available =
+## Horn1982$Available, : Some values are greater than 1, but you specified not
+## to calculate relative abundance. You may get odd results for some indices. For
+## relative abundance, data should sum to 1 and therefore cannot be greater than 1.
+## If your data are relative abundance, you may need to divide them by 100 so they
+## sum to 1. If they are not yet in relative abundance, please use CalcAbundance =
+## TRUE
+```
+
+```
+## Warning in lapply(X = x, FUN = .Generic, ...): NaNs produced
+
+## Warning in lapply(X = x, FUN = .Generic, ...): NaNs produced
+
+## Warning in lapply(X = x, FUN = .Generic, ...): NaNs produced
+
+## Warning in lapply(X = x, FUN = .Generic, ...): NaNs produced
+
+## Warning in lapply(X = x, FUN = .Generic, ...): NaNs produced
+
+## Warning in lapply(X = x, FUN = .Generic, ...): NaNs produced
+
+## Warning in lapply(X = x, FUN = .Generic, ...): NaNs produced
 ```
 
 We can see that the `Electivity` function returned a list of data frames of class `Electivity`. Each data frame contains a calculated index and is named respective of the index calculated. Do not that in some cases of these calculations, certain calculations may yield `NaN` values or `Inf` values, for instance due to division by 0 or log of zero or negative number. These typically arise when a prey item is either presentin the habitat but not consumed, present in the diet but not in the habitat, or where they are both absent from a record. In these cases, `NA` is returned.
@@ -277,9 +303,9 @@ PlotElectivity(Electivity.Calcs = my.indices)
 ![](dietr-vignette_files/figure-latex/unnamed-chunk-18-1.pdf)<!-- --> ![](dietr-vignette_files/figure-latex/unnamed-chunk-18-2.pdf)<!-- --> ![](dietr-vignette_files/figure-latex/unnamed-chunk-18-3.pdf)<!-- --> ![](dietr-vignette_files/figure-latex/unnamed-chunk-18-4.pdf)<!-- --> 
 
 ## 3.5: Using dietr to Calculate  Composite Diet Indices
-If users have diet data that is in percent frequency of occurence, percent number, and percent volume or weight, `dietr` can be used to calculate three different composite indices. The first, the Index of Preponderance (Natarajan & Jhingran, 1961 AKA Feeding Index Kawakami & Vazzoler, 1980) is the product of the frequency of occurence of prey with either their volumetric or weight contribution to the diet. The Index of Relative Importance (Pinkas et al., 1971) is calculated as the  the product of the sum of the weight or volume of a prey item and the percent number and the percent frequency occurence. The Feeding Quotient (Hureau, 1970) is the product of the percent number and the percent weight. For a review of these indices, I recommend de Silviera et al., 2020. 
+If users have diet data that is in percent frequency of occurrence, percent number, and percent volume or weight, `dietr` can be used to calculate three different composite indices. The first, the Index of Preponderance (Natarajan & Jhingran, 1961 AKA Feeding Index Kawakami & Vazzoler, 1980) is the product of the frequency of occurrence of prey with either their volumetric or weight contribution to the diet. The Index of Relative Importance (Pinkas et al., 1971) is calculated as the  the product of the sum of the weight or volume of a prey item and the percent number and the percent frequency occurrence. The Feeding Quotient (Hureau, 1970) is the product of the percent number and the percent weight. For a review of these indices, I recommend de Silviera et al., 2020. 
 
-The formatting for the input data is rather minimal for this function. It is mandatory for this function that the first column contain the diet record identifier and the second column the names of the prey. The diet record identifier should be a unique name for each record, which allows one to calculate feeding indices for numerous records with a single call of the function. As the second column contains the prey identifier, if a species feeds upon three different prey, the first three rows of the dataset would have the same record identifier. The remaining columns should contain information on the percent frequency of occurence, percent number, and percent weight or volume, though the order of these does not matter as they are assigned using the arguments `PercentOccurence`, `PercentNumber`, and `PercentVolWeight` respectively. Users can specify which index/indices they want to calculate with the `Indices` argument, with the options being `IRI`, `IOP`, `FQ` for Index of Relative Importance, Index of Preponderance, and Feeding Quotient respectively. Users have the option of returning the full calculations and the percents or just the percents with the `PercentOnly` argument. If set to `TRUE` only the percent of these indices is returned. Additionally, if users want the raw data returned as well, they can do so with the `ReternRaw` argument. The dataset `Casaux1998` contains data highlighting how data should be formatted for these functions as well as to run the examples. 
+The formatting for the input data is rather minimal for this function. It is mandatory for this function that the first column contain the diet record identifier and the second column the names of the prey. The diet record identifier should be a unique name for each record, which allows one to calculate feeding indices for numerous records with a single call of the function. As the second column contains the prey identifier, if a species feeds upon three different prey, the first three rows of the dataset would have the same record identifier. The remaining columns should contain information on the percent frequency of occurrence, percent number, and percent weight or volume, though the order of these does not matter as they are assigned using the arguments `PercentOccurrence`, `PercentNumber`, and `PercentVolWeight` respectively. Users can specify which index/indices they want to calculate with the `Indices` argument, with the options being `IRI`, `IOP`, `FQ` for Index of Relative Importance, Index of Preponderance, and Feeding Quotient respectively. Users have the option of returning the full calculations and the percents or just the percents with the `PercentOnly` argument. If set to `TRUE` only the percent of these indices is returned. Additionally, if users want the raw data returned as well, they can do so with the `ReternRaw` argument. The dataset `Casaux1998` contains data highlighting how data should be formatted for these functions as well as to run the examples. 
 
 
 ```r
@@ -288,21 +314,20 @@ The formatting for the input data is rather minimal for this function. It is man
 data(Casaux1998)
 
 #Calculate all three diet indices (IOP, IRI, FQ), return the raw data, and all calculations.
-CompositeIndices(DietData = Casaux1998, Indices = c("IOP","IRI","FQ"), 
-    PercentNumber = 4, PercentOccurence = 3, PercentVolWeight = 5, ReturnRaw = TRUE, 
-    PercentOnly = FALSE)
+CompositeIndices(DietData = Casaux1998, Indices = c("IOP","IRI","FQ"), PercentNumber = 4, 
+  PercentOccurrence = 3, PercentVolWeight = 5, ReturnRaw = TRUE, PercentOnly = FALSE)
 ```
 
 ```
 ## $Harpagifer_antarcticus_PotterCove
-##          Prey PercentNumber PercentOccurence PercentVolWeight     IOP
-## 1   Gammarids          86.5             98.4             95.9 9436.56
-## 2     Isopods           2.0              8.9              0.3    2.67
-## 3  Gastropods           5.8             23.6              0.5   11.80
-## 4    Bivalves           0.3              1.6              0.0    0.00
-## 5     Chitons           0.1              0.8              0.0    0.00
-## 6 Polychaetes           0.7              4.9              1.7    8.33
-## 7       Algae           4.6             30.9              1.6   49.44
+##          Prey PercentNumber PercentOccurrence PercentVolWeight     IOP
+## 1   Gammarids          86.5              98.4             95.9 9436.56
+## 2     Isopods           2.0               8.9              0.3    2.67
+## 3  Gastropods           5.8              23.6              0.5   11.80
+## 4    Bivalves           0.3               1.6              0.0    0.00
+## 5     Chitons           0.1               0.8              0.0    0.00
+## 6 Polychaetes           0.7               4.9              1.7    8.33
+## 7       Algae           4.6              30.9              1.6   49.44
 ##          %IOP      IRI         %IRI      FQ          %FQ
 ## 1 99.24028269 17948.16 9.796384e+01 8295.35 99.854948600
 ## 2  0.02807925    20.47 1.117284e-01    0.60  0.007222476
@@ -313,9 +338,9 @@ CompositeIndices(DietData = Casaux1998, Indices = c("IOP","IRI","FQ"),
 ## 7  0.51993942   191.58 1.045673e+00    7.36  0.088595710
 ## 
 ## $Harpagifer_antarcticus_HarmonyPoint
-##                Prey PercentNumber PercentOccurence PercentVolWeight     IOP
-## 1 Euphausia superba          88.7             95.5             95.9 9158.45
-## 2         Gammarids          11.3             18.2              4.1   74.62
+##                Prey PercentNumber PercentOccurrence PercentVolWeight     IOP
+## 1 Euphausia superba          88.7              95.5             95.9 9158.45
+## 2         Gammarids          11.3              18.2              4.1   74.62
 ##         %IOP      IRI      %IRI      FQ        %FQ
 ## 1 99.1918181 17629.30 98.435028 8506.33 99.4582972
 ## 2  0.8081819   280.28  1.564972   46.33  0.5417028
@@ -324,7 +349,7 @@ CompositeIndices(DietData = Casaux1998, Indices = c("IOP","IRI","FQ"),
 ```r
 #Calculate all three diet indices and return only the percent of the index
 CompositeIndices(DietData = Casaux1998, Indices = c("IOP","IRI","FQ"), PercentNumber = 4, 
-  PercentOccurence = 3, PercentVolWeight = 5, ReturnRaw = FALSE, PercentOnly = TRUE)
+  PercentOccurrence = 3, PercentVolWeight = 5, ReturnRaw = FALSE, PercentOnly = TRUE)
 ```
 
 ```

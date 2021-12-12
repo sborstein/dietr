@@ -62,7 +62,7 @@ data(Horn1982)
 #Run all electivity indices
 my.indices <- Electivity(Diet = Horn1982$Consumed, Available = Horn1982$Available, Indices = 
 c("ForageRatio","Ivlev","Strauss","JacobsQ","JacobsD","Chesson","VanderploegScavia"),LogQ = TRUE,
-Depleting = FALSE)
+CalcAbundance = FALSE, Depleting = FALSE)
 }
 \references{
 Chesson, J. 1983. The estimation and analysis of preference and its relatioship to foraging models. Ecology 64:1297-1304.
