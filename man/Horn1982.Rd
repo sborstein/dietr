@@ -7,15 +7,15 @@
 \format{
 A list of length 2 containing two data frames.
 \itemize{
-  \item Available A data frame with 2 rows and 18 columns containing data on prey availability in two different years.
-  \item Consumed A data frame with four rows and 19 columns containing data on prey consumption by two species in two different years..
+  \item Available A data frame with 2 rows and 18 columns containing data on percent weight relative abundance of macroalgae prey availability in two different years.
+  \item Consumed A data frame with four rows and 19 columns containing data on percent weight relative abundance of macroalgae prey consumption by two species in two different years.
   }
 }
 \usage{
 Horn1982
 }
 \description{
-Raw data from Horn, 1982. Prey consumption and availability are in percent weight. Not that as the values do not sum to 100, the relative abundance will be calculated.
+Raw data from Horn, 1982. Prey consumption and availability are relative abundance by weight of macroalgae species. Note that values do not sum to 1 as dataset only includes macroalgae and not other prey items. See Table 4 and Table 4 in Horn et al., 1982.
 }
 \details{
 Data from Horn, 1982 for the diet of two species of Stichaeidae and prey availability over two years.

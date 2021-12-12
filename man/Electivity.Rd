@@ -10,6 +10,7 @@ Electivity(
   Indices = c("ForageRatio", "Ivlev", "Strauss", "JacobsQ", "JacobsD", "Chesson",
     "VanderploegScavia"),
   LogQ = TRUE,
+  CalcAbundance = FALSE,
   Depleting = FALSE
 )
 }
@@ -21,6 +22,8 @@ Electivity(
 \item{Indices}{Character vector containing the names of the desired indices to calculate. See description for information on available indices.}
 
 \item{LogQ}{Logical. If true, should Jacob's Q be logged? This is the recommendation of Jacob, 1974.Default is TRUE, following the recommendation.}
+
+\item{CalcAbundance}{Logical. If true, are the data raw and would you like to calculate the relative abundance? Relative abundance will be calculated for both diet and available given the row sums of the supplied Diet and Available parameter inputs. Default is False, i.e. relative abundances are not calculated.}
 
 \item{Depleting}{Logical. If true, calculates Chesson's Case 2, where food depletion occurs and the available food is not constant. Default is False.}
 }
@@ -39,11 +42,11 @@ Ivlev's (1961) Forage Ratio ("ForageRatio") and electivity ("Ivlev"), Strauss'(1
 and Vanderploeg & Scavia (1979) ("VanderploegScavia"). For those wishing to calculate Vanderploeg and Scavia's selectivity coefficient (W), please select "Chesson" as an argument for indices, which
 will calculate Chesson's alpha, which is identical to Vanderploeg and Scavia's selectivity coefficient (W).
 
-The function takes two dataframes as input. The first argument, Diet, should be formatted as followed. Each row in the data frame should be a diet record. 
-The first column should contain the name of the record to be calculated. The second column should contain the name linking the consumed prey in Diet to that in Available (example, name of the different habitats), which will be described below.
-All remaining columns should contain the abundance or relative abundance of the prey in the diet. These columns should also be named so they can be matched to Those in Available. The second data frame, Available should be formatted similar to Diet where each row describes a unique record for available prey.
-The remaining columns should contain the abundance or relative abundance of the prey that are available to be consumed. These columns should also be named so they can be matched to Those in Diet. Users should define if their data is raw or relative abundance by using the Abundance argument. 
-Note that these indices rely on relative abundance data for calculations. While it is recommended to have input data as relative abundances, the function automatically will calculate relative abundances (which has no effect on data that are already in units of relative abundance).
+The function takes two data frames as input. The first argument, Diet, should be formatted as followed. Each row in the data frame should be a diet record. 
+The first column should contain the name of the record to be calculated. The second column should contain the name linking the consumed prey in Diet to that in Available (example, name of the different habitats, note in our example it is "Year"), which will be described below.
+All remaining columns should contain the abundance or relative abundance of the prey in the diet. These columns should also be named so they can be matched to those in Available. The second data frame, Available should be formatted similar to Diet where each row describes a unique record for available prey.
+The remaining columns should contain the abundance or relative abundance of the prey that are available to be consumed. These columns should also be named so they can be matched to Those in Diet. These indices typically utilize relative abundances and the abundances with relative abundance represented by a decimal (i.e sum to 1). Users can supply raw data that are not in relative abundances and use the 
+CalcAbundance option to calculate relative abundances if they wish to do so. By default, CalcAbundance is set to FALSE and assumes the supplied data are already in relative abundance, so users wishing to calculate relative abundance should use CalcAbundance = TRUE.
  
 Indices are bounded by the following values. Ivlev's, Strauss', and Jacobs' D, and Vanderploeg & Scavia's indices are bounded between -1 and 1, with items closer to -1 representing avoided items, 0 randomly feeding, and 1 preferential items.
 Forage ratio values range between 1 and infinity for preferred items while values between 0 and 1 represent avoided prey. Similar to forage ratio, Jacobs' Q ranges  
