@@ -1,7 +1,7 @@
 ---
 title: "dietr Tutorial"
 author: "Samuel R. Borstein"
-date: "12 December, 2021"
+date: "13 December, 2021"
 output:
   pdf_document:
     keep_md: true

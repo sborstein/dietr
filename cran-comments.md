@@ -5,6 +5,7 @@ This is a package update that fixes a minor bug, typos in documentation, and add
 
 ## Test environments
 * local Windows 10 install, R 4.1.2
+* local Ubuntu 20.04, R 4.1.2
 * ubuntu 16.04 (on travis-ci), R 4.0.2
 * win-builder (devel, release, and oldrelease)
 
