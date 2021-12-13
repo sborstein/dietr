@@ -171,7 +171,7 @@ For this tutorial lets measure four hierarchical trophic levels. Specifically, w
 HMtax<-cbind.data.frame(HMdat$individual,paste(HMdat$lake,HMdat$year),HMdat$lake)
 #Name the data frame
 colnames(HMtax)<-c("Individual","Lake x Year","Lake (all years)")
-#To calculate trophic level for the entire species, add a vecotr to the data frame of
+#To calculate trophic level for the entire species, add a vector to the data frame of
 #the species name
 HMtax$species<-"Herichthys minckleyi"
 ```
@@ -240,7 +240,8 @@ While `dietr` can estimate trophic levels from food item and diet composition da
 
 To highlight an example of how to use this function and how data should be formatted for it, we can load data from Horn, 1982. This is a dataset containing data on relative abundance by percent weight of macroalgae prey consumption and availability for two species of Stichaeidae in two different years. We can load it as such and see the format of the data by doing the following.
 
-```
+
+```r
 data(Horn1982)# load data
 Horn1982$Consumed#See data for prey consumption
 Horn1982$Available#See data for available prey
@@ -254,32 +255,6 @@ my.indices <- Electivity(Diet = Horn1982$Consumed, Available = Horn1982$Availabl
   "VanderploegScavia"),LogQ = TRUE, CalcAbundance = FALSE, Depleting = FALSE)
 ```
 
-```
-## Warning in Electivity(Diet = Horn1982$Consumed, Available =
-## Horn1982$Available, : Some values are greater than 1, but you specified not
-## to calculate relative abundance. You may get odd results for some indices. For
-## relative abundance, data should sum to 1 and therefore cannot be greater than 1.
-## If your data are relative abundance, you may need to divide them by 100 so they
-## sum to 1. If they are not yet in relative abundance, please use CalcAbundance =
-## TRUE
-```
-
-```
-## Warning in lapply(X = x, FUN = .Generic, ...): NaNs produced
-
-## Warning in lapply(X = x, FUN = .Generic, ...): NaNs produced
-
-## Warning in lapply(X = x, FUN = .Generic, ...): NaNs produced
-
-## Warning in lapply(X = x, FUN = .Generic, ...): NaNs produced
-
-## Warning in lapply(X = x, FUN = .Generic, ...): NaNs produced
-
-## Warning in lapply(X = x, FUN = .Generic, ...): NaNs produced
-
-## Warning in lapply(X = x, FUN = .Generic, ...): NaNs produced
-```
-
 We can see that the `Electivity` function returned a list of data frames of class `Electivity`. Each data frame contains a calculated index and is named respective of the index calculated. Do not that in some cases of these calculations, certain calculations may yield `NaN` values or `Inf` values, for instance due to division by 0 or log of zero or negative number. These typically arise when a prey item is either presentin the habitat but not consumed, present in the diet but not in the habitat, or where they are both absent from a record. In these cases, `NA` is returned.
 
 We can also use the function `PlotElcectivity` to plot our Electivity calculations. This function takes an object of class `Electivity` and a few other parameters to choose what indices are plotted as well as options for the plots themselves, such as font size and color. Electivity calculations are input using hte `Electivity.Calcs` parameter. Users use the parameter `indices` to choose which of Ivlev's, Strauss', Jacob's D, and Vanderploeg & Scavia indices they  want plotted. If numerous indices are selected, numerous plots will be made. If users supply colors via the `BarColor` parameter, they must be the same length as the number of records calculated in Electivity and supplied via `Electivity.Calcs`. IF no colors are supplied, `dietr` will automatically assign colors. The parameters `NameSize`, `AxisFontSize`, `BorderCol`, `LegendFontSize`, and `LegendTitle` control the font size of the names of prey plotted, axis label size, color of bar plot border outlines, font size of the legend, and the text used in the title of the legend respectively.
@@ -291,7 +266,7 @@ PlotElectivity(Electivity.Calcs = my.indices, Indices = "VanderploegScavia",
   BarColor = c("Red","Purple","Black","Grey"))
 ```
 
-![](dietr-vignette_files/figure-latex/unnamed-chunk-17-1.pdf)<!-- --> 
+![](dietr-vignette_files/figure-latex/unnamed-chunk-18-1.pdf)<!-- --> 
 
 If we wanted to plot all four of the possible indices we can plot that were previously calculated, we could also run this chunk of code. For this example, I will not specify colors using `BarColor` to highlight the default color selection. Note that based on the size of your plotting window, you may need to adjust the size of the font.
 
@@ -300,7 +275,7 @@ If we wanted to plot all four of the possible indices we can plot that were prev
 PlotElectivity(Electivity.Calcs = my.indices)
 ```
 
-![](dietr-vignette_files/figure-latex/unnamed-chunk-18-1.pdf)<!-- --> ![](dietr-vignette_files/figure-latex/unnamed-chunk-18-2.pdf)<!-- --> ![](dietr-vignette_files/figure-latex/unnamed-chunk-18-3.pdf)<!-- --> ![](dietr-vignette_files/figure-latex/unnamed-chunk-18-4.pdf)<!-- --> 
+![](dietr-vignette_files/figure-latex/unnamed-chunk-19-1.pdf)<!-- --> ![](dietr-vignette_files/figure-latex/unnamed-chunk-19-2.pdf)<!-- --> ![](dietr-vignette_files/figure-latex/unnamed-chunk-19-3.pdf)<!-- --> ![](dietr-vignette_files/figure-latex/unnamed-chunk-19-4.pdf)<!-- --> 
 
 ## 3.5: Using dietr to Calculate  Composite Diet Indices
 If users have diet data that is in percent frequency of occurrence, percent number, and percent volume or weight, `dietr` can be used to calculate three different composite indices. The first, the Index of Preponderance (Natarajan & Jhingran, 1961 AKA Feeding Index Kawakami & Vazzoler, 1980) is the product of the frequency of occurrence of prey with either their volumetric or weight contribution to the diet. The Index of Relative Importance (Pinkas et al., 1971) is calculated as the  the product of the sum of the weight or volume of a prey item and the percent number and the percent frequency occurrence. The Feeding Quotient (Hureau, 1970) is the product of the percent number and the percent weight. For a review of these indices, I recommend de Silviera et al., 2020. 

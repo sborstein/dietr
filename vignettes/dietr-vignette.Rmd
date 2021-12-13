@@ -160,7 +160,7 @@ For this tutorial lets measure four hierarchical trophic levels. Specifically, w
 HMtax<-cbind.data.frame(HMdat$individual,paste(HMdat$lake,HMdat$year),HMdat$lake)
 #Name the data frame
 colnames(HMtax)<-c("Individual","Lake x Year","Lake (all years)")
-#To calculate trophic level for the entire species, add a vecotr to the data frame of
+#To calculate trophic level for the entire species, add a vector to the data frame of
 #the species name
 HMtax$species<-"Herichthys minckleyi"
 ```
@@ -225,7 +225,7 @@ While `dietr` can estimate trophic levels from food item and diet composition da
 
 To highlight an example of how to use this function and how data should be formatted for it, we can load data from Horn, 1982. This is a dataset containing data on relative abundance by percent weight of macroalgae prey consumption and availability for two species of Stichaeidae in two different years. We can load it as such and see the format of the data by doing the following.
 
-```
+```{r, eval=FALSE}
 data(Horn1982)# load data
 Horn1982$Consumed#See data for prey consumption
 Horn1982$Available#See data for available prey

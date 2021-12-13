@@ -1,4 +1,4 @@
-dietr 1.1.2
+dietr 1.1.3
 ============
 
 ## Minor changes
