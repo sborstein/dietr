@@ -7,7 +7,7 @@ Maintainer: Samuel R. Borstein <sam@borstein.com>
 Depends:
     R (>= 4.0)
 Imports:
-    rfishbase (>= 3.1.10)
+    rfishbase (>= 4.1)
 Description: Estimates fractional trophic level from quantitative and qualitative diet data and calculates electivity indices in R. Borstein (2020) <doi:10.1007/s10750-020-04417-5>.
 License: GPL (>= 2)
 LazyData: true
