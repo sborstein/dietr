@@ -34,7 +34,7 @@
 #' @export
 
 PlotElectivity <- function(Electivity.Calcs, Indices = c("Ivlev","Strauss","JacobsD","VanderploegScavia"), BarColor = NULL, NameSize = 1, AxisFontSize = 1, BorderCol = "Black", LegendFontSize = 1, LegendTitle = "Record"){
-  if(!class(Electivity.Calcs)=="Electivity")stop('Data is not of class electivity. See the Electivity function to calculate Electivity indices')
+  if(!inherits(x = Electivity.Calcs,what = "Electivity"))stop('Data is not of class electivity. See the Electivity function to calculate Electivity indices')
   Data2Plot <- Electivity.Calcs[which(names(Electivity.Calcs)%in%Indices)]
   ifelse(is.null(BarColor), BarColor <- grDevices::rainbow(n=nrow(Data2Plot[[1]])), BarColor <- BarColor)
   if (!length(BarColor)==nrow(Data2Plot[[1]])) {

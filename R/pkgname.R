@@ -9,7 +9,7 @@
 #' 
 #' Title: An R package to estimate trophic level from diet and food item data
 #' 
-#' Version: 1.1.1
+#' Version: 1.1.4
 #' 
 #' Date: 2020-3-3
 #' 

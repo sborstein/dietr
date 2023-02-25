@@ -24,6 +24,12 @@ ConvertFishbaseDiet<-function(ExcludeStage=NULL){
   records.raw<-as.data.frame(rfishbase::diet())#Read in FishBase diet record info
   records <- records.raw[!is.na(records.raw),]#remove records lacking DietCode ID
   merged.diets<-merge(items,records,by.x = "DietCode")
+  Spec.Code.ID <- suppressMessages(unique(rfishbase::species_names(merged.diets$SpecCode)))
+  merged.diets$Species <- vector(length = length(merged.diets$SpecCode),mode = "character")
+  for(ID.index in 1:length(Spec.Code.ID$SpecCode)){
+    found.Spec.Code <- which(Spec.Code.ID$SpecCode[ID.index]==merged.diets$SpecCode)
+    merged.diets$Species[found.Spec.Code]<-Spec.Code.ID$Species[ID.index]
+  }
   if(is.null(ExcludeStage)){
     ConvertDat<-cbind.data.frame(merged.diets$DietCode,merged.diets$Species,merged.diets$FoodI,merged.diets$FoodII,merged.diets$FoodIII,merged.diets$Stage,merged.diets$DietPercent)
     colnames(ConvertDat)<-c("Individual","Species","FoodI","FoodII","FoodIII","Stage","Percentage")
