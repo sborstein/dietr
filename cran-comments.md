@@ -1,5 +1,10 @@
-## Package Update
-This is a package update that fixes a minor bug introduced by updated dependencies that was causing the package to fail CRAN checks. Note:
+## Resubmission
+This is a resubmission. The below error has now been fixed and bibentry() is now used.
+
+```
+  Package CITATION file contains call(s) to old-style citEntry().  Please
+  use bibentry() instead.
+```
 
 * There are unit tests using testthat for functions in which the examples are wrapped with /donttest. It is not feasible to unwrap these functions from /donttest as the functions and examples connect to a remote database and often take longer than 5 seconds to run. These functions are ConvertFishbaseFood, ConvertFishbaseDiet, FoodTroph, and DietTroph and have testthat test files with similar names. I have checked the examples of these functions that are wrapped in /donttest using R CMD CHECK --run-donttest, and all ran without error.
 
