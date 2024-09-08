@@ -29,8 +29,6 @@
 #' 
 #' @seealso \code{\link{Electivity}},\code{\link{ConvertFishbaseFood}},\code{\link{DietTroph}},\code{\link{FoodTroph}}
 #' 
-#' @docType package
 #' @name dietr
 #"_PACKAGE"
-#> [1] "_PACKAGE"
 NULL
