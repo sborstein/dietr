@@ -1,5 +1,5 @@
 ## Ignore travis config file
-^\.travis\.yml$
+^\.github$
 
 ##Ignore the cran-comments.rd
 ^cran-comments\.md$
