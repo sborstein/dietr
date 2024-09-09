@@ -3,7 +3,7 @@ title: "dietr Tutorial"
 author: "Samuel R. Borstein"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
-  pdf_document:
+  html_document:
     keep_md: true
 vignette: >
   %\VignetteIndexEntry{dietr Tutorial}

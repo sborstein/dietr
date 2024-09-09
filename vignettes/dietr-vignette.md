@@ -1,9 +1,9 @@
 ---
 title: "dietr Tutorial"
 author: "Samuel R. Borstein"
-date: "24 February, 2023"
+date: "08 September, 2024"
 output:
-  pdf_document:
+  html_document:
     keep_md: true
 vignette: >
   %\VignetteIndexEntry{dietr Tutorial}
@@ -50,7 +50,7 @@ install.packages("dietr")
 ## 2.2: Installation of Development Version From GitHub
 While we recommend use of the stable CRAN version of this package, we recommend using the package `devtools` to temporarily install the development version of the package from GitHub if for any reason you wish to use it:
 
-```r
+``` r
 #1. Install 'devtools' if you do not already have it installed:
 install.packages("devtools")
 
@@ -68,7 +68,7 @@ dev_mode(on=F)
 # 3: Using dietr
 To load `dietr` and all of its functions/data:
 
-```r
+``` r
 library(dietr)
 ```
 ## 3.0: Basic Data Necessary to Run dietr for Trophic level Calculations
@@ -79,7 +79,7 @@ are standardized diet prey values for sharks from Cortes, 1999. Both of these ca
 from `dietr` using the `data()` function:
 
 
-```r
+``` r
 data(FishBasePreyVals)#Load the Fishbase trophic levels of prey items 
 #Standardized trophic levels of prey items for elasmobranchs
 data(CortesPreyVals)#Load the Cortes (1992)
@@ -92,7 +92,7 @@ Our first example will use FishBase diet data. Unfortunately, this was easier to
 The function has only one argument, `ExcludeStage`, in which users specify if they want to exclude a stage (ex. larvae) or not (in which case `ExcludeStage = NULL`). It returns a list of two data frames. The first, named `DietItems` contains the diet items while the second, `Taxonomy` , contains the taxonomy for calculating heirarchical trophic levels. Below, we will get FishBase diet for use with `dietr` while removind records from immature specimens.
 
 
-```r
+``` r
 # Convert Fishbase Diet Data and exclude juvenile and larval records
 my.diets <- ConvertFishbaseDiet(ExcludeStage=c("recruits/juv.","larvae"))
 ```
@@ -102,7 +102,7 @@ We can see that `my.diets` object we created is a list containing two data frame
 We can now measure the trophic level from diet items using the function `DietTroph`. Here, we will specify our `DietItems` and `Taxonomy` using the `cleaned.diets` object we generated above. We will also specify the `PreyValues` as being the included `FishBasePreyVals` that are part of the package. As the columns for the `PreyVals` and `DietItems` use a calssification of "FoodI","FoodII","FoodIII","Stage", we will specify these as a vector for the `PreyClass` argument. For this example, lets just focus on a single species with multiple diet records, *Epinephelus itjara*, which has a total of three records.
 
 
-```r
+``` r
 #Remove Data for Epinephelus itajara
 my.diets$DietItems <- my.diets$DietItems[my.diets$DietItems$Species == 
   "Epinephelus itajara",]
@@ -112,7 +112,7 @@ my.diets$Taxonomy <- my.diets$Taxonomy[my.diets$Taxonomy$Species ==
 We can now calculate the trophic levels. We will use the trophic levels of prey from FishBase, which is a data object that can be loaded named `FishBasePreyVals`. We will specify our diet data and taxonomy with the parameter `DietItems` and `Taxonomy` respectively. We also need to specify how the prey is classified. This is meant to be flexible and tells `dietr` how to relate the values in `DietItems` to the values in `PreyValues`. If we look at the columns of both, we can see they use a classification scheme of `FoodI`, `FoodII`, "FoodIII` and `Stage`, so we will input that information in `PreyClass`. We will show the flexibility of this parameter a little later in this vignette in another example.The final parameter, `SumCheck` checks that the diet data do infact sum to 100 as would be expected if they are percent composition and will recalculate if they are not. I strongly recommend this always be set to `TRUE`.
 
 
-```r
+``` r
 data(FishBasePreyVals)#load the FishBase prey values that are part of the dietr package
 #Calculate trophic level with DietTroph function
 my.TL<-DietTroph(DietItems = my.diets$DietItems,PreyValues = FishBasePreyVals, 
@@ -127,7 +127,7 @@ We can see that the `my.TL` object we just created contains a list of length two
 Our second example will estimate trophic level from food item data. The process is extremely similar to the above. For this example, let's get some data from rfishbase using the `fooditems` function for the same two species we did above. 
 
 
-```r
+``` r
 #Get some food item data from rfishbase
 my.food<-rfishbase::fooditems(c("Lutjanus apodus","Epinephelus itajara"))
 ```
@@ -135,7 +135,7 @@ my.food<-rfishbase::fooditems(c("Lutjanus apodus","Epinephelus itajara"))
 In order to use this in `dietr`, we will need to convert it using the function `ConvertFishbaseFood`. This function is basically identical to the  `ConvertFishbaseDiet` function we used above, except our data frame is from the `fooditems` function. We will then use `FoodTroph` function to calculate the trophic level. It is important to note that as this method randomly samples food items and ranks them for calculating the trophic level, that each time you run the function you will get a slightly different result, though they should largey be close in value. 
 
 
-```r
+``` r
 #Convert FishBase food item data to a format usable for FoodTroph
 converted.foods<-ConvertFishbaseFood(my.food)
 #Calculate trophic level from food items
@@ -151,14 +151,14 @@ my.TL<-FoodTroph(FoodItems = converted.foods$FoodItems,PreyValues = FishBasePrey
 First we can load the data. We will mostly be focusing on the last ten columns, which contain the volumetric proportions of the prey items as well as the first three columns which contain information on the individual fish, the lake it was caught, and the year in which it was caught.
 
 
-```r
+``` r
 data(Herichthys)
 ```
 
 Note, this is the raw data from their paper and contains other data on morphology and genotypes. As such, not all individuals have diet data associated with them, so we will want to remove them. 
 
 
-```r
+``` r
 #Subset out individuals with diet data
 HMdat<-Herichthys[Herichthys$total==100,]
 ```
@@ -166,7 +166,7 @@ HMdat<-Herichthys[Herichthys$total==100,]
 For this tutorial lets measure four hierarchical trophic levels. Specifically, we will measure trophic levels at the individual, lake by year, lake (across all years), and for the species inclusive of all *Herichthys minckleyi* individuals. To do this, we will need to generate a four column data frame to input as our `Taxonomy` parameter. We can do this by doing the following.
 
 
-```r
+``` r
 #Make a data frame of the individuals, lake by year, and lake.
 HMtax<-cbind.data.frame(HMdat$individual,paste(HMdat$lake,HMdat$year),HMdat$lake)
 #Name the data frame
@@ -178,7 +178,7 @@ HMtax$species<-"Herichthys minckleyi"
 Next, we need to organize the data for input with dietr. First, lets grab out the data.
 
 
-```r
+``` r
 HMdat<-HMdat[,c("individual","X.Gastrop","X.Insect","X.Fish","X.Zoopl","X.plants",
             "X.algae", "X.detritus")]
 ```
@@ -186,7 +186,7 @@ HMdat<-HMdat[,c("individual","X.Gastrop","X.Insect","X.Fish","X.Zoopl","X.plants
 Remember that `dietr` requires each row to be a unique diet item per individual and that the first column contains the individual's name. We will need to format our data to work. Currently, we can see that for each individual, there are columns for the prey items, so we will need to take the data in these columns and make each prey item a row.
 
 
-```r
+``` r
 #Repeat the individual name the number of unique prey types (6)
 Inds<-rep(x = HMdat$individual, times=6)[order(rep(x = HMdat$individual, times=6))]
 #Repeat the number of food typed the length of the number of individuals
@@ -211,7 +211,7 @@ HM.mat<-HM.mat[!HM.mat$Percent==0,]
 We can see that our data frame `HM.mat` is of three columns. The first row has our individual names, the second, the prey name, and the third, the dietary contribution of that prey. We now need to generate the prey values we want to use for calculating trophic levels into a format that can be used with `dietr`. For our example, we can easily do this by creating a data frame, which we will call PreyMat. The dimensions of this data frame will be three columns, so we can input the prey name, prey trophic level, and prey SE (if we want to have one, we can also just set them to 0, and functionally not measure it). Note for this example, the values of the prey will be equivalent to those in `FishBasePreyVals`, but as an example, I will show a simple way one could make prey values with vectors.
 
 
-```r
+``` r
 #Create a empty data frame for prey values
 PreyMat<-as.data.frame(matrix(ncol = 3,nrow = 6))
 #Name the columns something useful
@@ -227,7 +227,7 @@ PreyMat[,3]<-c(.58,.4,.8,.3,0,0)
 We now have all our needed information to calculate trophic levels (`DietItems`, `Taxonomy`, and `PreyValues`). We can now call `dietr's` `DietTroph` function and calculate trophic levels at the individual, lake by year, lake, and species level we defined in our Taxonomy data frame.
 
 
-```r
+``` r
 HM.TL<-DietTroph(DietItems = HM.mat,PreyValues = PreyMat, PreyClass = "FoodItem",
   Taxonomy = HMtax, SumCheck = TRUE)
 ```
@@ -241,7 +241,7 @@ While `dietr` can estimate trophic levels from food item and diet composition da
 To highlight an example of how to use this function and how data should be formatted for it, we can load data from Horn, 1982. This is a dataset containing data on relative abundance by percent weight of macroalgae prey consumption and availability for two species of Stichaeidae in two different years. We can load it as such and see the format of the data by doing the following.
 
 
-```r
+``` r
 data(Horn1982)# load data
 Horn1982$Consumed#See data for prey consumption
 Horn1982$Available#See data for available prey
@@ -249,7 +249,7 @@ Horn1982$Available#See data for available prey
 We can see here that we are identifying available prey her by year and month in the first column of `Horn1982$Available` and that all remaining columns are prey items available during those two time periods. In `Horn1982$Consumed` we can see that the first column is the name of the record and the second column matches a record in the first column of `Horn1982$Available` to link it to prey availability. We can then run one or any of the indices using the following code and arguments. We will define the consumed prey with the `Diet` argument as `Horn1982$Consumed`, `Available` prey as `Horn1982$Available`, and we will denote we want to calculate all of the indices using the `Indices` argument. For calculating Jacobs' Q, we will use the argument `LogQ` which takes `log10` of Q, which is recommended. We will also denote that we do not want to account for prey depletion in the calculation of Chesson's index. If set to true, Chesson's case 2 will be calculated.
 
 
-```r
+``` r
 my.indices <- Electivity(Diet = Horn1982$Consumed, Available = Horn1982$Available, 
   Indices = c("ForageRatio","Ivlev","Strauss","JacobsQ","JacobsD","Chesson",
   "VanderploegScavia"),LogQ = TRUE, CalcAbundance = FALSE, Depleting = FALSE)
@@ -261,21 +261,21 @@ We can also use the function `PlotElcectivity` to plot our Electivity calculatio
 
 For instance, if we wanted to plot the Vanderploeg & Scavia index we calculated above, we could run the following. This will assign a seperate color using the `BarColor` argument.
 
-```r
+``` r
 PlotElectivity(Electivity.Calcs = my.indices, Indices = "VanderploegScavia", 
   BarColor = c("Red","Purple","Black","Grey"))
 ```
 
-![](dietr-vignette_files/figure-latex/unnamed-chunk-18-1.pdf)<!-- --> 
+![](dietr-vignette_files/figure-html/unnamed-chunk-18-1.png)<!-- -->
 
 If we wanted to plot all four of the possible indices we can plot that were previously calculated, we could also run this chunk of code. For this example, I will not specify colors using `BarColor` to highlight the default color selection. Note that based on the size of your plotting window, you may need to adjust the size of the font.
 
 
-```r
+``` r
 PlotElectivity(Electivity.Calcs = my.indices)
 ```
 
-![](dietr-vignette_files/figure-latex/unnamed-chunk-19-1.pdf)<!-- --> ![](dietr-vignette_files/figure-latex/unnamed-chunk-19-2.pdf)<!-- --> ![](dietr-vignette_files/figure-latex/unnamed-chunk-19-3.pdf)<!-- --> ![](dietr-vignette_files/figure-latex/unnamed-chunk-19-4.pdf)<!-- --> 
+![](dietr-vignette_files/figure-html/unnamed-chunk-19-1.png)<!-- -->![](dietr-vignette_files/figure-html/unnamed-chunk-19-2.png)<!-- -->![](dietr-vignette_files/figure-html/unnamed-chunk-19-3.png)<!-- -->![](dietr-vignette_files/figure-html/unnamed-chunk-19-4.png)<!-- -->
 
 ## 3.5: Using dietr to Calculate  Composite Diet Indices
 If users have diet data that is in percent frequency of occurrence, percent number, and percent volume or weight, `dietr` can be used to calculate three different composite indices. The first, the Index of Preponderance (Natarajan & Jhingran, 1961 AKA Feeding Index Kawakami & Vazzoler, 1980) is the product of the frequency of occurrence of prey with either their volumetric or weight contribution to the diet. The Index of Relative Importance (Pinkas et al., 1971) is calculated as the  the product of the sum of the weight or volume of a prey item and the percent number and the percent frequency occurrence. The Feeding Quotient (Hureau, 1970) is the product of the percent number and the percent weight. For a review of these indices, I recommend de Silviera et al., 2020. 
@@ -283,7 +283,7 @@ If users have diet data that is in percent frequency of occurrence, percent numb
 The formatting for the input data is rather minimal for this function. It is mandatory for this function that the first column contain the diet record identifier and the second column the names of the prey. The diet record identifier should be a unique name for each record, which allows one to calculate feeding indices for numerous records with a single call of the function. As the second column contains the prey identifier, if a species feeds upon three different prey, the first three rows of the dataset would have the same record identifier. The remaining columns should contain information on the percent frequency of occurrence, percent number, and percent weight or volume, though the order of these does not matter as they are assigned using the arguments `PercentOccurrence`, `PercentNumber`, and `PercentVolWeight` respectively. Users can specify which index/indices they want to calculate with the `Indices` argument, with the options being `IRI`, `IOP`, `FQ` for Index of Relative Importance, Index of Preponderance, and Feeding Quotient respectively. Users have the option of returning the full calculations and the percents or just the percents with the `PercentOnly` argument. If set to `TRUE` only the percent of these indices is returned. Additionally, if users want the raw data returned as well, they can do so with the `ReternRaw` argument. The dataset `Casaux1998` contains data highlighting how data should be formatted for these functions as well as to run the examples. 
 
 
-```r
+``` r
 #Load diet data from Casaux1998, which contains diet for two populations
 #and is listed in percent frequency, percent number, and percent mass.
 data(Casaux1998)
@@ -321,7 +321,7 @@ CompositeIndices(DietData = Casaux1998, Indices = c("IOP","IRI","FQ"), PercentNu
 ## 2  0.8081819   280.28  1.564972   46.33  0.5417028
 ```
 
-```r
+``` r
 #Calculate all three diet indices and return only the percent of the index
 CompositeIndices(DietData = Casaux1998, Indices = c("IOP","IRI","FQ"), PercentNumber = 4, 
   PercentOccurrence = 3, PercentVolWeight = 5, ReturnRaw = FALSE, PercentOnly = TRUE)
@@ -344,7 +344,7 @@ CompositeIndices(DietData = Casaux1998, Indices = c("IOP","IRI","FQ"), PercentNu
 ## 2         Gammarids  0.8081819  1.564972  0.5417028
 ```
 
-```r
+``` r
 #Calculate Feeding Quotient and return the raw data and the all calculations.
 CompositeIndices(DietData = Casaux1998, Indices = "FQ", PercentNumber = 4, 
   PercentVolWeight = 5,ReturnRaw = FALSE, PercentOnly = FALSE)
@@ -373,7 +373,7 @@ As we can see, this function returns a list with the calculated composite indice
 `dietr` also has functions to calculate the gastro-somatic and Vacuity indices. The Vacuity index is simply the percentage frequency of fishes that lack stomach contents. The first column should contain the specimen identifier and the second column should contain the weight of the stomach contents. Below is a quick example showing how to use the `dietr` function `VacuityIndex` to calculate the vacuity index using the example dataset `SebastesStomachs`, which contains NOAA data on the stomach content weight and predator weight for *Sebastes flavidus* specimens. For now, we will ignore the `PredatorWeight` column which contains the weight of the specimens as we will use that later in the tutorial.
 
 
-```r
+``` r
 data(SebastesStomachs)#load example data
 VacuityIndex(StomachData = SebastesStomachs)
 ```
@@ -385,7 +385,7 @@ VacuityIndex(StomachData = SebastesStomachs)
 To gastro-somatic index is the percentage weight the stomach contents represents relative to the total weight of a specimen, which can provide information on the feeding condition of a fish. The function `GastrosomaticIndex` calculates this. Data should be formatted similar as described above for the `VacuityIndex`, but a third column containing the wight of the specimen is also needed. For an example of how this data should be formatted, see the dataset `SebastesStomachs`. Besides the argument `StomachData` which should be the data frame with the stomach content and predator weights, an additional argument `Calc.Vacuity` is available. If `Calc.Vacuity = TRUE`, then in addition to the gastro-somatic index, the vacuity index is also calculated for the same data. This function will return a list contianing the gastro-somatic index of each specimen, the mean gastro-somatic index of all specimens, and, if  `Calc.Vacuity = TRUE`, the vacuity index. We could run the function as such using the `SebastesStomachs` dataset.
 
 
-```r
+``` r
 data(SebastesStomachs)#load example data
 #Calculate the Gastro-somatic Index and Vacuity Index
 GastrosomaticIndex (StomachData = SebastesStomachs, Calc.Vacuity = TRUE)
