@@ -1,7 +1,6 @@
-dietr 1.1.4
+dietr 1.1.5
 ============
 
 ## Minor changes
-* Fixed issues with functionality caused by duckdb and rfishbase updates
+* Fixed issues with functionality caused by rfishbase updates
 * Updated vignette and documentation.
-* Better handling of class checking for functions using inherits
