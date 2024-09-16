@@ -1,7 +1,7 @@
 ---
 title: "dietr Tutorial"
 author: "Samuel R. Borstein"
-date: "08 September, 2024"
+date: "15 September, 2024"
 output:
   html_document:
     keep_md: true
@@ -426,7 +426,7 @@ Chesson, J. 1983. The estimation and analysis of preference and its relatioship 
 Cortes E. 1999. Standardized diet compositions and trophic levels of sharks. ICES Journal of marine science 56:707-717. 
 da Silveira EL, Semmar N, Cartes JE, Tuset VM, Lombarte A, Ballester ELC, and Vaz-dos-Santos AM. 2019. Methods for Trophic Ecology Assessment in Fishes: A Critical Review of Stomach Analyses. Reviews in Fisheries Science & Aquaculture 28:71-106. 10.1080/23308249.2019.1678013
 
-Froese R, and Pauly D. 2019. FishBase. http://www.fishbase.org/2019).
+Froese R, and Pauly D. 2024. FishBase. http://www.fishbase.org).
 
 Horn M, Murray S, and Edwards T. 1982. Dietary selectivity in the field and food preferences in the laboratory for two herbivorous fishes (Cebidichthys violaceus and Xiphister mucosus) from a temperate intertidal zone. Marine Biology 67:237-246. 
 

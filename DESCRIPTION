@@ -3,6 +3,10 @@ Version: 1.1.5
 Date: 2024-9-15
 Title: Diet Estimated Trophic Levels
 Author: Samuel R. Borstein <sam@borstein.com>
+Authors@R: person(given = c("Samuel"),
+                  family = "Borstein",
+                  role = c("aut", "cre"),
+                  email = "sam@borstein.com")
 Maintainer: Samuel R. Borstein <sam@borstein.com>
 Depends:
     R (>= 4.3)
