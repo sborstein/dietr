@@ -7,7 +7,7 @@ Authors@R: person(given = c("Samuel", "R."),
 				  role = c("aut", "cre"),
 				  email = "sam@borstein.com")
 Depends:
-    R (>= 4.4)
+    R (>= 4.3)
 Imports:
     rfishbase (>= 5.0)
 Description: Estimates fractional trophic level from quantitative and qualitative diet data and calculates electivity indices in R. Borstein (2020) <doi:10.1007/s10750-020-04417-5>.
