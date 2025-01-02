@@ -1,5 +1,5 @@
 ## Resubmission
-This is a resubmission. The below error, caused by an update of the dependency rfishbase, has now been fixed.
+This is a resubmission. The below error, caused by an update of the dependency rfishbase, has now been fixed. Also converted Author field to Authors@R in Description.
 
 ```
 checking examples with --run-donttest ... ERROR

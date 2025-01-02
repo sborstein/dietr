@@ -18,12 +18,12 @@
 #' @author Samuel Borstein
 #' @export
 
-ConvertFishbaseDiet<-function(ExcludeStage=NULL){
-  items.raw<-as.data.frame(rfishbase::diet_items())#Read in FishBase diet item data
+ConvertFishbaseDiet <- function(ExcludeStage=NULL){
+  items.raw <- as.data.frame(rfishbase::diet_items())#Read in FishBase diet item data
   items <- items.raw[!is.na(items.raw$DietCode),]#remove records lacking DietCode ID
-  records.raw<-as.data.frame(rfishbase::diet())#Read in FishBase diet record info
+  records.raw <- as.data.frame(rfishbase::diet())#Read in FishBase diet record info
   records <- records.raw[!is.na(records.raw),]#remove records lacking DietCode ID
-  merged.diets<-merge(items,records,by.x = "DietCode")
+  merged.diets <- merge(items,records,by.x = "DietCode")
   SpeciesDat <- rfishbase::fb_tbl("species")
   SpeciesDat$SciName <- paste(SpeciesDat$Genus, SpeciesDat$Species)
   SpeciesDatCleaned <- SpeciesDat[SpeciesDat$SpecCode%in%merged.diets$SpecCode,]
@@ -34,21 +34,21 @@ ConvertFishbaseDiet<-function(ExcludeStage=NULL){
   }
   if(is.null(ExcludeStage)){
     ConvertDat<-cbind.data.frame(merged.diets$DietCode,merged.diets$Species,merged.diets$FoodI,merged.diets$FoodII,merged.diets$FoodIII,merged.diets$Stage,merged.diets$DietPercent)
-    colnames(ConvertDat)<-c("Individual","Species","FoodI","FoodII","FoodIII","Stage","Percentage")
-    Taxonomy<-as.data.frame(cbind(merged.diets$DietCode,merged.diets$Species),stringsAsFactors = F)
-    Taxonomy<-unique(Taxonomy)
-    colnames(Taxonomy)<-c("Individual","Species")
-    ConvertedStuff<-list(ConvertDat,Taxonomy)
-    names(ConvertedStuff)<-c("DietItems","Taxonomy") 
+    colnames(ConvertDat) <- c("Individual","Species","FoodI","FoodII","FoodIII","Stage","Percentage")
+    Taxonomy <- as.data.frame(cbind(merged.diets$DietCode,merged.diets$Species),stringsAsFactors = F)
+    Taxonomy <- unique(Taxonomy)
+    colnames(Taxonomy) <- c("Individual","Species")
+    ConvertedStuff <- list(ConvertDat,Taxonomy)
+    names(ConvertedStuff) <- c("DietItems","Taxonomy") 
   }else{
-  ExcludeDat<-merged.diets[!merged.diets$SampleStage%in%ExcludeStage,]
-  ConvertDat<-cbind.data.frame(ExcludeDat$DietCode,ExcludeDat$Species,ExcludeDat$FoodI,ExcludeDat$FoodII,ExcludeDat$FoodIII,ExcludeDat$Stage,ExcludeDat$DietPercent)
-  colnames(ConvertDat)<-c("Individual","Species","FoodI","FoodII","FoodIII","Stage","Percentage")
-  Taxonomy<-as.data.frame(cbind(ExcludeDat$DietCode,ExcludeDat$Species),stringsAsFactors = F)
-  Taxonomy<-unique(Taxonomy)
-  colnames(Taxonomy)<-c("Individual","Species")
-  ConvertedStuff<-list(ConvertDat,Taxonomy)
-  names(ConvertedStuff)<-c("DietItems","Taxonomy") 
+  ExcludeDat <- merged.diets[!merged.diets$SampleStage%in%ExcludeStage,]
+  ConvertDat <- cbind.data.frame(ExcludeDat$DietCode,ExcludeDat$Species,ExcludeDat$FoodI,ExcludeDat$FoodII,ExcludeDat$FoodIII,ExcludeDat$Stage,ExcludeDat$DietPercent)
+  colnames(ConvertDat) <- c("Individual","Species","FoodI","FoodII","FoodIII","Stage","Percentage")
+  Taxonomy <- as.data.frame(cbind(ExcludeDat$DietCode,ExcludeDat$Species),stringsAsFactors = F)
+  Taxonomy <- unique(Taxonomy)
+  colnames(Taxonomy) <- c("Individual","Species")
+  ConvertedStuff <- list(ConvertDat,Taxonomy)
+  names(ConvertedStuff) <- c("DietItems","Taxonomy") 
   }
   ConvertedStuff
 }

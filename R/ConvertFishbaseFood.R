@@ -13,29 +13,29 @@
 #' }
 #' @export
 
-ConvertFishbaseFood<-function(FishBaseFood,ExcludeStage=NULL){
+ConvertFishbaseFood <- function(FishBaseFood,ExcludeStage=NULL){
   if(!length(colnames(FishBaseFood))==30){#check if right format
     stop('Error: Not Raw rfishbase Food Data')#kill if it is not right format
   }else{
-    unique.life<-unique(FishBaseFood$PredatorStage)#get the life stages to exclude
+    unique.life <- unique(FishBaseFood$PredatorStage)#get the life stages to exclude
     if(!is.null(ExcludeStage)){
     for(ExcludeStage.index in 1:length(ExcludeStage)){#trim exclude lifestages out
-      FishBaseFood<-subset(FishBaseFood,!FishBaseFood$PredatorStage==ExcludeStage[ExcludeStage.index])#subset bad lifestages
+      FishBaseFood <- subset(FishBaseFood,!FishBaseFood$PredatorStage==ExcludeStage[ExcludeStage.index])#subset bad lifestages
     }
-      Taxonomy<-as.data.frame(FishBaseFood$Species,stringsAsFactors = F)
+      Taxonomy <- as.data.frame(FishBaseFood$Species,stringsAsFactors = F)
       colnames(Taxonomy)<-"Species"
-      FoodItems<-cbind.data.frame(FishBaseFood$Species,FishBaseFood$FoodI,FishBaseFood$FoodII,FishBaseFood$FoodIII,FishBaseFood$PreyStage)
-      colnames(FoodItems)<-c("Species","FoodI","FoodII","FoodIII","Stage")
-      ConvertedStuff<-list(FoodItems,Taxonomy)
-      names(ConvertedStuff)<-c("FoodItems","Taxonomy") 
+      FoodItems <- cbind.data.frame(FishBaseFood$Species,FishBaseFood$FoodI,FishBaseFood$FoodII,FishBaseFood$FoodIII,FishBaseFood$PreyStage)
+      colnames(FoodItems) <- c("Species","FoodI","FoodII","FoodIII","Stage")
+      ConvertedStuff <- list(FoodItems,Taxonomy)
+      names(ConvertedStuff) <- c("FoodItems","Taxonomy") 
     }else{
-    Taxonomy<-as.data.frame(unique(FishBaseFood$Species),stringsAsFactors = F)
-    colnames(Taxonomy)<-"Species"
-    FoodItems<-cbind(FishBaseFood$Species,FishBaseFood$FoodI,FishBaseFood$FoodII,FishBaseFood$FoodIII,FishBaseFood$PreyStage)
-    colnames(FoodItems)<-c("Species","FoodI","FoodII","FoodIII","Stage")
-    FoodItems<-as.data.frame(FoodItems, stringsAsFactors = F)
-    ConvertedStuff<-list(FoodItems,Taxonomy)
-    names(ConvertedStuff)<-c("FoodItems","Taxonomy")
+    Taxonomy <- as.data.frame(unique(FishBaseFood$Species),stringsAsFactors = F)
+    colnames(Taxonomy) <- "Species"
+    FoodItems <- cbind(FishBaseFood$Species,FishBaseFood$FoodI,FishBaseFood$FoodII,FishBaseFood$FoodIII,FishBaseFood$PreyStage)
+    colnames(FoodItems) <- c("Species","FoodI","FoodII","FoodIII","Stage")
+    FoodItems <- as.data.frame(FoodItems, stringsAsFactors = F)
+    ConvertedStuff <- list(FoodItems,Taxonomy)
+    names(ConvertedStuff) <- c("FoodItems","Taxonomy")
     }
   ConvertedStuff
   }

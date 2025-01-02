@@ -61,70 +61,70 @@ Electivity <- function(Diet, Available, Indices = c("ForageRatio","Ivlev","Strau
     Diet[,3:ncol(Diet)] <- Diet[,3:ncol(Diet)]/rowSums(Diet[,3:ncol(Diet)])
     Available[,2:ncol(Available)] <- Available[,2:ncol(Available)]/rowSums(Available[,2:ncol(Available)])
   }
-  order.available<-order(match(colnames(Available),colnames(Diet)))
-  Available<-Available[,order.available]
-  MatchHabs<-merge(Diet,Available,by.x = colnames(Diet)[2],by.y = colnames(Available)[1],sort = FALSE)
-  Diet.Dat<-grep(".x",colnames(MatchHabs),fixed = TRUE)
-  Available.Dat<-grep(".y",colnames(MatchHabs),fixed = TRUE)
-  OrgDat<-data.frame(matrix(ncol = 1+length(Available),nrow = nrow(Diet)))  
-  colnames(OrgDat)<-c("Record","Available",colnames(Diet[-c(1:2)]))
-  OrgDat$Record<-MatchHabs[,2]
-  OrgDat$Available<-MatchHabs[,1]
-  ElectivIndices<-rep(list(OrgDat),times=length(Indices))
-  names(ElectivIndices)<-Indices
+  order.available <- order(match(colnames(Available),colnames(Diet)))
+  Available <- Available[,order.available]
+  MatchHabs <- merge(Diet,Available,by.x = colnames(Diet)[2],by.y = colnames(Available)[1],sort = FALSE)
+  Diet.Dat <- grep(".x",colnames(MatchHabs),fixed = TRUE)
+  Available.Dat <- grep(".y",colnames(MatchHabs),fixed = TRUE)
+  OrgDat <- data.frame(matrix(ncol = 1+length(Available),nrow = nrow(Diet)))  
+  colnames(OrgDat) <- c("Record","Available",colnames(Diet[-c(1:2)]))
+  OrgDat$Record <- MatchHabs[,2]
+  OrgDat$Available <- MatchHabs[,1]
+  ElectivIndices <- rep(list(OrgDat),times=length(Indices))
+  names(ElectivIndices) <- Indices
   if (any(Indices=="ForageRatio")) {
-    r<-MatchHabs[,Diet.Dat]
-    p<-MatchHabs[,Available.Dat]
-    ElectivIndices$ForageRatio[,-c(1:2)]<-r/p
+    r <- MatchHabs[,Diet.Dat]
+    p <- MatchHabs[,Available.Dat]
+    ElectivIndices$ForageRatio[,-c(1:2)] <- r/p
   }
   if (any(Indices=="Ivlev")) {
     #Ivlev=(r-p)/(r+p)
-    r<-MatchHabs[,Diet.Dat]
-    p<-MatchHabs[,Available.Dat]
-    ElectivIndices$Ivlev[,-c(1:2)]<-(r-p)/(r+p)
+    r <- MatchHabs[,Diet.Dat]
+    p <- MatchHabs[,Available.Dat]
+    ElectivIndices$Ivlev[,-c(1:2)] <- (r-p)/(r+p)
   }
   if (any(Indices=="Strauss")) {
     #Strauss<-r-p
-    r<-MatchHabs[,Diet.Dat]
-    p<-MatchHabs[,Available.Dat]
-    ElectivIndices$Strauss[,-c(1:2)]<-r-p 
+    r <- MatchHabs[,Diet.Dat]
+    p <- MatchHabs[,Available.Dat]
+    ElectivIndices$Strauss[,-c(1:2)] <- r-p 
   }
   if (any(Indices=="JacobsQ")) {
     #JacobsQ=log10((1-p)/(1-r))
-    r<-MatchHabs[,Diet.Dat]
-    p<-MatchHabs[,Available.Dat]
+    r <- MatchHabs[,Diet.Dat]
+    p <- MatchHabs[,Available.Dat]
     ifelse(LogQ == TRUE, ElectivIndices$JacobsQ[,-c(1:2)]<-log10((r*(1-p))/(p*(1-r))), ElectivIndices$JacobsQ[,-c(1:2)]<-(r*(1-p))/(p*(1-r)))
   }
   if (any(Indices=="JacobsD")) {
     #JacobsD=(r-p)/((r+p)-(2*(r*p)))
-    r<-MatchHabs[,Diet.Dat]
-    p<-MatchHabs[,Available.Dat]
-    ElectivIndices$JacobsD[,-c(1:2)]<-(r-p)/((r+p)-(2*(r*p))) 
+    r <- MatchHabs[,Diet.Dat]
+    p <- MatchHabs[,Available.Dat]
+    ElectivIndices$JacobsD[,-c(1:2)] <- (r-p)/((r+p)-(2*(r*p))) 
   }
   #CHECK IF SUM OR ROWSUM  
   if (any(Indices=="Chesson")) {
     #Chesson = (r/p)/sum(r/p)
-    r<-MatchHabs[,Diet.Dat]
-    p<-MatchHabs[,Available.Dat]
-    num<-r/p
-    is.na(num)<-sapply(num, is.infinite)
-    num[is.na(num)]<-NA
+    r <- MatchHabs[,Diet.Dat]
+    p <- MatchHabs[,Available.Dat]
+    num <- r/p
+    is.na(num) <- sapply(num, is.infinite)
+    num[is.na(num)] <- NA
     #W_i<-num/rowSums(num,na.rm = TRUE)#Same as Chesson
     ifelse(Depleting == FALSE, ElectivIndices$Chesson[,-c(1:2)]<- (num)/rowSums(num,na.rm = TRUE),ElectivIndices$Chesson[,-c(1:2)]<-((log((p-r)/p))/(rowSums(log((p-r)/p),na.rm = TRUE))))
   }
   if (any(Indices=="VanderploegScavia")) {
     #W_i = (r/p)/sum(r/p) Which Is The Same as Chesson
     #VanderploegScavia = (W_i-(1/length(W_i)))/(W_i+(1/length(W_i)))
-    r<-MatchHabs[,Diet.Dat]
-    p<-MatchHabs[,Available.Dat]
-    num<-r/p
-    is.na(num)<-sapply(num, is.infinite)
-    num[is.na(num)]<-NA
-    W_i<-num/rowSums(num,na.rm = TRUE)#Same as Chesson
-    ElectivIndices$VanderploegScavia[,-c(1:2)]<-(W_i-(1/length(W_i)))/(W_i+(1/length(W_i)))
+    r <- MatchHabs[,Diet.Dat]
+    p <- MatchHabs[,Available.Dat]
+    num <- r/p
+    is.na(num) <- sapply(num, is.infinite)
+    num[is.na(num)] <- NA
+    W_i <- num/rowSums(num,na.rm = TRUE)#Same as Chesson
+    ElectivIndices$VanderploegScavia[,-c(1:2)] <- (W_i-(1/length(W_i)))/(W_i+(1/length(W_i)))
   }
-  ElectivIndices<-rapply(ElectivIndices, f=function(x) ifelse(is.infinite(x),NA,x), how="replace" )
-  ElectivIndices<-rapply(ElectivIndices, f=function(x) ifelse(is.nan(x),NA,x), how="replace" )
-  class(ElectivIndices)<-"Electivity"
+  ElectivIndices <- rapply(ElectivIndices, f=function(x) ifelse(is.infinite(x),NA,x), how="replace" )
+  ElectivIndices <- rapply(ElectivIndices, f=function(x) ifelse(is.nan(x),NA,x), how="replace" )
+  class(ElectivIndices) <- "Electivity"
   return(ElectivIndices)
 }
