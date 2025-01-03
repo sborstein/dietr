@@ -1,6 +1,6 @@
 #' Calculates various composite indices for studying trophic ecology
 #' @param DietData A data frame containing the diet data. See details for information on formatting
-#' @param Indices Character vector of indices to calculate. Options are IOP for index of preponderance, IRI for index of relative importance, and FQ for feeding quotient.
+#' @param Indices Character vector of indices to calculate. Options are IOP for index of preponderance, IRI for index of relative importance, and FQ for feeding quotient, GII for the geometric importance index, MFI for the Main Food Item, and WSI for Windell's Significance.
 #' @param PercentNumber Numeric. Column number in DietData containing the percent numeric data. If calculating an index that does not require percent number data, can be left as NA.
 #' @param PercentOccurrence Numeric. Column number in DietData containing the percent Occurrence data. If calculating an index that does not require frequency of occurrence data, can be left as NA.
 #' @param PercentVolWeight Numeric. Column number in DietData containing the percent volume or weight data.
@@ -12,6 +12,8 @@
 #' product of the frequency of occurrence of prey with either their volumetric or weight contribution to the diet. The Index of Relative Importance (Pinkas et al., 1971) is calculated as the 
 #' the product of the sum of the weight or volume of a prey item and the percent number and the percent frequency occurrence. The Feeding Quotient (Hureau, 1970) is the product of the percent number
 #' and the percent weight. The Geometric Importance Index (Assis, 1996) is the sum of 2 or more percent dietary contributions divided by the square root of the number of categories. 
+#' Main Food Item (MFI) (Zander, 1982) is the square root of the product taken by multiplying the percent volume or weight by the sum of percent frequency and percent number divided by two. Windell's Significance (1971)
+#' is based on the geometric mean by taking the square root of the product of percent frequency and percent number.
 #' These indices can be returned as just a percentage or the percentage and the raw calculations with the PercentOnly argument.
 #' 
 #' The main input for this function is DietData, which requires minimal formatting. It is mandatory for this function that the first column contain the diet record identifier and the second column the names of
@@ -28,15 +30,21 @@
 #' #Load diet data from Casaux1998, which contains diet for two populations of Harpagifer
 #' # antarcticus in percent frequency, percent number, and percent mass.
 #' data(Casaux1998)
-#' #Calculate all three diet indices (IOP, IRI, FQ), return the raw data, and all calculations.
-#' CompositeIndices(DietData = Casaux1998, Indices = c("IOP","IRI","FQ"), PercentNumber = 4, 
-#' PercentOccurrence = 3, PercentVolWeight = 5, ReturnRaw = TRUE, PercentOnly = FALSE)
+#' 
+#' #Calculate all diet indices (IOP, IRI, FQ, GII, MFI, WSI), return the raw data, and
+#' #all calculations.
+#' CompositeIndices(DietData = Casaux1998, Indices = c("IOP","IRI","FQ", "GII", "MFI", "WSI"), 
+#' PercentNumber = 4, PercentOccurrence = 3, PercentVolWeight = 5, ReturnRaw = TRUE, 
+#' PercentOnly = FALSE)
+#' 
 #' #Calculate all three diet indices and return only the percent of the index
 #' CompositeIndices(DietData = Casaux1998, Indices = c("IOP","IRI","FQ"), PercentNumber = 4, 
 #' PercentOccurrence = 3, PercentVolWeight = 5, ReturnRaw = FALSE, PercentOnly = TRUE)
+#' 
 #' #Calculate Feeding Quotient and return the raw data and the all calculations.
 #' CompositeIndices(DietData = Casaux1998, Indices = "FQ", PercentNumber = 4, PercentVolWeight = 5,
 #' ReturnRaw = TRUE, PercentOnly = FALSE)
+#' 
 #' #Calculate Geometric Importance Index and return the raw data and the all calculations.
 #' CompositeIndices(DietData = Casaux1998, Indices = "GII", PercentNumber = 4, 
 #' PercentOccurrence = 3, PercentVolWeight = 5, ReturnRaw = TRUE, PercentOnly = FALSE)
@@ -52,6 +60,10 @@
 #' Natarajan A, and Jhingran A. 1961. Index of preponderance-a method of grading the food elements in the stomach analysis of fishes. Indian Journal of Fisheries 8:54-59.
 #' 
 #' Pinkas L, Oliphant MS, and Iverson IL. 1971. Food Habits of Albacore, Bluefin Tuna, and Bonito In California Waters. Fish Bulletin 152:1-105.
+#' 
+#' Windell JT. 1971. Food analysis and rate of digestion. In: Ricker WE, ed. Methods for assessment of fish production in fresh waters, 215-226.
+#' 
+#' Zander CD. 1982. Feeding ecology of littoral gobiid and blennioid fish of the Banyuls area (Mediterranean Sea) I. Main food and trophic dimension of niche and ecotope. Vie et Milieu 32:1-10. 
 #' @export
 
 CompositeIndices <- function (DietData, Indices = c("IOP","IRI","FQ", "GII"), PercentNumber = NA, PercentOccurrence = NA, PercentVolWeight = NA, ReturnRaw = FALSE, PercentOnly = TRUE){
@@ -115,6 +127,22 @@ CompositeIndices <- function (DietData, Indices = c("IOP","IRI","FQ", "GII"), Pe
         IndicesCalced <- cbind.data.frame(IndicesCalced,Current.GII)
       }
     }
+    if(any(Indices == "MFI")){
+      Current.MFI <- Calc.MFI(DietData = current.record, PercentOccurrence = PercentOccurrence, PercentNumber = PercentNumber, PercentVolWeight = PercentVolWeight)
+      if(PercentOnly == TRUE){
+        IndicesCalced$'%MFI' <- Current.MFI$`%MFI`
+      }else{
+        IndicesCalced <- cbind.data.frame(IndicesCalced,Current.MFI)
+      }
+    }
+    if(any(Indices == "WSI")){
+      Current.WSI <- Calc.WSI(DietData = current.record, PercentOccurrence = PercentOccurrence, PercentNumber = PercentNumber)
+      if(PercentOnly == TRUE){
+        IndicesCalced$'%WSI' <- Current.WSI$`%WSI`
+      }else{
+        IndicesCalced <- cbind.data.frame(IndicesCalced,Current.WSI)
+      }
+    }
     Store.Indices[[record.index]] <- IndicesCalced
   }
   return(Store.Indices)
@@ -175,4 +203,31 @@ Calc.GII <- function (DietData, PercentNumber, PercentOccurrence, PercentVolWeig
   GII <- cbind.data.frame(GII.res,PercentGII)
   colnames(GII) <- c("GII","%GII")
   return(GII)
+}
+
+
+##################################
+####Function to calculate MFI#####
+##################################
+
+Calc.MFI <- function (DietData, PercentNumber, PercentOccurrence, PercentVolWeight){
+  MFI.calc <- sqrt(((DietData[,PercentNumber]+DietData[,PercentOccurrence])/2)*DietData[,PercentVolWeight])
+  sumMFI <- sum(MFI.calc)
+  PercentMFI <- (MFI.calc/sumMFI)*100
+  MFI <- cbind.data.frame(MFI.calc,PercentMFI)
+  colnames(MFI) <- c("MFI","%MFI")
+  return(MFI)
+}
+
+##################################
+####Function to calculate WSI#####
+##################################
+
+Calc.WSI <- function (DietData, PercentNumber, PercentOccurrence){
+  WSI.calc <- sqrt(DietData[,PercentNumber]*DietData[,PercentOccurrence])
+  sumWSI <- sum(WSI.calc)
+  PercentWSI <- (WSI.calc/sumWSI)*100
+  WSI <- cbind.data.frame(WSI.calc,PercentWSI)
+  colnames(WSI) <- c("WSI","%WSI")
+  return(WSI)
 }
