@@ -6,9 +6,9 @@ This is a resubmission. The errors that previously caused the packae to be remov
 ## Test environments
 * local Windows 10 install, R 4.4.2
 * local Windows 11 install, R 4.4.2
+* local macos Sonoma 14.5
 * Ubuntu 22.04.5  on GitHub Actions(devel, release, oldrelease)
 * win-builder (devel, release, and oldrelease)
-* macosx-arm64, R 4.4.2
 ## R CMD check results
 0 errors | 0 warnings | 0 notes
-For R CMD check ran with ubuntu, Windows 10, Windows 11, win-builder (devel), win-builder (release), and win-builder (oldrelease), macosx-arm64
+For R CMD check ran with ubuntu, Windows 10, Windows 11, win-builder (devel), win-builder (release), and win-builder (oldrelease), macos Sonoma 14.5
