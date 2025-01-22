@@ -17,7 +17,7 @@
 #' While FishBase data obtained from rfishbase can be used, users can also upload their own data for
 #' use in with function (see vignette for a tutorial). 
 #' @author Samuel Borstein
-#' @examples
+#' @examplesIf interactive()
 #' \donttest{
 #' ###EXAMPLE USING RAW DATA FROM Magalhaes et al., 2015###
 #' data(Herichthys)#load data

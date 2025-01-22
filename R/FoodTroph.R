@@ -18,7 +18,7 @@
 #' the SE which they also refer to as the omnivory index. Alternatively, users can select the Sims option, in which case the SE is estimated based on the estimated TL of the n number
 #' of subsampling routines.Users can also select "Both" if they would like to calculate both types of SE.
 #' @author Samuel Borstein
-#' @examples 
+#' @examplesIf interactive() 
 #' \donttest{
 #' #Get some food item data from rfishbase
 #' my.food <- rfishbase::fooditems(c("Lutjanus apodus","Epinephelus itajara"))

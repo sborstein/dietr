@@ -2,6 +2,7 @@
 #Test obtains food item data from FishBase database and calcultes the trophic level of the record
 #Tests that the calculated trophic level is what we expect it to be
 test_that("FoodTroph function works", {
+  skip_on_cran()
   test.food <- try(rfishbase::fooditems("Plectropomus maculatus"),silent = TRUE)#get food items from database
   if ("try-error"%in%class(test.food)) {
     skip("could not connect to remote database")

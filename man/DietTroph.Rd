@@ -39,6 +39,7 @@ While FishBase data obtained from rfishbase can be used, users can also upload t
 use in with function (see vignette for a tutorial).
 }
 \examples{
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 \donttest{
 ###EXAMPLE USING RAW DATA FROM Magalhaes et al., 2015###
 data(Herichthys)#load data
@@ -98,6 +99,7 @@ data(FishBasePreyVals)
 my.TL <- DietTroph(DietItems = my.diets,PreyValues = FishBasePreyVals, Taxonomy = 
 my.taxonomy, PreyClass=c("FoodI","FoodII","FoodIII","Stage"))
 }
+\dontshow{\}) # examplesIf}
 }
 \author{
 Samuel Borstein

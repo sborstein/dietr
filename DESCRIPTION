@@ -1,5 +1,5 @@
 Package: dietr
-Version: 1.1.6
+Version: 1.1.6-1
 Date: 2025-1-12
 Title: Diet Estimated Trophic Levels
 Authors@R: person(given = c("Samuel", "R."),
